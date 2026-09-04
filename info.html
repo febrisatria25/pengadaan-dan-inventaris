@@ -15,10 +15,7 @@
       animation: shimmer 1.5s infinite;
     }
     @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .fade-up { animation: fadeUp 0.5s ease-out forwards; }
     .fade-up-delay { animation: fadeUp 0.5s ease-out 0.15s forwards; opacity: 0; }
     .fade-up-delay2 { animation: fadeUp 0.5s ease-out 0.3s forwards; opacity: 0; }
@@ -37,28 +34,22 @@
   <div id="errorState" class="w-full max-w-md hidden">
     <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
       <div class="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-4">
-        <svg class="w-8 h-8 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/>
-        </svg>
+        <svg class="w-8 h-8 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
       </div>
       <h2 class="text-lg font-bold text-slate-800 mb-2">Data Tidak Ditemukan</h2>
       <p id="errorMessage" class="text-sm text-slate-500">Kode barang tidak valid atau belum terdaftar di sistem.</p>
-      <button onclick="history.back()" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">
-        Kembali
-      </button>
+      <button onclick="history.back()" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">Kembali</button>
     </div>
   </div>
 
   <!-- Main Content -->
   <div id="mainContent" class="w-full max-w-md hidden">
 
-    <!-- Header Card -->
-    <div class="bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-2xl shadow-lg p-5 mb-3 fade-up">
-      <div class="flex items-center gap-2 mb-3">
+    <!-- Header Card (triple-click to login) -->
+    <div id="headerCard" class="bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-2xl shadow-lg p-5 mb-3 fade-up relative">
+      <div class="flex items-center gap-2 mb-3" id="logoTrigger" style="cursor:pointer" title="Klik 3x untuk masuk mode admin">
         <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-          </svg>
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
         </div>
         <div>
           <h1 class="text-white font-extrabold text-sm tracking-wide">UPJKP - INVENTARIS</h1>
@@ -69,11 +60,15 @@
         <p class="text-indigo-200 text-[9px] font-bold uppercase tracking-widest">Kode Barang</p>
         <p id="infoKode" class="text-white font-extrabold text-xl tracking-wider mt-0.5">-</p>
       </div>
+      <!-- Admin badge -->
+      <div id="adminBadge" class="hidden absolute top-3 right-3">
+        <span class="px-2 py-1 bg-emerald-500 text-white text-[9px] font-bold rounded-full">ADMIN</span>
+      </div>
     </div>
 
     <!-- Image Card -->
     <div id="imageCard" class="bg-white rounded-2xl shadow-lg p-3 mb-3 hidden fade-up-delay">
-      <div id="imageContainer" class="relative overflow-hidden rounded-xl bg-slate-50">
+      <div class="relative overflow-hidden rounded-xl bg-slate-50">
         <img id="itemImage" class="w-full h-52 object-contain" alt="Gambar Barang">
       </div>
     </div>
@@ -87,7 +82,7 @@
       <div id="detailGrid" class="space-y-3"></div>
     </div>
 
-    <!-- Status & Kondisi Badges -->
+    <!-- Status & Kondisi -->
     <div class="bg-white rounded-2xl shadow-lg p-5 mb-3 fade-up-delay">
       <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -103,6 +98,24 @@
         Nilai & Sumber
       </h2>
       <div class="space-y-3" id="valueInfo"></div>
+    </div>
+
+    <!-- Admin Actions -->
+    <div id="adminActions" class="hidden bg-white rounded-2xl shadow-lg p-5 mb-3 fade-up-delay2">
+      <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Aksi Admin</h2>
+      <div class="flex gap-2">
+        <button onclick="openEditModal()" class="flex-1 px-3 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          Edit Barang
+        </button>
+        <button onclick="deleteItem()" class="px-3 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+          Hapus
+        </button>
+      </div>
+      <button onclick="logoutAdmin()" class="w-full mt-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-bold transition">
+        Logout Admin
+      </button>
     </div>
 
     <!-- QR Code -->
@@ -123,14 +136,106 @@
       <p class="text-[10px] text-slate-400 font-semibold">UPJKP - Sistem Informasi Pengadaan & Inventaris</p>
       <p id="footerTimestamp" class="text-[9px] text-slate-300 mt-0.5"></p>
     </div>
-
   </div>
 
-  <!-- QR Code Library -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <!-- PIN Modal -->
+  <div id="pinModal" class="fixed inset-0 bg-black/50 z-[9999] flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6">
+      <div class="text-center mb-5">
+        <div class="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        </div>
+        <h3 class="text-base font-bold text-slate-800">Mode Admin</h3>
+        <p class="text-xs text-slate-400 mt-1">Masukkan PIN untuk mengakses fitur admin</p>
+      </div>
+      <input id="pinInput" type="password" maxlength="20" placeholder="Masukkan PIN..." class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl text-center text-lg font-bold tracking-widest focus:border-indigo-500 focus:outline-none transition">
+      <p id="pinError" class="text-xs text-rose-500 text-center mt-2 hidden font-semibold">PIN salah. Silakan coba lagi.</p>
+      <div class="flex gap-2 mt-4">
+        <button onclick="closePinModal()" class="flex-1 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-bold transition">Batal</button>
+        <button onclick="submitPin()" class="flex-1 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition">Masuk</button>
+      </div>
+    </div>
+  </div>
 
+  <!-- Edit Modal -->
+  <div id="editModal" class="fixed inset-0 bg-black/50 z-[9998] flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[85vh] overflow-y-auto">
+      <div class="sticky top-0 bg-white p-5 pb-3 border-b border-slate-100 rounded-t-2xl">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-slate-800">Edit Barang Inventaris</h3>
+          <button onclick="closeEditModal()" class="p-1.5 hover:bg-slate-100 rounded-lg transition">
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+      <form id="editForm" onsubmit="saveEdit(event)" class="p-5 space-y-3">
+        <div>
+          <label class="text-[10px] font-bold text-slate-400 uppercase">Nama Barang</label>
+          <input type="text" id="editNama" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold mt-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-[10px] font-bold text-slate-400 uppercase">Kategori</label>
+            <select id="editKategori" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold mt-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+              <option>Aset Tetap</option><option>Alat Tulis Kantor</option><option>Alat Habis Pakai</option><option>Alat Bantu Kerja</option><option>Souvenir</option><option>Dijual Kembali</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-[10px] font-bold text-slate-400 uppercase">Jumlah</label>
+            <input type="number" id="editJumlah" min="0" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold mt-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-[10px] font-bold text-slate-400 uppercase">Kondisi</label>
+            <select id="editKondisi" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold mt-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+              <option>Baik</option><option>Rusak Ringan</option><option>Rusak Berat</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-[10px] font-bold text-slate-400 uppercase">Status</label>
+            <select id="editStatus" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold mt-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+              <option>Tersedia</option><option>Dipinjam</option><option>Rusak</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="text-[10px] font-bold text-slate-400 uppercase">Merek / Type</label>
+          <input type="text" id="editMerek" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold mt-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="text-[10px] font-bold text-slate-400 uppercase">Lokasi Ruangan</label>
+          <input type="text" id="editLokasi" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold mt-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="text-[10px] font-bold text-slate-400 uppercase">Keterangan</label>
+          <textarea id="editKeterangan" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-semibold mt-1 focus:ring-2 focus:ring-indigo-500 focus:outline-none resize-none"></textarea>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="closeEditModal()" class="flex-1 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-bold transition">Batal</button>
+          <button type="submit" id="btnSaveEdit" class="flex-1 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[10000] hidden">
+    <div id="toastInner" class="px-4 py-2.5 rounded-xl shadow-lg text-xs font-bold text-white flex items-center gap-2">
+      <span id="toastIcon"></span>
+      <span id="toastMsg"></span>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyCj6vWfqiV_VsPVvWv6JGzaTe9MahdZDnx2ZuClqDXcjF4VbyGznMYLgSgxNFE-aqd2w/exec";
+    const DEFAULT_PIN = 'admin2026';
+
+    let isAdmin = false;
+    let currentItem = null;
+    let logoClickCount = 0;
+    let logoClickTimer = null;
 
     function extractDriveId(url) {
       if (!url) return null;
@@ -178,18 +283,218 @@
     }
 
     function renderDetailRow(label, value) {
-      return `
-        <div class="flex justify-between items-center py-1.5 border-b border-slate-50 last:border-0">
-          <span class="text-[10px] font-bold text-slate-400 uppercase">${label}</span>
-          <span class="text-xs font-bold text-slate-800 text-right max-w-[60%]">${value || '-'}</span>
-        </div>
-      `;
+      return `<div class="flex justify-between items-center py-1.5 border-b border-slate-50 last:border-0"><span class="text-[10px] font-bold text-slate-400 uppercase">${label}</span><span class="text-xs font-bold text-slate-800 text-right max-w-[60%]">${value || '-'}</span></div>`;
     }
 
     function renderBadge(text, colorClass) {
       return `<span class="px-3 py-1.5 rounded-full text-[10px] font-bold border ${colorClass}">${text}</span>`;
     }
 
+    function showToast(msg, isError) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      document.getElementById('toastIcon').textContent = isError ? '✕' : '✓';
+      document.getElementById('toastInner').className = isError
+        ? 'px-4 py-2.5 rounded-xl shadow-lg text-xs font-bold text-white flex items-center gap-2 bg-rose-500'
+        : 'px-4 py-2.5 rounded-xl shadow-lg text-xs font-bold text-white flex items-center gap-2 bg-emerald-500';
+      t.classList.remove('hidden');
+      setTimeout(() => t.classList.add('hidden'), 3000);
+    }
+
+    function getCurrentTimestamp() {
+      const now = new Date();
+      const pad = (n) => String(n).padStart(2, '0');
+      return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    }
+
+    // ====== ADMIN AUTH ======
+    document.getElementById('logoTrigger').addEventListener('click', function() {
+      if (isAdmin) return;
+      logoClickCount++;
+      clearTimeout(logoClickTimer);
+      if (logoClickCount >= 3) {
+        logoClickCount = 0;
+        openPinModal();
+      } else {
+        logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 600);
+      }
+    });
+
+    function openPinModal() {
+      document.getElementById('pinInput').value = '';
+      document.getElementById('pinError').classList.add('hidden');
+      document.getElementById('pinModal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('pinInput').focus(), 100);
+    }
+
+    function closePinModal() {
+      document.getElementById('pinModal').classList.add('hidden');
+    }
+
+    function submitPin() {
+      const pin = document.getElementById('pinInput').value;
+      if (pin === DEFAULT_PIN) {
+        isAdmin = true;
+        closePinModal();
+        updateAdminUI();
+        showToast('Mode admin aktif!');
+      } else {
+        document.getElementById('pinError').classList.remove('hidden');
+        document.getElementById('pinInput').value = '';
+        document.getElementById('pinInput').focus();
+      }
+    }
+
+    document.getElementById('pinInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') submitPin();
+    });
+
+    function updateAdminUI() {
+      if (isAdmin) {
+        document.getElementById('adminBadge').classList.remove('hidden');
+        document.getElementById('adminActions').classList.remove('hidden');
+      } else {
+        document.getElementById('adminBadge').classList.add('hidden');
+        document.getElementById('adminActions').classList.add('hidden');
+      }
+    }
+
+    function logoutAdmin() {
+      isAdmin = false;
+      updateAdminUI();
+      showToast('Kembali ke mode viewer');
+    }
+
+    // ====== EDIT MODAL ======
+    function openEditModal() {
+      if (!currentItem) return;
+      document.getElementById('editNama').value = currentItem.nama_barang || '';
+      document.getElementById('editKategori').value = currentItem.kategori || 'Aset Tetap';
+      document.getElementById('editJumlah').value = currentItem.jumlah || 0;
+      document.getElementById('editKondisi').value = currentItem.kondisi || 'Baik';
+      document.getElementById('editStatus').value = currentItem.status || 'Tersedia';
+      document.getElementById('editMerek').value = currentItem.merek_type || '';
+      document.getElementById('editLokasi').value = currentItem.lokasi_ruangan || '';
+      document.getElementById('editKeterangan').value = currentItem.keterangan || '';
+      document.getElementById('editModal').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').classList.add('hidden');
+    }
+
+    async function saveEdit(e) {
+      e.preventDefault();
+      if (!isAdmin || !currentItem) return;
+      const btn = document.getElementById('btnSaveEdit');
+      btn.disabled = true;
+      btn.textContent = 'Menyimpan...';
+
+      try {
+        const res = await fetch(WEB_APP_URL + '?t=' + Date.now());
+        const data = await res.json();
+        let inventory = data.inventory || [];
+        const idx = inventory.findIndex(i => i.kode_barang === currentItem.kode_barang);
+        if (idx === -1) { showToast('Item tidak ditemukan', true); return; }
+
+        inventory[idx] = {
+          ...inventory[idx],
+          nama_barang: document.getElementById('editNama').value.trim(),
+          kategori: document.getElementById('editKategori').value,
+          jumlah: parseInt(document.getElementById('editJumlah').value) || 0,
+          kondisi: document.getElementById('editKondisi').value,
+          status: document.getElementById('editStatus').value,
+          merek_type: document.getElementById('editMerek').value || '-',
+          lokasi_ruangan: document.getElementById('editLokasi').value || '-',
+          keterangan: document.getElementById('editKeterangan').value || '-',
+          jam_update: getCurrentTimestamp()
+        };
+
+        const saveRes = await fetch(WEB_APP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'saveInventoryAll', inventory: inventory, borrowing: data.borrowing || [], expenditures: data.expenditures || [], deliveries: data.deliveries || [] })
+        });
+        const saveData = await saveRes.json();
+        if (saveData.status === 'success') {
+          currentItem = inventory[idx];
+          renderAll(currentItem);
+          closeEditModal();
+          showToast('Barang berhasil diperbarui!');
+        } else {
+          showToast('Gagal menyimpan: ' + (saveData.message || 'unknown'), true);
+        }
+      } catch(err) {
+        console.error(err);
+        showToast('Error menyimpan data', true);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Simpan';
+      }
+    }
+
+    // ====== DELETE ======
+    async function deleteItem() {
+      if (!isAdmin || !currentItem) return;
+      if (!confirm('Yakin ingin menghapus "' + currentItem.nama_barang + '" (' + currentItem.kode_barang + ')?')) return;
+
+      try {
+        const res = await fetch(WEB_APP_URL + '?t=' + Date.now());
+        const data = await res.json();
+        let inventory = (data.inventory || []).filter(i => i.kode_barang !== currentItem.kode_barang);
+
+        const saveRes = await fetch(WEB_APP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'saveInventoryAll', inventory: inventory, borrowing: data.borrowing || [], expenditures: data.expenditures || [], deliveries: data.deliveries || [] })
+        });
+        const saveData = await saveRes.json();
+        if (saveData.status === 'success') {
+          showToast('Barang berhasil dihapus!');
+          setTimeout(() => history.back(), 1500);
+        } else {
+          showToast('Gagal menghapus: ' + (saveData.message || 'unknown'), true);
+        }
+      } catch(err) {
+        console.error(err);
+        showToast('Error menghapus data', true);
+      }
+    }
+
+    // ====== RENDER ======
+    function renderAll(item) {
+      document.title = 'UPJKP - ' + item.nama_barang;
+      document.getElementById('infoKode').textContent = item.kode_barang;
+
+      // Detail Grid
+      document.getElementById('detailGrid').innerHTML =
+        renderDetailRow('Nama Barang', item.nama_barang) +
+        renderDetailRow('Kategori', item.kategori) +
+        renderDetailRow('Merek / Type', item.merek_type) +
+        renderDetailRow('Lokasi Ruangan', item.lokasi_ruangan) +
+        renderDetailRow('Keterangan', item.keterangan) +
+        renderDetailRow('Source PPAB', item.source_ppab) +
+        renderDetailRow('Jam Update', item.jam_update);
+
+      // Status & Kondisi
+      const kondisiColors = { 'Baik': 'bg-emerald-50 text-emerald-700 border-emerald-200', 'Rusak Ringan': 'bg-amber-50 text-amber-700 border-amber-200', 'Rusak Berat': 'bg-rose-50 text-rose-700 border-rose-200' };
+      const statusColors = { 'Tersedia': 'bg-emerald-50 text-emerald-700 border-emerald-200', 'Dipinjam': 'bg-amber-50 text-amber-700 border-amber-200', 'Rusak': 'bg-rose-50 text-rose-700 border-rose-200' };
+      document.getElementById('statusBadges').innerHTML =
+        `<div class="flex flex-col items-center p-3 bg-slate-50 rounded-xl"><span class="text-[9px] font-bold text-slate-400 uppercase mb-1.5">Kondisi</span>${renderBadge(item.kondisi || '-', kondisiColors[item.kondisi] || 'bg-slate-50 text-slate-700 border-slate-200')}</div>
+        <div class="flex flex-col items-center p-3 bg-slate-50 rounded-xl"><span class="text-[9px] font-bold text-slate-400 uppercase mb-1.5">Status</span>${renderBadge(item.status || '-', statusColors[item.status] || 'bg-slate-50 text-slate-700 border-slate-200')}</div>
+        <div class="flex flex-col items-center p-3 bg-slate-50 rounded-xl"><span class="text-[9px] font-bold text-slate-400 uppercase mb-1.5">Jumlah</span><span class="text-lg font-extrabold text-indigo-700">${item.jumlah || 0}</span></div>
+        <div class="flex flex-col items-center p-3 bg-slate-50 rounded-xl"><span class="text-[9px] font-bold text-slate-400 uppercase mb-1.5">Tanggal Perolehan</span><span class="text-xs font-bold text-slate-700">${item.tanggal_perolehan || '-'}</span></div>`;
+
+      // Nilai & Sumber
+      document.getElementById('valueInfo').innerHTML =
+        `<div class="bg-indigo-50 rounded-xl p-3 border border-indigo-100"><span class="text-[9px] font-bold text-indigo-400 uppercase">Nilai Perolehan</span><p class="text-sm font-extrabold text-indigo-700 mt-0.5">${formatIDR(item.nilai_perolehan || 0)}</p></div>
+        <div class="bg-slate-50 rounded-xl p-3 border border-slate-100"><span class="text-[9px] font-bold text-slate-400 uppercase">Sumber Perolehan</span><p class="text-xs font-bold text-slate-700 mt-0.5">${item.sumber_perolehan || '-'}</p></div>`;
+
+      // Timestamp
+      document.getElementById('footerTimestamp').textContent = 'Terakhir diupdate: ' + (item.jam_update || '-');
+    }
+
+    // ====== INIT ======
     async function init() {
       const params = new URLSearchParams(window.location.search);
       const itemCode = params.get('item');
@@ -203,23 +508,18 @@
         const cacheBuster = "?t=" + Date.now();
         const response = await fetch(WEB_APP_URL + cacheBuster);
         const data = await response.json();
-
         let inventory = [];
         if (data && typeof data === 'object' && !Array.isArray(data)) {
           inventory = data.inventory || [];
         }
 
         const item = inventory.find(i => i.kode_barang === itemCode);
-
         if (!item) {
-          showError(`Barang dengan kode "${itemCode}" tidak ditemukan di database.`);
+          showError('Barang dengan kode "' + itemCode + '" tidak ditemukan di database.');
           return;
         }
 
-        document.title = `UPJKP - ${item.nama_barang}`;
-
-        // Kode Barang
-        document.getElementById('infoKode').textContent = item.kode_barang;
+        currentItem = item;
 
         // Image via backend proxy
         if (item.gambar_url) {
@@ -230,76 +530,18 @@
           }
         }
 
-        // Detail Grid
-        document.getElementById('detailGrid').innerHTML =
-          renderDetailRow('Nama Barang', item.nama_barang) +
-          renderDetailRow('Kategori', item.kategori) +
-          renderDetailRow('Merek / Type', item.merek_type) +
-          renderDetailRow('Lokasi Ruangan', item.lokasi_ruangan) +
-          renderDetailRow('Keterangan', item.keterangan) +
-          renderDetailRow('Source PPAB', item.source_ppab) +
-          renderDetailRow('Jam Update', item.jam_update);
-
-        // Status & Kondisi
-        const kondisiColors = {
-          'Baik': 'bg-emerald-50 text-emerald-700 border-emerald-200',
-          'Rusak Ringan': 'bg-amber-50 text-amber-700 border-amber-200',
-          'Rusak Berat': 'bg-rose-50 text-rose-700 border-rose-200'
-        };
-        const statusColors = {
-          'Tersedia': 'bg-emerald-50 text-emerald-700 border-emerald-200',
-          'Dipinjam': 'bg-amber-50 text-amber-700 border-amber-200',
-          'Rusak': 'bg-rose-50 text-rose-700 border-rose-200'
-        };
-        document.getElementById('statusBadges').innerHTML =
-          `<div class="flex flex-col items-center p-3 bg-slate-50 rounded-xl">
-            <span class="text-[9px] font-bold text-slate-400 uppercase mb-1.5">Kondisi</span>
-            ${renderBadge(item.kondisi || '-', kondisiColors[item.kondisi] || 'bg-slate-50 text-slate-700 border-slate-200')}
-          </div>
-          <div class="flex flex-col items-center p-3 bg-slate-50 rounded-xl">
-            <span class="text-[9px] font-bold text-slate-400 uppercase mb-1.5">Status</span>
-            ${renderBadge(item.status || '-', statusColors[item.status] || 'bg-slate-50 text-slate-700 border-slate-200')}
-          </div>
-          <div class="flex flex-col items-center p-3 bg-slate-50 rounded-xl">
-            <span class="text-[9px] font-bold text-slate-400 uppercase mb-1.5">Jumlah</span>
-            <span class="text-lg font-extrabold text-indigo-700">${item.jumlah || 0}</span>
-          </div>
-          <div class="flex flex-col items-center p-3 bg-slate-50 rounded-xl">
-            <span class="text-[9px] font-bold text-slate-400 uppercase mb-1.5">Tanggal Perolehan</span>
-            <span class="text-xs font-bold text-slate-700">${item.tanggal_perolehan || '-'}</span>
-          </div>`;
-
-        // Nilai & Sumber
-        document.getElementById('valueInfo').innerHTML = `
-          <div class="bg-indigo-50 rounded-xl p-3 border border-indigo-100">
-            <span class="text-[9px] font-bold text-indigo-400 uppercase">Nilai Perolehan</span>
-            <p class="text-sm font-extrabold text-indigo-700 mt-0.5">${formatIDR(item.nilai_perolehan || 0)}</p>
-          </div>
-          <div class="bg-slate-50 rounded-xl p-3 border border-slate-100">
-            <span class="text-[9px] font-bold text-slate-400 uppercase">Sumber Perolehan</span>
-            <p class="text-xs font-bold text-slate-700 mt-0.5">${item.sumber_perolehan || '-'}</p>
-          </div>`;
+        renderAll(item);
 
         // QR Code
         const qrUrl = window.location.href;
         const qrContainer = document.getElementById('qrContainer');
         qrContainer.innerHTML = '';
         try {
-          new QRCode(qrContainer, {
-            text: qrUrl,
-            width: 120,
-            height: 120,
-            colorDark: "#1e293b",
-            colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.H
-          });
+          new QRCode(qrContainer, { text: qrUrl, width: 120, height: 120, colorDark: "#1e293b", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
         } catch(e) {
-          qrContainer.innerHTML = `<p class="text-[9px] text-slate-400 break-all p-2">${qrUrl}</p>`;
+          qrContainer.innerHTML = '<p class="text-[9px] text-slate-400 break-all p-2">' + qrUrl + '</p>';
         }
         document.getElementById('qrLabel').textContent = item.kode_barang;
-
-        // Timestamp
-        document.getElementById('footerTimestamp').textContent = 'Terakhir diupdate: ' + (item.jam_update || '-');
 
         showState('mainContent');
 
