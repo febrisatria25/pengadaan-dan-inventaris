@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UPJKP - Info Inventaris</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .skeleton {
+      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.5s ease-out forwards; }
+    .fade-up-delay { animation: fadeUp 0.5s ease-out 0.15s forwards; opacity: 0; }
+    .fade-up-delay2 { animation: fadeUp 0.5s ease-out 0.3s forwards; opacity: 0; }
+  </style>
+</head>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
+
+  <!-- Loading State -->
+  <div id="loadingState" class="w-full max-w-md space-y-4">
+    <div class="skeleton h-20 rounded-2xl"></div>
+    <div class="skeleton h-48 rounded-2xl"></div>
+    <div class="skeleton h-64 rounded-2xl"></div>
+  </div>
+
+  <!-- Error State -->
+  <div id="errorState" class="w-full max-w-md hidden">
+    <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
+      <div class="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+        </svg>
+      </div>
+      <h2 class="text-lg font-bold text-slate-800 mb-2">Data Tidak Ditemukan</h2>
+      <p id="errorMessage" class="text-sm text-slate-500">Kode barang tidak valid atau belum terdaftar di sistem.</p>
+      <button onclick="history.back()" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">
+        Kembali
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div id="mainContent" class="w-full max-w-md hidden">
+
+    <!-- Header Card -->
+    <div class="bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-2xl shadow-lg p-5 mb-3 fade-up">
+      <div class="flex items-center gap-2 mb-3">
+        <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-white font-extrabold text-sm tracking-wide">UPJKP - INVENTARIS</h1>
+          <p class="text-indigo-200 text-[10px] font-semibold">Sistem Informasi Pengadaan & Inventaris</p>
+        </div>
+      </div>
+      <div class="bg-white/15 backdrop-blur-sm rounded-xl p-3 border border-white/20">
+        <p class="text-indigo-200 text-[9px] font-bold uppercase tracking-widest">Kode Barang</p>
+        <p id="infoKode" class="text-white font-extrabold text-xl tracking-wider mt-0.5">-</p>
+      </div>
+    </div>
+
+    <!-- Image Card -->
+    <div id="imageCard" class="bg-white rounded-2xl shadow-lg p-3 mb-3 hidden fade-up-delay">
+      <div id="imageContainer" class="relative overflow-hidden rounded-xl bg-slate-50">
+        <img id="itemImage" class="w-full h-52 object-contain" alt="Gambar Barang">
+      </div>
+    </div>
+
+    <!-- Detail Card -->
+    <div class="bg-white rounded-2xl shadow-lg p-5 mb-3 fade-up-delay">
+      <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Informasi Barang
+      </h2>
+      <div id="detailGrid" class="space-y-3"></div>
+    </div>
+
+    <!-- Status & Kondisi Badges -->
+    <div class="bg-white rounded-2xl shadow-lg p-5 mb-3 fade-up-delay">
+      <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Status & Kondisi
+      </h2>
+      <div class="grid grid-cols-2 gap-3" id="statusBadges"></div>
+    </div>
+
+    <!-- Nilai & Sumber -->
+    <div class="bg-white rounded-2xl shadow-lg p-5 mb-3 fade-up-delay2">
+      <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Nilai & Sumber
+      </h2>
+      <div class="space-y-3" id="valueInfo"></div>
+    </div>
+
+    <!-- QR Code -->
+    <div class="bg-white rounded-2xl shadow-lg p-5 mb-6 fade-up-delay2">
+      <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+        QR Code
+      </h2>
+      <div class="flex flex-col items-center">
+        <div id="qrContainer" class="bg-white p-3 rounded-xl border-2 border-dashed border-slate-200"></div>
+        <p id="qrLabel" class="text-[9px] text-slate-400 mt-2 font-semibold"></p>
+        <p class="text-[8px] text-slate-300 mt-1">Scan untuk lihat info lengkap barang</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center pb-4">
+      <p class="text-[10px] text-slate-400 font-semibold">UPJKP - Sistem Informasi Pengadaan & Inventaris</p>
+      <p id="footerTimestamp" class="text-[9px] text-slate-300 mt-0.5"></p>
+    </div>
+
+  </div>
+
+  <!-- QR Code Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyCj6vWfqiV_VsPVvWv6JGzaTe9MahdZDnx2ZuClqDXcjF4VbyGznMYLgSgxNFE-aqd2w/exec";
+
+    function extractDriveId(url) {
+      if (!url) return null;
+      let match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) return match[1];
+      match = url.match(/id=([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) return match[1];
+      return null;
+    }
+
+    async function fetchImageAsBase64(url) {
+      const fileId = extractDriveId(url);
+      if (!fileId) return null;
+      try {
+        const res = await fetch(WEB_APP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'fetchImageBase64', fileId: fileId })
+        });
+        const result = await res.json();
+        if (result.status === 'success' && result.base64) {
+          return 'data:' + (result.mimeType || 'image/jpeg') + ';base64,' + result.base64;
+        }
+        return null;
+      } catch(e) {
+        console.error('Error fetching image:', e);
+        return null;
+      }
+    }
+
+    function showState(state) {
+      document.getElementById('loadingState').classList.add('hidden');
+      document.getElementById('errorState').classList.add('hidden');
+      document.getElementById('mainContent').classList.add('hidden');
+      document.getElementById(state).classList.remove('hidden');
+    }
+
+    function showError(msg) {
+      document.getElementById('errorMessage').textContent = msg;
+      showState('errorState');
+    }
+
+    function formatIDR(val) {
+      return 'Rp ' + (val || 0).toLocaleString('id-ID');
+    }
+
+    function renderDetailRow(label, value) {
+      return `
+        <div class="flex justify-between items-center py-1.5 border-b border-slate-50 last:border-0">
+          <span class="text-[10px] font-bold text-slate-400 uppercase">${label}</span>
+          <span class="text-xs font-bold text-slate-800 text-right max-w-[60%]">${value || '-'}</span>
+        </div>
+      `;
+    }
+
+    function renderBadge(text, colorClass) {
+      return `<span class="px-3 py-1.5 rounded-full text-[10px] font-bold border ${colorClass}">${text}</span>`;
+    }
+
+    async function init() {
+      const params = new URLSearchParams(window.location.search);
+      const itemCode = params.get('item');
+
+      if (!itemCode) {
+        showError('Tidak ada kode barang yang ditentukan di URL. Gunakan format: info.html?item=INV/KODE_BARANG');
+        return;
+      }
+
+      try {
+        const cacheBuster = "?t=" + Date.now();
+        const response = await fetch(WEB_APP_URL + cacheBuster);
+        const data = await response.json();
+
+        let inventory = [];
+        if (data && typeof data === 'object' && !Array.isArray(data)) {
+          inventory = data.inventory || [];
+        }
+
+        const item = inventory.find(i => i.kode_barang === itemCode);
+
+        if (!item) {
+          showError(`Barang dengan kode "${itemCode}" tidak ditemukan di database.`);
+          return;
+        }
+
+        document.title = `UPJKP - ${item.nama_barang}`;
+
+        // Kode Barang
+        document.getElementById('infoKode').textContent = item.kode_barang;
+
+        // Image via backend proxy
+        if (item.gambar_url) {
+          const dataUrl = await fetchImageAsBase64(item.gambar_url);
+          if (dataUrl) {
+            document.getElementById('imageCard').classList.remove('hidden');
+            document.getElementById('itemImage').src = dataUrl;
+          }
+        }
+
+        // Detail Grid
+        document.getElementById('detailGrid').innerHTML =
+          renderDetailRow('Nama Barang', item.nama_barang) +
+          renderDetailRow('Kategori', item.kategori) +
+          renderDetailRow('Merek / Type', item.merek_type) +
+          renderDetailRow('Lokasi Ruangan', item.lokasi_ruangan) +
+          renderDetailRow('Keterangan', item.keterangan) +
+          renderDetailRow('Source PPAB', item.source_ppab) +
+          renderDetailRow('Jam Update', item.jam_update);
+
+        // Status & Kondisi
+        const kondisiColors = {
+          'Baik': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+          'Rusak Ringan': 'bg-amber-50 text-amber-700 border-amber-200',
+          'Rusak Berat': 'bg-rose-50 text-rose-700 border-rose-200'
+        };
+        const statusColors = {
+          'Tersedia': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+          'Dipinjam': 'bg-amber-50 text-amber-700 border-amber-200',
+          'Rusak': 'bg-rose-50 text-rose-700 border-rose-200'
+        };
+        document.getElementById('statusBadges').innerHTML =
+          `<div class="flex flex-col items-center p-3 bg-slate-50 rounded-xl">
+            <span class="text-[9px] font-bold text-slate-400 uppercase mb-1.5">Kondisi</span>
+            ${renderBadge(item.kondisi || '-', kondisiColors[item.kondisi] || 'bg-slate-50 text-slate-700 border-slate-200')}
+          </div>
+          <div class="flex flex-col items-center p-3 bg-slate-50 rounded-xl">
+            <span class="text-[9px] font-bold text-slate-400 uppercase mb-1.5">Status</span>
+            ${renderBadge(item.status || '-', statusColors[item.status] || 'bg-slate-50 text-slate-700 border-slate-200')}
+          </div>
+          <div class="flex flex-col items-center p-3 bg-slate-50 rounded-xl">
+            <span class="text-[9px] font-bold text-slate-400 uppercase mb-1.5">Jumlah</span>
+            <span class="text-lg font-extrabold text-indigo-700">${item.jumlah || 0}</span>
+          </div>
+          <div class="flex flex-col items-center p-3 bg-slate-50 rounded-xl">
+            <span class="text-[9px] font-bold text-slate-400 uppercase mb-1.5">Tanggal Perolehan</span>
+            <span class="text-xs font-bold text-slate-700">${item.tanggal_perolehan || '-'}</span>
+          </div>`;
+
+        // Nilai & Sumber
+        document.getElementById('valueInfo').innerHTML = `
+          <div class="bg-indigo-50 rounded-xl p-3 border border-indigo-100">
+            <span class="text-[9px] font-bold text-indigo-400 uppercase">Nilai Perolehan</span>
+            <p class="text-sm font-extrabold text-indigo-700 mt-0.5">${formatIDR(item.nilai_perolehan || 0)}</p>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-3 border border-slate-100">
+            <span class="text-[9px] font-bold text-slate-400 uppercase">Sumber Perolehan</span>
+            <p class="text-xs font-bold text-slate-700 mt-0.5">${item.sumber_perolehan || '-'}</p>
+          </div>`;
+
+        // QR Code
+        const qrUrl = window.location.href;
+        const qrContainer = document.getElementById('qrContainer');
+        qrContainer.innerHTML = '';
+        try {
+          new QRCode(qrContainer, {
+            text: qrUrl,
+            width: 120,
+            height: 120,
+            colorDark: "#1e293b",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+          });
+        } catch(e) {
+          qrContainer.innerHTML = `<p class="text-[9px] text-slate-400 break-all p-2">${qrUrl}</p>`;
+        }
+        document.getElementById('qrLabel').textContent = item.kode_barang;
+
+        // Timestamp
+        document.getElementById('footerTimestamp').textContent = 'Terakhir diupdate: ' + (item.jam_update || '-');
+
+        showState('mainContent');
+
+      } catch(e) {
+        console.error('Error:', e);
+        showError('Gagal mengambil data dari server. Periksa koneksi internet Anda.');
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
