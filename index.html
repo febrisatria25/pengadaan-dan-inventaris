@@ -2923,7 +2923,7 @@
           nilai_perolehan: hargaPerItem,
           status: 'Tersedia',
           gambar_url: '',
-          qr_code_url: window.location.origin + '/info.html?item=' + encodeURIComponent(kodeBarang),
+          qr_code_url: 'info.html?item=' + encodeURIComponent(kodeBarang),
           sumber_perolehan: sumber,
           source_ppab: ppabItem.no_ppab || '-',
           keterangan: 'Auto-import dari PPAB ' + (ppabItem.no_ppab || '') + ' | Harga satuan: ' + formatIDR(hargaPerItem),
@@ -3224,7 +3224,7 @@
             sumber_perolehan: document.getElementById('invSumber').value,
             keterangan: document.getElementById('invKeterangan').value || '-',
             gambar_url: gambarUrl,
-            qr_code_url: window.location.origin + '/info.html?item=' + encodeURIComponent(kodeBarang),
+            qr_code_url: 'info.html?item=' + encodeURIComponent(kodeBarang),
             jam_update: getCurrentTimestamp()
           };
           
@@ -3304,7 +3304,7 @@
           sumber_perolehan: document.getElementById('invSumber').value,
           keterangan: document.getElementById('invKeterangan').value || '-',
           gambar_url: gambarUrl,
-          qr_code_url: window.location.origin + '/info.html?item=' + encodeURIComponent(kodeBarang),
+          qr_code_url: 'info.html?item=' + encodeURIComponent(kodeBarang),
           source_ppab: '-',
           jam_update: getCurrentTimestamp()
         });
@@ -3527,7 +3527,7 @@
       document.getElementById('invDetailTitle').textContent = item.nama_barang;
       
       // QR Code content: selalu pointing ke info.html
-      const qrUrl = window.location.origin + '/info.html?item=' + encodeURIComponent(item.kode_barang);
+      const qrUrl = 'info.html?item=' + encodeURIComponent(item.kode_barang);
       
       const content = document.getElementById('invDetailContent');
       content.innerHTML = `
