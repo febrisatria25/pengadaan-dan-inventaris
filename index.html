@@ -1093,6 +1093,8 @@
     const STORAGE_KEY = 'ppab_monitoring_portal_v1';
     const PIN_STORAGE_KEY = 'ppab_admin_pin_secret';
     const SESSION_KEY = 'ppab_admin_session_active';
+    const SESSION_TIME_KEY = 'ppab_admin_session_time';
+    const SESSION_TIMEOUT = 3600000;
     const RENCANA_STORAGE_KEY = 'ppab_rencana_anggaran_v15';
     const DEFAULT_PIN = 'admin2026';
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyCj6vWfqiV_VsPVvWv6JGzaTe9MahdZDnx2ZuClqDXcjF4VbyGznMYLgSgxNFE-aqd2w/exec";
@@ -1124,7 +1126,16 @@
     window.addEventListener('DOMContentLoaded', () => {
       try { if (window.ChartDataLabels) Chart.register(window.ChartDataLabels); } catch(e) {}
       
-      if (localStorage.getItem(SESSION_KEY) === 'true') { isAdmin = true; }
+      if (localStorage.getItem(SESSION_KEY) === 'true') {
+        const loginTime = parseInt(localStorage.getItem(SESSION_TIME_KEY)) || 0;
+        if (Date.now() - loginTime > SESSION_TIMEOUT) {
+          localStorage.removeItem(SESSION_KEY);
+          localStorage.removeItem(SESSION_TIME_KEY);
+          isAdmin = false;
+        } else {
+          isAdmin = true;
+        }
+      }
 
       initTahunAnggaran(); 
       loadDatabase();
@@ -1355,6 +1366,7 @@
       if (enteredPin === getStoredPin() || enteredPin === 'admin2026') {
         isAdmin = true; 
         localStorage.setItem(SESSION_KEY, 'true');
+        localStorage.setItem(SESSION_TIME_KEY, Date.now().toString());
         closeAuthModal(); 
         updateAuthUI(); 
         refreshAll(false); 
@@ -1369,6 +1381,7 @@
       if (confirm("Apakah Anda ingin keluar dari Mode Admin?")) {
         isAdmin = false; 
         localStorage.removeItem(SESSION_KEY);
+        localStorage.removeItem(SESSION_TIME_KEY);
         updateAuthUI(); 
         refreshAll(false); 
         showToast("Anda telah keluar dari Mode Admin.");
@@ -3526,8 +3539,8 @@
       currentInvDetailId = id;
       document.getElementById('invDetailTitle').textContent = item.nama_barang;
       
-      // QR Code content: selalu pointing ke info.html
-      const qrUrl = 'info.html?item=' + encodeURIComponent(item.kode_barang);
+      // QR Code content: prioritas qr_info_url → gambar_url → info.html fallback
+      const qrUrl = item.qr_info_url || item.gambar_url || ('info.html?item=' + encodeURIComponent(item.kode_barang));
       
       const content = document.getElementById('invDetailContent');
       content.innerHTML = `
