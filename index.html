@@ -2540,13 +2540,14 @@
 
     function openEditModal(no) {
       if (!isAdmin) return;
-      const item = database.find(d => d.no === no);
+      const noNum = parseInt(no) || no;
+      const item = database.find(d => parseInt(d.no) === noNum || d.no === no);
       if (!item) return;
 
-      currentEditNo = no;
+      currentEditNo = noNum;
       temporaryEditFiles = item.files ? JSON.parse(JSON.stringify(item.files)) : [];
 
-      const rawItem = rawDatabase.find(d => d.no === no);
+      const rawItem = rawDatabase.find(d => parseInt(d.no) === noNum || d.no === no);
       if (rawItem) rawItem._prevStatus = rawItem.status || 'Belum Proses';
 
       document.getElementById('editItemNo').value = item.no;
@@ -2583,8 +2584,9 @@
     function saveEditedPpab(e) {
       e.preventDefault();
       if (!isAdmin) return;
-      const no = parseInt(document.getElementById('editItemNo').value);
-      const itemIndex = rawDatabase.findIndex(d => d.no === no);
+      const noVal = document.getElementById('editItemNo').value;
+      const no = parseInt(noVal) || noVal;
+      const itemIndex = rawDatabase.findIndex(d => parseInt(d.no) === no || d.no === noVal);
       if (itemIndex === -1) return;
 
       const cards = document.querySelectorAll('.item-row-card');
@@ -2635,7 +2637,8 @@
     function deleteCurrentEditItem() {
       if (!currentEditNo || !isAdmin) return;
       if (confirm(`Apakah Anda yakin ingin menghapus paket #${currentEditNo} beserta seluruh lampiran filenya?`)) {
-        const item = rawDatabase.find(d => d.no === currentEditNo);
+        const editNoNum = parseInt(currentEditNo) || currentEditNo;
+        const item = rawDatabase.find(d => parseInt(d.no) === editNoNum || d.no === currentEditNo);
         
         if (item && item.no_ppab && item.no_ppab !== '-') {
            const delYear = extractYearFromDate(item.tanggal);
@@ -2646,13 +2649,14 @@
            });
         }
         
-        rawDatabase = rawDatabase.filter(d => d.no !== currentEditNo);
+        rawDatabase = rawDatabase.filter(d => parseInt(d.no) !== editNoNum && d.no !== currentEditNo);
         saveDatabase(); closeEditModal(); showToast(`Paket #${currentEditNo} telah dihapus.`, true);
       }
     }
 
     function viewDetail(no) {
-      const item = database.find(d => d.no === no);
+      const noNum = parseInt(no) || no;
+      const item = database.find(d => parseInt(d.no) === noNum || d.no === no);
       if (!item) return;
 
       document.getElementById('modalPpabNo').innerText = item.no_ppab;
