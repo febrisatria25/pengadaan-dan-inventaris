@@ -1350,9 +1350,19 @@
            try { d.items_breakdown = JSON.parse(d.items_breakdown); } catch(e) {}
            if (!Array.isArray(d.items_breakdown)) d.items_breakdown = [];
          }
-         if (!d.items_breakdown && d.items_breakdow) {
-           try { d.items_breakdown = JSON.parse(d.items_breakdow); } catch(e) {}
+         if (d.items_breakdown.length > 0 && typeof d.items_breakdown[0] === 'string') {
+           try { d.items_breakdown = JSON.parse(d.items_breakdown[0]); } catch(e) {}
            if (!Array.isArray(d.items_breakdown)) d.items_breakdown = [];
+         }
+         d.items_breakdown = d.items_breakdown.map(item => ({
+           name: item.name || item.nama || item.nama_barang || 'Barang',
+           qty_order: parseInt(item.qty_order) || 0,
+           qty_received: parseInt(item.qty_received) || 0
+         }));
+         
+         if (!Array.isArray(d.files)) {
+           try { d.files = JSON.parse(d.files); } catch(e) {}
+           if (!Array.isArray(d.files)) d.files = [];
          }
          
          d.nilai = parseFloat(d.nilai) || 0;
@@ -1484,7 +1494,7 @@
       if (isAdmin) {
         btnTopAdd.classList.remove('hidden'); btnTopAdd.classList.add('inline-flex');
         btnTopLogout.classList.remove('hidden'); btnTopLogout.classList.add('inline-flex');
-        btnTopAddDeliveryWrap.classList.remove('hidden'); btnTopAddDeliveryWrap.classList.add('inline-flex');
+        btnTopAddDeliveryWrap.classList.add('hidden'); btnTopAddDeliveryWrap.classList.remove('inline-flex');
         btnMasterAdd.classList.remove('hidden'); btnMasterAdd.classList.add('flex');
         adminSessionBox.classList.remove('hidden');
       } else {
@@ -2539,21 +2549,18 @@
     let currentEditNo = null;
 
     function openEditModal(no) {
-      console.log('[DEBUG] openEditModal called', { no, type: typeof no, isAdmin });
       if (!isAdmin) return;
-      const noNum = parseInt(no) || no;
-      const item = database.find(d => parseInt(d.no) === noNum || d.no === no);
-      console.log('[DEBUG] noNum:', noNum, 'item found:', !!item, 'database.length:', database.length);
+      const noNum = parseInt(no) || Number(no) || 0;
+      const item = database.find(d => Number(d.no) === noNum || String(d.no) === String(no));
       if (!item) return;
 
       currentEditNo = noNum;
-      console.log('[DEBUG] currentEditNo set to:', currentEditNo, typeof currentEditNo);
       temporaryEditFiles = item.files ? JSON.parse(JSON.stringify(item.files)) : [];
 
-      const rawItem = rawDatabase.find(d => parseInt(d.no) === noNum || d.no === no);
+      const rawItem = rawDatabase.find(d => Number(d.no) === noNum || String(d.no) === String(no));
       if (rawItem) rawItem._prevStatus = rawItem.status || 'Belum Proses';
 
-      document.getElementById('editItemNo').value = item.no;
+      document.getElementById('editItemNo').value = Number(item.no);
       
       const tglRaw = item.tanggal ? item.tanggal.toString().replace(/^[0-9]+\s+/, '').trim() : '';
       document.getElementById('editTanggal').value = tglRaw !== '-' ? tglRaw : '';
@@ -2588,10 +2595,9 @@
       e.preventDefault();
       if (!isAdmin) return;
       const noVal = document.getElementById('editItemNo').value;
-      const no = parseInt(noVal) || noVal;
-      const itemIndex = rawDatabase.findIndex(d => parseInt(d.no) === no || d.no === noVal);
-      console.log('[DEBUG] saveEditedPpab', { noVal, no, itemIndex, rawDatabaseLength: rawDatabase.length });
-      if (itemIndex === -1) { console.log('[DEBUG] BLOCKED: item not found in rawDatabase'); return; }
+      const no = parseInt(noVal) || Number(noVal) || 0;
+      const itemIndex = rawDatabase.findIndex(d => Number(d.no) === no || String(d.no) === String(noVal));
+      if (itemIndex === -1) return;
 
       const cards = document.querySelectorAll('.item-row-card');
       const itemsList = []; let totalOrder = 0; let totalReceived = 0;
@@ -2639,13 +2645,10 @@
     }
 
     function deleteCurrentEditItem() {
-      console.log('[DEBUG] deleteCurrentEditItem called', { currentEditNo, isAdmin, typeofCurrentEditNo: typeof currentEditNo });
-      if (!currentEditNo || !isAdmin) { console.log('[DEBUG] BLOCKED: currentEditNo or isAdmin falsy'); return; }
+      if (!currentEditNo || !isAdmin) return;
       if (confirm(`Apakah Anda yakin ingin menghapus paket #${currentEditNo} beserta seluruh lampiran filenya?`)) {
-        const editNoNum = parseInt(currentEditNo) || currentEditNo;
-        console.log('[DEBUG] editNoNum:', editNoNum, 'rawDatabase.length:', rawDatabase.length);
-        const item = rawDatabase.find(d => parseInt(d.no) === editNoNum || d.no === currentEditNo);
-        console.log('[DEBUG] Found item:', item);
+        const editNoNum = Number(currentEditNo);
+        const item = rawDatabase.find(d => Number(d.no) === editNoNum);
         
         if (item && item.no_ppab && item.no_ppab !== '-') {
            const delYear = extractYearFromDate(item.tanggal);
@@ -2656,20 +2659,14 @@
            });
         }
         
-        const beforeCount = rawDatabase.length;
-        rawDatabase = rawDatabase.filter(d => parseInt(d.no) !== editNoNum && d.no !== currentEditNo);
-        console.log('[DEBUG] After filter: before=' + beforeCount + ' after=' + rawDatabase.length);
+        rawDatabase = rawDatabase.filter(d => Number(d.no) !== editNoNum);
         saveDatabase(); closeEditModal(); showToast(`Paket #${currentEditNo} telah dihapus.`, true);
-      } else {
-        console.log('[DEBUG] User cancelled confirm dialog');
       }
     }
 
     function viewDetail(no) {
-      const noNum = parseInt(no) || no;
-      console.log('[DEBUG] viewDetail called', { no, noNum, type: typeof no });
-      const item = database.find(d => parseInt(d.no) === noNum || d.no === no);
-      console.log('[DEBUG] viewDetail item found:', !!item);
+      const noNum = parseInt(no) || Number(no) || 0;
+      const item = database.find(d => Number(d.no) === noNum || String(d.no) === String(no));
       if (!item) return;
 
       document.getElementById('modalPpabNo').innerText = item.no_ppab;
@@ -2777,7 +2774,7 @@
       const pct = totalOrder > 0 ? Math.min(100, Math.round((totalReceived / totalOrder) * 100)) : 0;
       let statusCalc = pct === 100 ? 'Selesai' : (pct > 0 ? 'Progres' : 'Belum Proses');
 
-      const nextNo = rawDatabase.length > 0 ? Math.max(...rawDatabase.map(d => parseInt(d.no)||0)) + 1 : 1;
+         const nextNo = rawDatabase.length > 0 ? Math.max(...rawDatabase.map(d => Number(d.no)||0)) + 1 : 1;
       const stAnggaran = document.getElementById('formStAnggaran').value || 'Opex';
       let mataAnggaran;
       if (stAnggaran === 'Capex') {
