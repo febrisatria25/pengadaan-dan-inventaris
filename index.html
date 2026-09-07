@@ -2539,12 +2539,15 @@
     let currentEditNo = null;
 
     function openEditModal(no) {
+      console.log('[DEBUG] openEditModal called', { no, type: typeof no, isAdmin });
       if (!isAdmin) return;
       const noNum = parseInt(no) || no;
       const item = database.find(d => parseInt(d.no) === noNum || d.no === no);
+      console.log('[DEBUG] noNum:', noNum, 'item found:', !!item, 'database.length:', database.length);
       if (!item) return;
 
       currentEditNo = noNum;
+      console.log('[DEBUG] currentEditNo set to:', currentEditNo, typeof currentEditNo);
       temporaryEditFiles = item.files ? JSON.parse(JSON.stringify(item.files)) : [];
 
       const rawItem = rawDatabase.find(d => parseInt(d.no) === noNum || d.no === no);
@@ -2587,7 +2590,8 @@
       const noVal = document.getElementById('editItemNo').value;
       const no = parseInt(noVal) || noVal;
       const itemIndex = rawDatabase.findIndex(d => parseInt(d.no) === no || d.no === noVal);
-      if (itemIndex === -1) return;
+      console.log('[DEBUG] saveEditedPpab', { noVal, no, itemIndex, rawDatabaseLength: rawDatabase.length });
+      if (itemIndex === -1) { console.log('[DEBUG] BLOCKED: item not found in rawDatabase'); return; }
 
       const cards = document.querySelectorAll('.item-row-card');
       const itemsList = []; let totalOrder = 0; let totalReceived = 0;
@@ -2635,10 +2639,13 @@
     }
 
     function deleteCurrentEditItem() {
-      if (!currentEditNo || !isAdmin) return;
+      console.log('[DEBUG] deleteCurrentEditItem called', { currentEditNo, isAdmin, typeofCurrentEditNo: typeof currentEditNo });
+      if (!currentEditNo || !isAdmin) { console.log('[DEBUG] BLOCKED: currentEditNo or isAdmin falsy'); return; }
       if (confirm(`Apakah Anda yakin ingin menghapus paket #${currentEditNo} beserta seluruh lampiran filenya?`)) {
         const editNoNum = parseInt(currentEditNo) || currentEditNo;
+        console.log('[DEBUG] editNoNum:', editNoNum, 'rawDatabase.length:', rawDatabase.length);
         const item = rawDatabase.find(d => parseInt(d.no) === editNoNum || d.no === currentEditNo);
+        console.log('[DEBUG] Found item:', item);
         
         if (item && item.no_ppab && item.no_ppab !== '-') {
            const delYear = extractYearFromDate(item.tanggal);
@@ -2649,14 +2656,20 @@
            });
         }
         
+        const beforeCount = rawDatabase.length;
         rawDatabase = rawDatabase.filter(d => parseInt(d.no) !== editNoNum && d.no !== currentEditNo);
+        console.log('[DEBUG] After filter: before=' + beforeCount + ' after=' + rawDatabase.length);
         saveDatabase(); closeEditModal(); showToast(`Paket #${currentEditNo} telah dihapus.`, true);
+      } else {
+        console.log('[DEBUG] User cancelled confirm dialog');
       }
     }
 
     function viewDetail(no) {
       const noNum = parseInt(no) || no;
+      console.log('[DEBUG] viewDetail called', { no, noNum, type: typeof no });
       const item = database.find(d => parseInt(d.no) === noNum || d.no === no);
+      console.log('[DEBUG] viewDetail item found:', !!item);
       if (!item) return;
 
       document.getElementById('modalPpabNo').innerText = item.no_ppab;
