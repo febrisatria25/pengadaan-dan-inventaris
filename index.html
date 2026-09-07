@@ -132,6 +132,15 @@
       <div class="flex items-center gap-2.5">
         <button id="btnTopAdd" onclick="openAddModal()" class="hidden items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-3.5 py-2 rounded-xl text-xs font-semibold shadow-sm transition"><i data-lucide="plus-circle" class="w-4 h-4"></i><span class="hidden sm:inline">Tambah PPAB Baru</span></button>
         <button id="btnTopAddInv" onclick="openAddInventoryModal()" class="hidden items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs font-semibold shadow-sm transition"><i data-lucide="package-plus" class="w-4 h-4"></i><span class="hidden sm:inline">Tambah Barang</span></button>
+        <div id="btnTopAddDeliveryWrap" class="hidden relative">
+          <button onclick="toggleDeliveryDropdown()" class="inline-flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white px-3.5 py-2 rounded-xl text-xs font-semibold shadow-sm transition"><i data-lucide="truck" class="w-4 h-4"></i><span class="hidden sm:inline">Tambah Pengiriman</span></button>
+          <div id="deliveryDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-xl z-50 py-1">
+            <button onclick="openAddDeliveryModal('Buku Laporan'); toggleDeliveryDropdown();" class="w-full text-left px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50">Buku Laporan</button>
+            <button onclick="openAddDeliveryModal('AWS'); toggleDeliveryDropdown();" class="w-full text-left px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50">AWS</button>
+            <button onclick="openAddDeliveryModal('Ombrometer'); toggleDeliveryDropdown();" class="w-full text-left px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50">Ombrometer</button>
+            <button onclick="openAddDeliveryModal('Souvenir'); toggleDeliveryDropdown();" class="w-full text-left px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50">Souvenir</button>
+          </div>
+        </div>
         <button id="btnTopLogout" onclick="logoutAdmin()" class="hidden items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100"><i data-lucide="log-out" class="w-3.5 h-3.5"></i><span>Logout Admin</span></button>
         <div class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-slate-200 px-3.5 py-1.5 rounded-xl transition shadow-sm"><i data-lucide="calendar" class="w-4 h-4 text-slate-500"></i><select id="tahunAnggaranFilter" onchange="filterDataByYear(true)" class="bg-transparent text-xs font-bold text-slate-700 focus:outline-none cursor-pointer"></select></div>
       </div>
@@ -763,7 +772,7 @@
             <div><span class="text-[11px] font-bold uppercase tracking-wider text-brand-700 block">Kalkulasi Otomatis Progres Fisik</span><p class="text-xs text-slate-600 font-medium" id="editItemsSummaryCount">0 dari 0 Item Masuk Lengkap</p></div>
             <div class="flex items-center gap-3">
               <div class="text-right"><span class="text-[10px] text-slate-400 font-bold block">Total Serapan Fisik</span><span class="text-base font-black text-brand-700" id="editProgresLabel">0%</span></div>
-              <select id="editStatus" required class="px-3 py-1.5 bg-white border border-slate-300 rounded-xl font-bold text-slate-800 text-xs focus:ring-2 focus:ring-brand-500 shadow-sm"><option value="Belum Proses">🔴 Belum Proses (Pending)</option><option value="Progres">🟡 Dalam Progres</option><option value="Selesai">🟢 Selesai (100%)</option></select>
+              <select id="editStatus" required class="px-3 py-1.5 bg-white border border-slate-300 rounded-xl font-bold text-slate-800 text-xs focus:ring-2 focus:ring-brand-500 shadow-sm"><option value="Belum Proses">🔴 Belum Proses (Pending)</option><option value="Progres">🟡 Dalam Progres</option><option value="Selesai">🟢 Selesai (100%)</option><option value="Dibatalkan">⚫ Dibatalkan</option></select>
             </div>
           </div>
           <div class="w-full bg-indigo-200 rounded-full h-2.5 overflow-hidden"><div id="editProgresBarFill" class="bg-brand-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div></div>
@@ -1097,7 +1106,7 @@
     const SESSION_TIMEOUT = 3600000;
     const RENCANA_STORAGE_KEY = 'ppab_rencana_anggaran_v15';
     const DEFAULT_PIN = 'admin2026';
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyCj6vWfqiV_VsPVvWv6JGzaTe9MahdZDnx2ZuClqDXcjF4VbyGznMYLgSgxNFE-aqd2w/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwQ8DwMZbDM5pVUW5YDhDgkb-rvZMtKOE70hOscVB08m4hwGJT2Fz9feppJA9ChmCAZgQ/exec";
 
     let rawDatabase = [];
     let database = [];
@@ -1140,7 +1149,7 @@
       initTahunAnggaran(); 
       loadDatabase();
       loadPin();
-      loadInventoryData();
+      loadInventoryFromCloud();
       window.addEventListener('keydown', (e) => { if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') { e.preventDefault(); if (!isAdmin) openAuthModal(); } });
       setTimeout(() => { try { lucide.createIcons(); } catch(e){} }, 100);
     });
@@ -1158,6 +1167,20 @@
       const now = new Date();
       const pad = (n) => String(n).padStart(2, '0');
       return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    }
+
+    function formatDateOnly(val) {
+      if (!val) return '-';
+      const s = String(val).trim();
+      const match = s.match(/^(\d{4}-\d{2}-\d{2})/);
+      return match ? match[1] : s.split('T')[0] || s;
+    }
+
+    function extractYearFromDate(val) {
+      if (!val) return new Date().getFullYear();
+      const s = String(val).trim();
+      const match = s.match(/^(\d{4})/);
+      return match ? match[1] : String(new Date().getFullYear());
     }
 
     function showToast(msg, isError = false) {
@@ -1320,13 +1343,38 @@
       const selectedYear = document.getElementById('tahunAnggaranFilter').value;
       
       rawDatabase = rawDatabase.map(d => {
-         if(!d.status) {
+         // Normalisasi tipe data dari Google Sheets
+         d.no = parseInt(d.no) || 0;
+         
+         if (!Array.isArray(d.items_breakdown)) {
+           try { d.items_breakdown = JSON.parse(d.items_breakdown); } catch(e) {}
+           if (!Array.isArray(d.items_breakdown)) d.items_breakdown = [];
+         }
+         if (!d.items_breakdown && d.items_breakdow) {
+           try { d.items_breakdown = JSON.parse(d.items_breakdow); } catch(e) {}
+           if (!Array.isArray(d.items_breakdown)) d.items_breakdown = [];
+         }
+         
+         d.nilai = parseFloat(d.nilai) || 0;
+         d.jumlah = parseFloat(d.jumlah) || 0;
+         d.progres = parseFloat(d.progres) || 0;
+         d.dpp = parseFloat(d.dpp) || 0;
+         d.ppn = parseFloat(d.ppn) || 0;
+         d.jml_item = parseInt(d.jml_item) || 0;
+         d.brg_msk = parseInt(d.brg_msk) || 0;
+         
+         if (!d.no_ppab) d.no_ppab = '-';
+         if (!d.perihal) d.perihal = '-';
+         if (!d.vendor) d.vendor = '-';
+         if (!d.mata_anggaran) d.mata_anggaran = '-';
+         if (!d.tanggal) d.tanggal = '-';
+         if (!d.tanggal_selesai) d.tanggal_selesai = '-';
+         if (!d.st_anggaran) d.st_anggaran = 'Opex';
+         
+         if (!d.status) {
              if (d.progres === 100) d.status = 'Selesai';
              else if (d.progres > 0) d.status = 'Progres';
              else d.status = 'Belum Proses';
-         }
-         if(!d.items_breakdown && d.items_breakdow) {
-             d.items_breakdown = d.items_breakdow;
          }
          return d;
       });
@@ -1388,6 +1436,16 @@
       }
     }
 
+    function toggleDeliveryDropdown() {
+      const dd = document.getElementById('deliveryDropdown');
+      dd.classList.toggle('hidden');
+    }
+    document.addEventListener('click', function(e) {
+      const wrap = document.getElementById('btnTopAddDeliveryWrap');
+      const dd = document.getElementById('deliveryDropdown');
+      if (wrap && dd && !wrap.contains(e.target)) { dd.classList.add('hidden'); }
+    });
+
     function applyAdminLockToRencana() {
       const year = document.getElementById('tahunAnggaranFilter').value;
       const isAll = (year === 'ALL');
@@ -1420,16 +1478,19 @@
       const btnTopAdd = document.getElementById('btnTopAdd');
       const btnTopLogout = document.getElementById('btnTopLogout');
       const btnMasterAdd = document.getElementById('btnMasterAdd');
+      const btnTopAddDeliveryWrap = document.getElementById('btnTopAddDeliveryWrap');
       const adminSessionBox = document.getElementById('adminSessionBox');
 
       if (isAdmin) {
         btnTopAdd.classList.remove('hidden'); btnTopAdd.classList.add('inline-flex');
         btnTopLogout.classList.remove('hidden'); btnTopLogout.classList.add('inline-flex');
+        btnTopAddDeliveryWrap.classList.remove('hidden'); btnTopAddDeliveryWrap.classList.add('inline-flex');
         btnMasterAdd.classList.remove('hidden'); btnMasterAdd.classList.add('flex');
         adminSessionBox.classList.remove('hidden');
       } else {
         btnTopAdd.classList.add('hidden'); btnTopAdd.classList.remove('inline-flex');
         btnTopLogout.classList.add('hidden'); btnTopLogout.classList.remove('inline-flex');
+        btnTopAddDeliveryWrap.classList.add('hidden'); btnTopAddDeliveryWrap.classList.remove('inline-flex');
         btnMasterAdd.classList.add('hidden'); btnMasterAdd.classList.remove('flex');
         adminSessionBox.classList.add('hidden');
       }
@@ -1510,6 +1571,7 @@
     function getStatusBadge(status) {
       if (status === 'Selesai') return `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Selesai</span>`;
       if (status === 'Progres') return `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Progres</span>`;
+      if (status === 'Dibatalkan') return `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 border border-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Dibatalkan</span>`;
       return `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Belum Proses</span>`;
     }
 
@@ -1576,7 +1638,7 @@
         row.className = 'hover:bg-slate-50 transition';
         row.innerHTML = `
           <td class="py-3 px-4 text-center font-bold text-slate-400">${displayNo}</td>
-          <td class="py-3 px-4 text-slate-800 whitespace-nowrap"><div class="font-bold text-slate-900">${r.no_ppab}</div><div class="text-[10px] text-slate-400 font-medium">${r.tanggal}</div></td>
+          <td class="py-3 px-4 text-slate-800 whitespace-nowrap"><div class="font-bold text-slate-900">${r.no_ppab}</div><div class="text-[10px] text-slate-400 font-medium">${formatDateOnly(r.tanggal)}</div></td>
           <td class="py-3 px-4 text-center whitespace-nowrap">${renderTypeBadge(r.st_anggaran)}</td>
           <td class="py-3 px-4 text-slate-800 font-semibold max-w-[140px] truncate" title="${r.perihal}"><div>${r.perihal}</div></td>
           <td class="py-3 px-4 max-w-[220px]">
@@ -1717,7 +1779,7 @@
       else {
         filteredData.forEach(r => {
           const row = document.createElement('tr'); row.className = 'hover:bg-slate-50 transition border-b border-slate-50';
-          row.innerHTML = `<td class="py-3 px-4 whitespace-nowrap"><div class="font-bold text-slate-900">${r.no_ppab}</div><div class="text-[10px] text-slate-500">Mulai: <span class="font-semibold">${r.tanggal}</span></div><div class="text-[10px] text-slate-500 mt-0.5">Target/Selesai: <span class="font-bold text-emerald-600">${r.tanggal_selesai && r.tanggal_selesai !== '-' ? r.tanggal_selesai : 'Belum Selesai'}</span></div></td><td class="py-3 px-4 max-w-[180px] truncate font-semibold text-slate-700" title="${r.perihal}">${r.perihal}</td><td class="py-3 px-4 text-[11px]">${r.mata_anggaran}</td><td class="py-3 px-4 text-right font-black text-brand-700 whitespace-nowrap">${formatIDR(r.jumlah)}</td><td class="py-3 px-4 text-center">${getStatusBadge(r.status)}</td><td class="py-3 px-4 text-center"><button onclick="closeVendorDetailModal(); viewDetail(${r.no})" class="inline-flex items-center text-slate-600 hover:text-white font-bold px-2.5 py-1.5 bg-slate-100 hover:bg-slate-900 rounded-lg transition text-[10px] uppercase tracking-wider">Rincian</button></td>`;
+          row.innerHTML = `<td class="py-3 px-4 whitespace-nowrap"><div class="font-bold text-slate-900">${r.no_ppab}</div><div class="text-[10px] text-slate-500">Mulai: <span class="font-semibold">${formatDateOnly(r.tanggal)}</span></div><div class="text-[10px] text-slate-500 mt-0.5">Target/Selesai: <span class="font-bold text-emerald-600">${r.tanggal_selesai && r.tanggal_selesai !== '-' ? formatDateOnly(r.tanggal_selesai) : 'Belum Selesai'}</span></div></td><td class="py-3 px-4 max-w-[180px] truncate font-semibold text-slate-700" title="${r.perihal}">${r.perihal}</td><td class="py-3 px-4 text-[11px]">${r.mata_anggaran}</td><td class="py-3 px-4 text-right font-black text-brand-700 whitespace-nowrap">${formatIDR(r.jumlah)}</td><td class="py-3 px-4 text-center">${getStatusBadge(r.status)}</td><td class="py-3 px-4 text-center"><button onclick="closeVendorDetailModal(); viewDetail(${r.no})" class="inline-flex items-center text-slate-600 hover:text-white font-bold px-2.5 py-1.5 bg-slate-100 hover:bg-slate-900 rounded-lg transition text-[10px] uppercase tracking-wider">Rincian</button></td>`;
           tbody.appendChild(row);
         });
       }
@@ -1736,7 +1798,7 @@
       else {
         filteredData.forEach(r => {
           const row = document.createElement('tr'); row.className = 'hover:bg-slate-50 transition border-b border-slate-50';
-          row.innerHTML = `<td class="py-3 px-4 whitespace-nowrap"><div class="font-bold text-slate-900">${r.no_ppab}</div><div class="text-[10px] text-slate-400">${r.tanggal}</div></td><td class="py-3 px-4 max-w-[180px] truncate font-semibold text-slate-700" title="${r.perihal}">${r.perihal}</td><td class="py-3 px-4">${r.vendor !== '-' ? r.vendor : '<span class="text-slate-400 italic text-[11px]">Belum Ditunjuk</span>'}</td><td class="py-3 px-4 text-right font-black text-brand-700 whitespace-nowrap">${formatIDR(r.jumlah)}</td><td class="py-3 px-4 text-center">${getStatusBadge(r.status)}</td><td class="py-3 px-4 text-center"><button onclick="closeMaDetailModal(); viewDetail(${r.no})" class="inline-flex items-center text-slate-600 hover:text-white font-bold px-2.5 py-1.5 bg-slate-100 hover:bg-slate-900 rounded-lg transition text-[10px] uppercase tracking-wider">Rincian</button></td>`;
+          row.innerHTML = `<td class="py-3 px-4 whitespace-nowrap"><div class="font-bold text-slate-900">${r.no_ppab}</div><div class="text-[10px] text-slate-400">${formatDateOnly(r.tanggal)}</div></td><td class="py-3 px-4 max-w-[180px] truncate font-semibold text-slate-700" title="${r.perihal}">${r.perihal}</td><td class="py-3 px-4">${r.vendor !== '-' ? r.vendor : '<span class="text-slate-400 italic text-[11px]">Belum Ditunjuk</span>'}</td><td class="py-3 px-4 text-right font-black text-brand-700 whitespace-nowrap">${formatIDR(r.jumlah)}</td><td class="py-3 px-4 text-center">${getStatusBadge(r.status)}</td><td class="py-3 px-4 text-center"><button onclick="closeMaDetailModal(); viewDetail(${r.no})" class="inline-flex items-center text-slate-600 hover:text-white font-bold px-2.5 py-1.5 bg-slate-100 hover:bg-slate-900 rounded-lg transition text-[10px] uppercase tracking-wider">Rincian</button></td>`;
           tbody.appendChild(row);
         });
       }
@@ -2308,7 +2370,9 @@
       document.getElementById('editProgresBarFill').style.width = `${pct}%`;
       document.getElementById('editItemsSummaryCount').innerText = `${completeCount} dari ${cards.length} Jenis Barang Lengkap Diterima (${totalReceived}/${totalOrder} Unit)`;
       const statusSelect = document.getElementById('editStatus');
-      if (pct === 100) statusSelect.value = 'Selesai'; else if (pct > 0) statusSelect.value = 'Progres'; else statusSelect.value = 'Belum Proses';
+      if (statusSelect.value !== 'Dibatalkan') {
+        if (pct === 100) statusSelect.value = 'Selesai'; else if (pct > 0) statusSelect.value = 'Progres'; else statusSelect.value = 'Belum Proses';
+      }
     }
 
     function renderEditFilesList() {
@@ -2335,7 +2399,9 @@
       const reader = new FileReader();
       reader.onload = async function(evt) {
         const base64Data = evt.target.result.split(',')[1];
-        const folderPath = "Pengadaan/" + noPpabVal.replace(/\//g, '_');
+        const editTanggal = document.getElementById('editTanggal').value || '';
+        const ppabYear = extractYearFromDate(editTanggal);
+        const folderPath = "Pengadaan/" + ppabYear + "/" + noPpabVal.replace(/\//g, '_');
         const payload = { action: "uploadFile", filename: file.name, mimeType: file.type || 'application/octet-stream', base64: base64Data, ppabFolder: folderPath };
         try {
           const res = await fetch(WEB_APP_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
@@ -2351,7 +2417,7 @@
                     saveDatabase(); 
                 }
             }
-            showToast("File berhasil diunggah ke Pengadaan/" + noPpabVal.replace(/\//g, '_'));
+            showToast("File berhasil diunggah ke Pengadaan/" + ppabYear + "/" + noPpabVal.replace(/\//g, '_'));
           } else { showToast("Gagal upload: " + (data.message || "Unknown error"), true); }
         } catch (err) { console.error(err); showToast("Koneksi error saat mengunggah file.", true); }
         
@@ -2426,14 +2492,16 @@
       const reader = new FileReader();
       reader.onload = async function(evt) {
         const base64Data = evt.target.result.split(',')[1];
-        const folderPath = "Pengadaan/" + noPpabVal.replace(/\//g, '_');
+        const formTgl = document.getElementById('formTgl').value || '';
+        const ppabYear = extractYearFromDate(formTgl);
+        const folderPath = "Pengadaan/" + ppabYear + "/" + noPpabVal.replace(/\//g, '_');
         const payload = { action: "uploadFile", filename: file.name, mimeType: file.type || 'application/octet-stream', base64: base64Data, ppabFolder: folderPath };
         try {
           const res = await fetch(WEB_APP_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
           const data = await res.json();
           if (data.status === "success") {
             temporaryAddFiles.push({ name: file.name, type: 'link', url: data.url, id: data.id, date: new Date().toISOString().split('T')[0], size: (file.size / 1024).toFixed(0) + ' KB' });
-            renderAddFilesList(); showToast("File berhasil diunggah ke Pengadaan/" + noPpabVal.replace(/\//g, '_'));
+            renderAddFilesList(); showToast("File berhasil diunggah ke Pengadaan/" + ppabYear + "/" + noPpabVal.replace(/\//g, '_'));
           } else { showToast("Gagal upload: " + (data.message || "Unknown error"), true); }
         } catch (err) { console.error(err); showToast("Koneksi error saat mengunggah file.", true); }
         
@@ -2477,6 +2545,9 @@
 
       currentEditNo = no;
       temporaryEditFiles = item.files ? JSON.parse(JSON.stringify(item.files)) : [];
+
+      const rawItem = rawDatabase.find(d => d.no === no);
+      if (rawItem) rawItem._prevStatus = rawItem.status || 'Belum Proses';
 
       document.getElementById('editItemNo').value = item.no;
       
@@ -2555,6 +2626,9 @@
       if (document.getElementById('editStatus').value === 'Selesai') {
         autoTransferPPABToInventory(rawDatabase[itemIndex]);
       }
+      if (document.getElementById('editStatus').value === 'Dibatalkan' && rawDatabase[itemIndex]._prevStatus === 'Selesai') {
+        rollbackInventoryFromPPAB(rawDatabase[itemIndex]);
+      }
       showToast(`Paket #${no} dan berkas berhasil disimpan!`);
     }
 
@@ -2564,7 +2638,8 @@
         const item = rawDatabase.find(d => d.no === currentEditNo);
         
         if (item && item.no_ppab && item.no_ppab !== '-') {
-           const folderPath = "Pengadaan/" + item.no_ppab.replace(/\//g, '_');
+           const delYear = extractYearFromDate(item.tanggal);
+           const folderPath = "Pengadaan/" + delYear + "/" + item.no_ppab.replace(/\//g, '_');
            fetch(WEB_APP_URL, { 
              method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, 
              body: JSON.stringify({ action: "deleteFolderByPath", folderPath: folderPath }) 
@@ -2598,7 +2673,7 @@
       let filesListHtml = files.length === 0 ? `<div class="p-3 bg-slate-50 border border-dashed border-slate-200 rounded-xl text-center text-slate-400 text-xs">Belum ada berkas dokumen.</div>` : `<div class="space-y-2">${files.map((f, i) => `<div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-xl"><div class="flex items-center gap-2.5 overflow-hidden"><div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg shrink-0"><i data-lucide="${f.type === 'link' ? 'external-link' : 'file-text'}" class="w-4 h-4"></i></div><div class="overflow-hidden"><p class="font-bold text-slate-800 truncate text-xs">${f.name}</p><p class="text-[10px] text-slate-400">${f.size || 'File'} • ${f.date || item.tanggal}</p></div></div>${f.url ? `<a href="${f.url}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-xs font-semibold shrink-0 transition flex items-center gap-1 relative z-10"><i data-lucide="external-link" class="w-3.5 h-3.5"></i> Buka File</a>` : `<span class="px-2.5 py-1 bg-slate-200 text-slate-600 rounded-lg text-[10px] font-bold">Arsip</span>`}</div>`).join('')}</div>`;
 
       const dppDisplayVal = item.dpp !== undefined ? item.dpp : ((11 / 12) * item.nilai);
-      const tglRaw = item.tanggal ? item.tanggal.toString().replace(/^[0-9]+\s+/, '').trim() : '-';
+      const tglRaw = formatDateOnly(item.tanggal);
 
       const content = document.getElementById('modalDetailContent');
       content.innerHTML = `
@@ -2768,6 +2843,34 @@
       try { inventoryExpenditures = JSON.parse(localStorage.getItem(EXPEND_STORAGE_KEY)) || []; } catch(e) { inventoryExpenditures = []; }
       try { consumerDeliveries = JSON.parse(localStorage.getItem(DELIVERY_STORAGE_KEY)) || []; } catch(e) { consumerDeliveries = []; }
       checkLowStock();
+    }
+
+    async function loadInventoryFromCloud() {
+      try {
+        const cacheBuster = "?t=" + new Date().getTime();
+        const res = await fetch(WEB_APP_URL + cacheBuster);
+        const data = await res.json();
+        if (data.inventory && Array.isArray(data.inventory)) {
+          inventoryItems = data.inventory;
+          localStorage.setItem(INV_STORAGE_KEY, JSON.stringify(inventoryItems));
+        }
+        if (data.borrowing && Array.isArray(data.borrowing)) {
+          borrowingRecords = data.borrowing;
+          localStorage.setItem(BORROW_STORAGE_KEY, JSON.stringify(borrowingRecords));
+        }
+        if (data.expenditures && Array.isArray(data.expenditures)) {
+          inventoryExpenditures = data.expenditures;
+          localStorage.setItem(EXPEND_STORAGE_KEY, JSON.stringify(inventoryExpenditures));
+        }
+        if (data.deliveries && Array.isArray(data.deliveries)) {
+          consumerDeliveries = data.deliveries;
+          localStorage.setItem(DELIVERY_STORAGE_KEY, JSON.stringify(consumerDeliveries));
+        }
+        checkLowStock();
+      } catch(e) {
+        console.warn('Gagal load inventaris dari cloud, menggunakan localStorage:', e);
+        loadInventoryData();
+      }
     }
 
     // ======================================================================
@@ -2944,6 +3047,23 @@
         });
       });
       showToast(`${ppabItem.items_breakdown.length} item berhasil diimport ke Inventaris! Nilai perolehan: ${formatIDR(hargaPerItem)}/item`);
+    }
+
+    function rollbackInventoryFromPPAB(ppabItem) {
+      if (!ppabItem || !ppabItem.no_ppab) return;
+      const sourceLabel = 'PPAB - ' + (ppabItem.no_ppab || '');
+      const removed = [];
+      inventoryItems = inventoryItems.filter(item => {
+        if (item.source_ppab === ppabItem.no_ppab || (item.sumber_perolehan && item.sumber_perolehan.includes('PPAB') && item.source_ppab === ppabItem.no_ppab)) {
+          removed.push(item.nama_barang);
+          return false;
+        }
+        return true;
+      });
+      if (removed.length > 0) {
+        saveInventoryData();
+        showToast(`Rollback inventory: ${removed.length} item dihapus (${removed.join(', ')})`);
+      }
     }
 
     // ======================================================================
@@ -3180,13 +3300,15 @@
           if (!imgBase64 || !imgFilename) return null;
           try {
             const folderName = kodeBarang.replace(/\//g, '_');
+            const tglPerolehan = document.getElementById('invTglPerolehan').value || '';
+            const uploadYear = extractYearFromDate(tglPerolehan);
             showToast("Mengunggah gambar ke folder " + folderName + "...", false);
             const body = JSON.stringify({ 
               action: "uploadFile", 
               filename: imgFilename, 
               mimeType: imgMimeType, 
               base64: imgBase64, 
-              ppabFolder: "Inventaris/" + folderName 
+              ppabFolder: "Inventaris/" + uploadYear + "/" + folderName 
             });
             const res = await fetch(WEB_APP_URL, { 
               method: "POST", 
@@ -3349,8 +3471,9 @@
       // Hapus folder gambar dari Google Drive
       if (item.kode_barang) {
         const folderName = item.kode_barang.replace(/\//g, '_');
+        const invYear = extractYearFromDate(item.tanggal_perolehan);
         fetch(WEB_APP_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ action: "deleteFolderByPath", folderPath: "Inventaris/" + folderName }) });
+          body: JSON.stringify({ action: "deleteFolderByPath", folderPath: "Inventaris/" + invYear + "/" + folderName }) });
       }
       
       inventoryItems = inventoryItems.filter(i => i.id !== id);
@@ -3452,7 +3575,15 @@
                 img.onload = () => {
                   ctx.fillStyle = '#f8fafc';
                   ctx.fillRect(15, y + 5, 370, 120);
-                  ctx.drawImage(img, 25, y + 10, 350, 110);
+                  const boxW = 350, boxH = 110;
+                  const imgRatio = img.naturalWidth / img.naturalHeight;
+                  const boxRatio = boxW / boxH;
+                  let drawW, drawH;
+                  if (imgRatio > boxRatio) { drawW = boxW; drawH = boxW / imgRatio; }
+                  else { drawH = boxH; drawW = boxH * imgRatio; }
+                  const drawX = 25 + (boxW - drawW) / 2;
+                  const drawY = y + 10 + (boxH - drawH) / 2;
+                  ctx.drawImage(img, drawX, drawY, drawW, drawH);
                   resolve(canvas.toDataURL('image/jpeg', 0.8));
                 };
                 img.onerror = () => {
@@ -3511,7 +3642,7 @@
             base64: base64,
             mimeType: mimeType,
             filename: filename,
-            ppabFolder: 'Inventaris/' + item.kode_barang.replace(/\//g, '_')
+            ppabFolder: 'Inventaris/' + extractYearFromDate(item.tanggal_perolehan) + '/' + item.kode_barang.replace(/\//g, '_')
           })
         });
         
@@ -4456,6 +4587,17 @@
           btnTopAddInv.classList.remove('hidden'); btnTopAddInv.classList.add('inline-flex');
         } else {
           btnTopAddInv.classList.add('hidden'); btnTopAddInv.classList.remove('inline-flex');
+        }
+      }
+
+      // Sembunyikan/tampilkan tombol "Tambah Pengiriman" hanya di tab pengiriman
+      const btnTopAddDeliveryWrap = document.getElementById('btnTopAddDeliveryWrap');
+      if (btnTopAddDeliveryWrap && isAdmin) {
+        const deliveryTabs = ['kirim-bukulaporan', 'kirim-aws', 'kirim-ombrometer', 'kirim-souvenir'];
+        if (deliveryTabs.includes(tabId)) {
+          btnTopAddDeliveryWrap.classList.remove('hidden'); btnTopAddDeliveryWrap.classList.add('inline-flex');
+        } else {
+          btnTopAddDeliveryWrap.classList.add('hidden'); btnTopAddDeliveryWrap.classList.remove('inline-flex');
         }
       }
 
