@@ -2421,7 +2421,7 @@
             renderEditFilesList(); 
             
             if (currentEditNo) {
-                const itemIndex = rawDatabase.findIndex(d => d.no === currentEditNo);
+                const itemIndex = rawDatabase.findIndex(d => Number(d.no) === Number(currentEditNo));
                 if (itemIndex !== -1) {
                     rawDatabase[itemIndex].files = temporaryEditFiles;
                     saveDatabase(); 
@@ -2446,7 +2446,7 @@
       linkInput.value = '';
       
       if (currentEditNo) {
-          const itemIndex = rawDatabase.findIndex(d => d.no === currentEditNo);
+          const itemIndex = rawDatabase.findIndex(d => Number(d.no) === Number(currentEditNo));
           if (itemIndex !== -1) {
               rawDatabase[itemIndex].files = temporaryEditFiles;
               saveDatabase(); 
@@ -2470,7 +2470,7 @@
       renderEditFilesList(); 
       
       if (currentEditNo) {
-          const itemIndex = rawDatabase.findIndex(d => d.no === currentEditNo);
+          const itemIndex = rawDatabase.findIndex(d => Number(d.no) === Number(currentEditNo));
           if (itemIndex !== -1) {
               rawDatabase[itemIndex].files = temporaryEditFiles;
               saveDatabase(); 
@@ -2562,10 +2562,11 @@
 
       document.getElementById('editItemNo').value = Number(item.no);
       
-      const tglRaw = item.tanggal ? item.tanggal.toString().replace(/^[0-9]+\s+/, '').trim() : '';
-      document.getElementById('editTanggal').value = tglRaw !== '-' ? tglRaw : '';
+      const tglFormatted = formatDateOnly(item.tanggal);
+      document.getElementById('editTanggal').value = tglFormatted !== '-' ? tglFormatted : '';
       
-      document.getElementById('editTglSelesai').value = item.tanggal_selesai && item.tanggal_selesai !== '-' ? item.tanggal_selesai : '';
+      const tglSelesaiFormatted = item.tanggal_selesai && item.tanggal_selesai !== '-' ? formatDateOnly(item.tanggal_selesai) : '';
+      document.getElementById('editTglSelesai').value = tglSelesaiFormatted !== '-' ? tglSelesaiFormatted : '';
       document.getElementById('editNoPpab').value = item.no_ppab || '';
       document.getElementById('editStAnggaran').value = item.st_anggaran || 'Opex';
       document.getElementById('editNoKak').value = item.no_kak !== '-' ? item.no_kak : '';
@@ -2645,6 +2646,7 @@
     }
 
     function deleteCurrentEditItem() {
+      alert('DEBUG: deleteCurrentEditItem dipanggil, currentEditNo=' + currentEditNo + ', isAdmin=' + isAdmin);
       if (!currentEditNo || !isAdmin) return;
       if (confirm(`Apakah Anda yakin ingin menghapus paket #${currentEditNo} beserta seluruh lampiran filenya?`)) {
         const editNoNum = Number(currentEditNo);
@@ -2660,7 +2662,7 @@
         }
         
         rawDatabase = rawDatabase.filter(d => Number(d.no) !== editNoNum);
-        saveDatabase(); closeEditModal(); showToast(`Paket #${currentEditNo} telah dihapus.`, true);
+        saveDatabase(); closeEditModal(); showToast(`Paket #${currentEditNo} telah dihapus.`);
       }
     }
 
