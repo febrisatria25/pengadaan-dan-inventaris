@@ -86,7 +86,8 @@
             <button onclick="switchTab('inv-dashboard')" id="nav-inv-dashboard" class="nav-item w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition"><i data-lucide="bar-chart-3" class="w-4 h-4"></i><span>Dashboard Inventaris</span></button>
             <!-- Sub-menu Dashboard Inventaris (muncul saat tab inventaris aktif) -->
             <div id="invSubDashboardMenu" class="hidden ml-4 space-y-0.5 border-l border-slate-700 pl-3">
-              <button onclick="switchTab('inv-aset-pinjam')" id="nav-inv-aset-pinjam" class="nav-item w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] font-medium text-slate-400 hover:bg-slate-800 hover:text-white transition"><i data-lucide="briefcase" class="w-3.5 h-3.5"></i><span>Aset Tetap & Peminjaman</span></button>
+              <button onclick="switchTab('inv-aset')" id="nav-inv-aset" class="nav-item w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] font-medium text-slate-400 hover:bg-slate-800 hover:text-white transition"><i data-lucide="briefcase" class="w-3.5 h-3.5"></i><span>Aset Tetap</span></button>
+              <button onclick="switchTab('inv-abk')" id="nav-inv-abk" class="nav-item w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] font-medium text-slate-400 hover:bg-slate-800 hover:text-white transition"><i data-lucide="wrench" class="w-3.5 h-3.5"></i><span>Alat Bantu Kerja</span></button>
               <button onclick="switchTab('inv-atk-habispakai')" id="nav-inv-atk-habispakai" class="nav-item w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] font-medium text-slate-400 hover:bg-slate-800 hover:text-white transition"><i data-lucide="pen-tool" class="w-3.5 h-3.5"></i><span>Habis Pakai & ATK</span></button>
               <button onclick="switchTab('inv-dashboard-dijual')" id="nav-inv-dashboard-dijual" class="nav-item w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] font-medium text-slate-400 hover:bg-slate-800 hover:text-white transition"><i data-lucide="trending-up" class="w-3.5 h-3.5"></i><span>Dijual Kembali</span></button>
             </div>
@@ -222,7 +223,6 @@
               <select id="masterMAFilter" onchange="filterMasterData(true)" class="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-xl font-medium"><option value="">Semua Pos Anggaran</option><option value="HPP Rekomendasi Pupuk">HPP Rekomendasi Pupuk</option><option value="HPP Jasa Informasi Digital">HPP Jasa Informasi Digital</option><option value="HPP Training">HPP Training</option><option value="HPP Bantuan Teknis">HPP Bantuan Teknis</option></select>
             </div>
           </div>
-          <div id="invDataLowStockWarning" class="px-5 pt-3"></div>
           <div class="overflow-x-auto max-h-[580px]">
             <table class="w-full text-left text-xs text-slate-600">
               <thead class="bg-slate-100/90 text-slate-700 font-bold uppercase tracking-wider sticky top-0 z-10 border-b border-slate-200">
@@ -314,7 +314,7 @@
         <!-- KPI Gabungan dari 3 Sub-Dashboard + Total -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByStatus('')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Aset</span><div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center"><i data-lucide="package" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-slate-900 mt-2" id="invKpiTotal">0</p><p class="text-xs text-slate-500 mt-1" id="invKpiTotalVal">Rp 0</p><p class="text-[10px] text-brand-600 font-bold mt-2 cursor-pointer">Lihat Daftar →</p></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="switchTab('inv-aset-pinjam')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Aset Tetap & Peminjaman</span><div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i data-lucide="briefcase" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-blue-600 mt-2" id="invKpiAsetPinjam">0</p><p class="text-xs text-slate-500 mt-1">Aset tetap & alat bantu</p><p class="text-[10px] text-brand-600 font-bold mt-2 cursor-pointer">Lihat Detail →</p></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="switchTab('inv-aset')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Aset Tetap</span><div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i data-lucide="briefcase" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-blue-600 mt-2" id="invKpiAsetPinjam">0</p><p class="text-xs text-slate-500 mt-1">Aset tetap kantor</p><p class="text-[10px] text-brand-600 font-bold mt-2 cursor-pointer">Lihat Detail →</p></div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="switchTab('inv-atk-habispakai')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">ATK & Habis Pakai</span><div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center"><i data-lucide="pen-tool" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-amber-600 mt-2" id="invKpiAtkHabis">0</p><p class="text-xs text-slate-500 mt-1">ATK, habis pakai, souvenir</p><p class="text-[10px] text-brand-600 font-bold mt-2 cursor-pointer">Lihat Detail →</p></div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="switchTab('inv-dashboard-dijual')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Dijual Kembali</span><div class="w-8 h-8 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center"><i data-lucide="trending-up" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-violet-600 mt-2" id="invKpiDijual">0</p><p class="text-xs text-slate-500 mt-1">Barang dijual kembali</p><p class="text-[10px] text-brand-600 font-bold mt-2 cursor-pointer">Lihat Detail →</p></div>
         </div>
@@ -339,10 +339,10 @@
           <div class="space-y-1"><span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-violet-500/30 text-violet-200 border border-violet-400/30 uppercase tracking-wider">Dijual Kembali</span><h2 class="text-xl sm:text-2xl font-black tracking-tight">Dashboard Dijual Kembali</h2><p class="text-xs text-slate-300 max-w-xl">Pemantauan penjualan kembali barang inventaris.</p></div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-<div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByStatus('Dijual Kembali')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Stok</span><div class="w-8 h-8 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center"><i data-lucide="package" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-slate-900 mt-2" id="invDijualKpiTotal">0</p><p class="text-xs text-slate-500 mt-1" id="invDijualKpiTotalVal">Rp 0</p><p class="text-[10px] text-brand-600 font-bold mt-2 cursor-pointer">Lihat Daftar →</p></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByStatus('Tersedia')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Tersedia</span><div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center"><i data-lucide="check-circle" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-emerald-600 mt-2" id="invDijualKpiTersedia">0</p><p class="text-xs text-slate-500 mt-1" id="invDijualKpiPctTersedia">0%</p><p class="text-[10px] text-brand-600 font-bold mt-2 cursor-pointer">Lihat Daftar →</p></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByStatus('Dipinjam')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Terjual</span><div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i data-lucide="shopping-cart" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-blue-600 mt-2" id="invDijualKpiTerjual">0</p><p class="text-xs text-slate-500 mt-1" id="invDijualKpiPctTerjual">0%</p><p class="text-[10px] text-brand-600 font-bold mt-2 cursor-pointer">Lihat Daftar →</p></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByStatus('Stok Habis')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Stok Habis</span><div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center"><i data-lucide="package-x" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-rose-600 mt-2" id="invDijualKpiHabis">0</p><p class="text-xs text-slate-500 mt-1" id="invDijualKpiPctHabis">0%</p><p class="text-[10px] text-brand-600 font-bold mt-2 cursor-pointer">Lihat Daftar →</p></div>
+<div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByStatus(null, 'Dijual Kembali')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Stok</span><div class="w-8 h-8 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center"><i data-lucide="package" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-slate-900 mt-2" id="invDijualKpiTotal">0</p><p class="text-xs text-slate-500 mt-1" id="invDijualKpiTotalVal">Rp 0</p><p class="text-[10px] text-brand-600 font-bold mt-2 cursor-pointer">Lihat Daftar →</p></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterDijualKembaliTersedia()"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Tersedia</span><div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center"><i data-lucide="check-circle" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-emerald-600 mt-2" id="invDijualKpiTersedia">0</p><p class="text-xs text-slate-500 mt-1" id="invDijualKpiPctTersedia">0%</p><p class="text-[10px] text-brand-600 font-bold mt-2 cursor-pointer">Lihat Daftar →</p></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterDijualKembaliDikirim()"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Dikirim</span><div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i data-lucide="shopping-cart" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-blue-600 mt-2" id="invDijualKpiDikirim">0</p><p class="text-xs text-slate-500 mt-1" id="invDijualKpiPctDikirim">0%</p><p class="text-[10px] text-brand-600 font-bold mt-2 cursor-pointer">Lihat Daftar →</p></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByStokHabis(['Dijual Kembali'])"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Stok Habis</span><div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center"><i data-lucide="package-x" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-rose-600 mt-2" id="invDijualKpiHabis">0</p><p class="text-xs text-slate-500 mt-1" id="invDijualKpiPctHabis">0%</p><p class="text-[10px] text-brand-600 font-bold mt-2 cursor-pointer">Lihat Daftar →</p></div>
         </div>
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm lg:col-span-2"><h3 class="text-sm font-bold text-slate-900 mb-1">Pengiriman per Bulan</h3><div id="wrapInvDijualBulan" class="h-56 w-full"></div></div>
@@ -351,22 +351,40 @@
         </div>
       </section>
 
-      <!-- INVENTORY DASHBOARD ASET TETAP & PEMINJAMAN -->
-      <section id="view-inv-aset-pinjam" class="tab-view hidden space-y-6">
+      <!-- INVENTORY DASHBOARD ASET TETAP -->
+      <section id="view-inv-aset" class="tab-view hidden space-y-6">
         <div class="bg-gradient-to-r from-blue-900 via-indigo-950 to-slate-900 rounded-2xl p-6 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div class="space-y-1"><span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/30 text-blue-200 border border-blue-400/30 uppercase tracking-wider">Aset Tetap & Peminjaman</span><h2 class="text-xl sm:text-2xl font-black tracking-tight">Dashboard Aset Tetap dan Peminjaman Barang</h2><p class="text-xs text-slate-300 max-w-xl">Pemantauan aset tetap dan peminjaman barang.</p></div>
+          <div class="space-y-1"><span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/30 text-blue-200 border border-blue-400/30 uppercase tracking-wider">Aset Tetap</span><h2 class="text-xl sm:text-2xl font-black tracking-tight">Dashboard Aset Tetap</h2><p class="text-xs text-slate-300 max-w-xl">Pemantauan aset tetap kantor.</p></div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByKategoriAset('Aset Tetap')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Aset Tetap</span><div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i data-lucide="briefcase" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-slate-900 mt-2" id="invAsetKpiTotal">0</p><p class="text-xs text-slate-500 mt-1" id="invAsetKpiTotalVal">Rp 0</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByStatus('Dipinjam')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sedang Dipinjam</span><div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center"><i data-lucide="hand-metal" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-amber-600 mt-2" id="invAsetKpiDipinjam">0</p><p class="text-xs text-slate-500 mt-1">Barang sedang dipinjam</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByKategoriAset('Alat Bantu Kerja')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Alat Bantu Kerja</span><div class="w-8 h-8 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center"><i data-lucide="wrench" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-teal-600 mt-2" id="invAsetKpiAlatBantu">0</p><p class="text-xs text-slate-500 mt-1">Total alat bantu kerja</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByStatus('Rusak')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Rusak</span><div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center"><i data-lucide="alert-triangle" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-orange-600 mt-2" id="invAsetKpiRusak">0</p><p class="text-xs text-slate-500 mt-1">Aset dalam kondisi rusak</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByStatus('Dipinjam', 'Aset Tetap')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sedang Dipinjam</span><div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center"><i data-lucide="hand-metal" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-amber-600 mt-2" id="invAsetKpiDipinjam">0</p><p class="text-xs text-slate-500 mt-1">Aset sedang dipinjam</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByKondisi('Baik', 'Aset Tetap')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Kondisi Baik</span><div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center"><i data-lucide="check-circle" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-emerald-600 mt-2" id="invAsetKpiBaik">0</p><p class="text-xs text-slate-500 mt-1">Aset dalam kondisi baik</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByKondisiRusak('Aset Tetap')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Rusak</span><div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center"><i data-lucide="alert-triangle" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-orange-600 mt-2" id="invAsetKpiRusak">0</p><p class="text-xs text-slate-500 mt-1">Aset dalam kondisi rusak</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-1">Peminjaman Terkini</h3><div class="overflow-x-auto"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-50 border-b border-slate-200"><tr><th class="py-2 px-3">Peminjam</th><th class="py-2 px-3">Barang</th><th class="py-2 px-3 text-center">Jml Pinjam</th><th class="py-2 px-3 text-center">Stok</th><th class="py-2 px-3">Tgl Pinjam</th></tr></thead><tbody id="invAsetBorrowTable" class="divide-y divide-slate-100"></tbody></table></div></div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-1">Distribusi Aset per Lokasi</h3><div id="wrapInvAsetLokasi" class="h-56 w-full"></div></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-1">List Aset Tetap & ABK</h3><div class="overflow-x-auto"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-50 border-b border-slate-200"><tr><th class="py-2 px-3">Nama Barang</th><th class="py-2 px-3">Kode Barang</th><th class="py-2 px-3">Kategori</th><th class="py-2 px-3 text-center">Stok</th></tr></thead><tbody id="invAsetListTable" class="divide-y divide-slate-100"></tbody></table></div></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-1">Total Aset Tetap</h3><div id="wrapInvAsetKondisi" class="h-56 w-full flex items-center justify-center"></div></div>
         </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-3">List Aset Tetap</h3><div class="overflow-x-auto"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-50 border-b border-slate-200"><tr><th class="py-2 px-3">Nama Barang</th><th class="py-2 px-3">Kode Barang</th><th class="py-2 px-3">Lokasi</th><th class="py-2 px-3 text-center">Kondisi</th><th class="py-2 px-3 text-center">Stok</th></tr></thead><tbody id="invAsetListTable" class="divide-y divide-slate-100"></tbody></table></div></div>
+      </section>
+
+      <!-- INVENTORY DASHBOARD ALAT BANTU KERJA -->
+      <section id="view-inv-abk" class="tab-view hidden space-y-6">
+        <div class="bg-gradient-to-r from-teal-900 via-cyan-950 to-slate-900 rounded-2xl p-6 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1"><span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-teal-500/30 text-teal-200 border border-teal-400/30 uppercase tracking-wider">Alat Bantu Kerja</span><h2 class="text-xl sm:text-2xl font-black tracking-tight">Dashboard Alat Bantu Kerja</h2><p class="text-xs text-slate-300 max-w-xl">Pemantauan alat bantu kerja kantor.</p></div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByKategoriAset('Alat Bantu Kerja')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total ABK</span><div class="w-8 h-8 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center"><i data-lucide="wrench" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-teal-600 mt-2" id="invAbkKpiTotal">0</p><p class="text-xs text-slate-500 mt-1">Total alat bantu kerja</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByStatus('Dipinjam', 'Alat Bantu Kerja')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sedang Dipinjam</span><div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center"><i data-lucide="hand-metal" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-amber-600 mt-2" id="invAbkKpiDipinjam">0</p><p class="text-xs text-slate-500 mt-1">ABK sedang dipinjam</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByKondisi('Baik', 'Alat Bantu Kerja')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Kondisi Baik</span><div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center"><i data-lucide="check-circle" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-emerald-600 mt-2" id="invAbkKpiBaik">0</p><p class="text-xs text-slate-500 mt-1">ABK kondisi baik</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByKondisiRusak('Alat Bantu Kerja')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Rusak</span><div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center"><i data-lucide="alert-triangle" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-orange-600 mt-2" id="invAbkKpiRusak">0</p><p class="text-xs text-slate-500 mt-1">ABK kondisi rusak</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-1">Distribusi ABK per Lokasi</h3><div id="wrapInvAbkLokasi" class="h-56 w-full"></div></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-1">Kondisi ABK</h3><div id="wrapInvAbkKondisi" class="h-56 w-full flex items-center justify-center"></div></div>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-3">List Alat Bantu Kerja</h3><div class="overflow-x-auto"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-50 border-b border-slate-200"><tr><th class="py-2 px-3">Nama Barang</th><th class="py-2 px-3">Kode Barang</th><th class="py-2 px-3">Lokasi</th><th class="py-2 px-3 text-center">Kondisi</th><th class="py-2 px-3 text-center">Stok</th></tr></thead><tbody id="invAbkListTable" class="divide-y divide-slate-100"></tbody></table></div></div>
       </section>
 
       <!-- INVENTORY DASHBOARD HABIS PAKAI & ATK -->
@@ -378,7 +396,7 @@
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByKategoriAset('Alat Tulis Kantor')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Alat Tulis Kantor</span><div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center"><i data-lucide="pen-tool" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-slate-900 mt-2" id="invAtkKpiAtk">0</p><p class="text-xs text-slate-500 mt-1">Total item ATK</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByKategoriAset('Alat Habis Pakai')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Alat Habis Pakai</span><div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center"><i data-lucide="zap" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-orange-600 mt-2" id="invAtkKpiHabisPakai">0</p><p class="text-xs text-slate-500 mt-1">Total alat habis pakai</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByKategoriAset('Souvenir')"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Souvenir</span><div class="w-8 h-8 rounded-lg bg-pink-50 text-pink-600 flex items-center justify-center"><i data-lucide="gift" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-pink-600 mt-2" id="invAtkKpiSouvenir">0</p><p class="text-xs text-slate-500 mt-1">Total souvenir</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByStokHabis()"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Stok Habis</span><div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center"><i data-lucide="package-x" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-rose-600 mt-2" id="invAtkKpiHabis">0</p><p class="text-xs text-slate-500 mt-1">Barang habis stok</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="filterInventoryByStokHabis(['Alat Tulis Kantor', 'Alat Habis Pakai', 'Souvenir'])"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Stok Habis</span><div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center"><i data-lucide="package-x" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-rose-600 mt-2" id="invAtkKpiHabis">0</p><p class="text-xs text-slate-500 mt-1">Barang habis stok</p><p class="text-[10px] text-brand-600 font-bold mt-2">Lihat Daftar →</p></div>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-1">Distribusi Kategori</h3><div id="wrapInvAtkKategori" class="h-56 w-full flex items-center justify-center"></div></div>
@@ -408,6 +426,7 @@
               <select id="invStatusFilter" onchange="filterInventory()" class="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-xl font-medium"><option value="">Semua Status</option><option value="Tersedia">Tersedia</option><option value="Dipinjam">Dipinjam</option><option value="Rusak">Rusak</option><option value="Tidak Tersedia">Tidak Tersedia</option></select>
             </div>
           </div>
+          <div id="invDataLowStockWarning" class="px-5 pt-3"></div>
           <div class="overflow-x-auto max-h-[580px]"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-100/90 text-slate-700 font-bold uppercase tracking-wider sticky top-0 z-10 border-b border-slate-200"><tr><th class="py-3 px-4 text-center">No</th><th class="py-3 px-4">Kode</th><th class="py-3 px-4">Nama Barang</th><th class="py-3 px-4 text-center">Kategori</th><th class="py-3 px-4">Lokasi</th><th class="py-3 px-4 text-center">Kondisi</th><th class="py-3 px-4 text-center">Stok</th><th class="py-3 px-4 text-center">Status</th><th class="py-3 px-4 text-center">Aksi</th></tr></thead><tbody id="invDataTableBody" class="divide-y divide-slate-200 font-medium"></tbody></table></div>
           <div class="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs text-slate-500 font-medium" id="invPaginationWrapper"></div>
         </div>
@@ -456,7 +475,7 @@
         </div>
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div class="p-5 border-b border-slate-200 flex items-center justify-between"><h3 class="text-sm font-bold text-slate-900">Pengiriman Terkini</h3><button onclick="switchTab('kirim-bukulaporan-db')" class="text-xs font-semibold text-brand-600">Lihat Semua</button></div>
-          <div class="overflow-x-auto"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-50 border-b border-slate-200"><tr><th class="py-2 px-3">Konsumen</th><th class="py-2 px-3 text-center">Jml</th><th class="py-2 px-3">Tanggal</th></tr></thead><tbody id="kirimBukuRecentTable" class="divide-y divide-slate-100"></tbody></table></div>
+          <div class="overflow-x-auto"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-50 border-b border-slate-200"><tr><th class="py-2 px-3">Konsumen</th><th class="py-2 px-3">Kebun</th><th class="py-2 px-3">Nama Barang</th><th class="py-2 px-3 text-center">Jml</th><th class="py-2 px-3">Tanggal</th></tr></thead><tbody id="kirimBukuRecentTable" class="divide-y divide-slate-100"></tbody></table></div>
         </div>
       </section>
       <section id="view-kirim-bukulaporan-db" class="tab-view hidden space-y-6">
@@ -465,7 +484,7 @@
             <div><h3 class="text-base font-bold text-slate-900">Database Pengiriman Buku Laporan</h3><p class="text-xs text-slate-500">Catatan pengiriman buku laporan kepada konsumen</p></div>
             <button onclick="openAddDeliveryModal('Buku Laporan')" class="bg-brand-600 hover:bg-brand-700 text-white px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm transition"><i data-lucide="plus" class="w-4 h-4"></i> Tambah Pengiriman</button>
           </div>
-          <div class="overflow-x-auto max-h-[500px]"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-100/90 text-slate-700 font-bold uppercase tracking-wider sticky top-0 z-10 border-b border-slate-200"><tr><th class="py-3 px-4">No. Kirim</th><th class="py-3 px-4">Konsumen</th><th class="py-3 px-4 text-center">Jumlah</th><th class="py-3 px-4">Tanggal Kirim</th><th class="py-3 px-4 text-center">Berkas</th><th class="py-3 px-4">Keterangan</th><th class="py-3 px-4 text-center">Aksi</th></tr></thead><tbody id="deliveryBukuTableBody" class="divide-y divide-slate-100 font-medium"></tbody></table></div>
+          <div class="overflow-x-auto max-h-[500px]"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-100/90 text-slate-700 font-bold uppercase tracking-wider sticky top-0 z-10 border-b border-slate-200"><tr><th class="py-3 px-4">No. Kirim</th><th class="py-3 px-4">Konsumen</th><th class="py-3 px-4">Kebun</th><th class="py-3 px-4">Nama Barang</th><th class="py-3 px-4 text-center">Jumlah</th><th class="py-3 px-4">Tanggal Kirim</th><th class="py-3 px-4 text-center">Berkas</th><th class="py-3 px-4">Keterangan</th><th class="py-3 px-4 text-center">Aksi</th></tr></thead><tbody id="deliveryBukuTableBody" class="divide-y divide-slate-100 font-medium"></tbody></table></div>
         </div>
       </section>
 
@@ -483,7 +502,7 @@
         </div>
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div class="p-5 border-b border-slate-200 flex items-center justify-between"><h3 class="text-sm font-bold text-slate-900">Pengiriman Terkini</h3><button onclick="switchTab('kirim-aws-db')" class="text-xs font-semibold text-brand-600">Lihat Semua</button></div>
-          <div class="overflow-x-auto"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-50 border-b border-slate-200"><tr><th class="py-2 px-3">Konsumen</th><th class="py-2 px-3 text-center">Jml</th><th class="py-2 px-3">Tanggal</th></tr></thead><tbody id="kirimAwsRecentTable" class="divide-y divide-slate-100"></tbody></table></div>
+          <div class="overflow-x-auto"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-50 border-b border-slate-200"><tr><th class="py-2 px-3">Konsumen</th><th class="py-2 px-3">Kebun</th><th class="py-2 px-3">Nama Barang</th><th class="py-2 px-3 text-center">Jml</th><th class="py-2 px-3">Tanggal</th></tr></thead><tbody id="kirimAwsRecentTable" class="divide-y divide-slate-100"></tbody></table></div>
         </div>
       </section>
       <section id="view-kirim-aws-db" class="tab-view hidden space-y-6">
@@ -492,7 +511,7 @@
             <div><h3 class="text-base font-bold text-slate-900">Database Pengiriman AWS</h3><p class="text-xs text-slate-500">Catatan pengiriman Automatic Weather Station</p></div>
             <button onclick="openAddDeliveryModal('AWS')" class="bg-brand-600 hover:bg-brand-700 text-white px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm transition"><i data-lucide="plus" class="w-4 h-4"></i> Tambah Pengiriman</button>
           </div>
-          <div class="overflow-x-auto max-h-[500px]"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-100/90 text-slate-700 font-bold uppercase tracking-wider sticky top-0 z-10 border-b border-slate-200"><tr><th class="py-3 px-4">No. Kirim</th><th class="py-3 px-4">Konsumen</th><th class="py-3 px-4 text-center">Jumlah</th><th class="py-3 px-4">Tanggal Kirim</th><th class="py-3 px-4 text-center">Berkas</th><th class="py-3 px-4">Keterangan</th><th class="py-3 px-4 text-center">Aksi</th></tr></thead><tbody id="deliveryAwsTableBody" class="divide-y divide-slate-100 font-medium"></tbody></table></div>
+          <div class="overflow-x-auto max-h-[500px]"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-100/90 text-slate-700 font-bold uppercase tracking-wider sticky top-0 z-10 border-b border-slate-200"><tr><th class="py-3 px-4">No. Kirim</th><th class="py-3 px-4">Konsumen</th><th class="py-3 px-4">Kebun</th><th class="py-3 px-4">Nama Barang</th><th class="py-3 px-4 text-center">Jumlah</th><th class="py-3 px-4">Tanggal Kirim</th><th class="py-3 px-4 text-center">Berkas</th><th class="py-3 px-4">Keterangan</th><th class="py-3 px-4 text-center">Aksi</th></tr></thead><tbody id="deliveryAwsTableBody" class="divide-y divide-slate-100 font-medium"></tbody></table></div>
         </div>
       </section>
 
@@ -504,13 +523,14 @@
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Konsumen</span><p class="text-xl font-extrabold text-indigo-600 mt-2" id="kirimKpiOmbroKonsumen">0</p></div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Bulan Ini</span><p class="text-xl font-extrabold text-emerald-600 mt-2" id="kirimKpiOmbroBulan">0</p></div>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-1">Pengiriman per Bulan</h3><div id="wrapKirimOmbro" class="h-56 w-full"></div></div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-1">Top Konsumen (Tahun Ini)</h3><div id="wrapKirimOmbroKonsumen" class="h-56 w-full"></div></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-1">Komposisi Barang</h3><div id="wrapKirimOmbroKomposisi" class="h-56 w-full"></div></div>
         </div>
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div class="p-5 border-b border-slate-200 flex items-center justify-between"><h3 class="text-sm font-bold text-slate-900">Pengiriman Terkini</h3><button onclick="switchTab('kirim-ombrometer-db')" class="text-xs font-semibold text-brand-600">Lihat Semua</button></div>
-          <div class="overflow-x-auto"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-50 border-b border-slate-200"><tr><th class="py-2 px-3">Konsumen</th><th class="py-2 px-3 text-center">Jml</th><th class="py-2 px-3">Tanggal</th></tr></thead><tbody id="kirimOmbroRecentTable" class="divide-y divide-slate-100"></tbody></table></div>
+          <div class="overflow-x-auto"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-50 border-b border-slate-200"><tr><th class="py-2 px-3">Konsumen</th><th class="py-2 px-3">Kebun</th><th class="py-2 px-3">Nama Barang</th><th class="py-2 px-3 text-center">Jml</th><th class="py-2 px-3">Tanggal</th></tr></thead><tbody id="kirimOmbroRecentTable" class="divide-y divide-slate-100"></tbody></table></div>
         </div>
       </section>
       <section id="view-kirim-ombrometer-db" class="tab-view hidden space-y-6">
@@ -519,7 +539,7 @@
             <div><h3 class="text-base font-bold text-slate-900">Database Pengiriman Ombrometer</h3><p class="text-xs text-slate-500">Tabung Curah Hujan & Gelas Ukur</p></div>
             <button onclick="openAddDeliveryModal('Ombrometer')" class="bg-brand-600 hover:bg-brand-700 text-white px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm transition"><i data-lucide="plus" class="w-4 h-4"></i> Tambah Pengiriman</button>
           </div>
-          <div class="overflow-x-auto max-h-[500px]"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-100/90 text-slate-700 font-bold uppercase tracking-wider sticky top-0 z-10 border-b border-slate-200"><tr><th class="py-3 px-4">No. Kirim</th><th class="py-3 px-4">Konsumen</th><th class="py-3 px-4 text-center">Jumlah</th><th class="py-3 px-4">Tanggal Kirim</th><th class="py-3 px-4 text-center">Berkas</th><th class="py-3 px-4">Keterangan</th><th class="py-3 px-4 text-center">Aksi</th></tr></thead><tbody id="deliveryOmbroTableBody" class="divide-y divide-slate-100 font-medium"></tbody></table></div>
+          <div class="overflow-x-auto max-h-[500px]"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-100/90 text-slate-700 font-bold uppercase tracking-wider sticky top-0 z-10 border-b border-slate-200"><tr><th class="py-3 px-4">No. Kirim</th><th class="py-3 px-4">Konsumen</th><th class="py-3 px-4">Kebun</th><th class="py-3 px-4">Nama Barang</th><th class="py-3 px-4 text-center">Jumlah</th><th class="py-3 px-4">Tanggal Kirim</th><th class="py-3 px-4 text-center">Berkas</th><th class="py-3 px-4">Keterangan</th><th class="py-3 px-4 text-center">Aksi</th></tr></thead><tbody id="deliveryOmbroTableBody" class="divide-y divide-slate-100 font-medium"></tbody></table></div>
         </div>
       </section>
 
@@ -531,13 +551,14 @@
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Konsumen</span><p class="text-xl font-extrabold text-indigo-600 mt-2" id="kirimKpiSouvenirKonsumen">0</p></div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Bulan Ini</span><p class="text-xl font-extrabold text-emerald-600 mt-2" id="kirimKpiSouvenirBulan">0</p></div>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-1">Pengiriman per Bulan</h3><div id="wrapKirimSouvenir" class="h-56 w-full"></div></div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-1">Top Konsumen (Tahun Ini)</h3><div id="wrapKirimSouvenirKonsumen" class="h-56 w-full"></div></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold text-slate-900 mb-1">Komposisi Barang</h3><div id="wrapKirimSouvenirKomposisi" class="h-56 w-full"></div></div>
         </div>
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div class="p-5 border-b border-slate-200 flex items-center justify-between"><h3 class="text-sm font-bold text-slate-900">Pengiriman Terkini</h3><button onclick="switchTab('kirim-souvenir-db')" class="text-xs font-semibold text-brand-600">Lihat Semua</button></div>
-          <div class="overflow-x-auto"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-50 border-b border-slate-200"><tr><th class="py-2 px-3">Konsumen</th><th class="py-2 px-3 text-center">Jml</th><th class="py-2 px-3">Tanggal</th></tr></thead><tbody id="kirimSouvenirRecentTable" class="divide-y divide-slate-100"></tbody></table></div>
+          <div class="overflow-x-auto"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-50 border-b border-slate-200"><tr><th class="py-2 px-3">Konsumen</th><th class="py-2 px-3">Kebun</th><th class="py-2 px-3">Nama Barang</th><th class="py-2 px-3 text-center">Jml</th><th class="py-2 px-3">Tanggal</th></tr></thead><tbody id="kirimSouvenirRecentTable" class="divide-y divide-slate-100"></tbody></table></div>
         </div>
       </section>
       <section id="view-kirim-souvenir-db" class="tab-view hidden space-y-6">
@@ -546,7 +567,7 @@
             <div><h3 class="text-base font-bold text-slate-900">Database Pengiriman Souvenir</h3><p class="text-xs text-slate-500">Catatan pengiriman souvenir kepada konsumen</p></div>
             <button onclick="openAddDeliveryModal('Souvenir')" class="bg-brand-600 hover:bg-brand-700 text-white px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm transition"><i data-lucide="plus" class="w-4 h-4"></i> Tambah Pengiriman</button>
           </div>
-          <div class="overflow-x-auto max-h-[500px]"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-100/90 text-slate-700 font-bold uppercase tracking-wider sticky top-0 z-10 border-b border-slate-200"><tr><th class="py-3 px-4">No. Kirim</th><th class="py-3 px-4">Konsumen</th><th class="py-3 px-4 text-center">Jumlah</th><th class="py-3 px-4">Tanggal Kirim</th><th class="py-3 px-4 text-center">Berkas</th><th class="py-3 px-4">Keterangan</th><th class="py-3 px-4 text-center">Aksi</th></tr></thead><tbody id="deliverySouvenirTableBody" class="divide-y divide-slate-100 font-medium"></tbody></table></div>
+          <div class="overflow-x-auto max-h-[500px]"><table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-100/90 text-slate-700 font-bold uppercase tracking-wider sticky top-0 z-10 border-b border-slate-200"><tr><th class="py-3 px-4">No. Kirim</th><th class="py-3 px-4">Konsumen</th><th class="py-3 px-4">Kebun</th><th class="py-3 px-4">Nama Barang</th><th class="py-3 px-4 text-center">Jumlah</th><th class="py-3 px-4">Tanggal Kirim</th><th class="py-3 px-4 text-center">Berkas</th><th class="py-3 px-4">Keterangan</th><th class="py-3 px-4 text-center">Aksi</th></tr></thead><tbody id="deliverySouvenirTableBody" class="divide-y divide-slate-100 font-medium"></tbody></table></div>
         </div>
       </section>
 
@@ -757,15 +778,15 @@
 
   <!-- MODAL EDIT -->
   <div id="editModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-      <div class="p-5 bg-gradient-to-r from-brand-600 to-indigo-700 text-white flex items-center justify-between">
+    <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 flex flex-col max-h-[85vh]">
+      <div class="p-5 bg-gradient-to-r from-brand-600 to-indigo-700 text-white flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2.5">
           <div class="p-2 bg-white/10 rounded-lg"><i data-lucide="boxes" class="w-5 h-5"></i></div>
           <div><h4 class="text-sm font-bold">Edit Rincian Barang, Pajak & Berkas PPAB</h4><p class="text-[11px] text-indigo-100">Perbarui kuantitas barang, tipe anggaran, DPP 11/12, atau lampiran</p></div>
         </div>
         <button onclick="closeEditModal()" class="text-indigo-200 hover:text-white p-1 rounded-lg hover:bg-white/10"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-      <form id="editPpabForm" onsubmit="saveEditedPpab(event)" class="p-6 space-y-5 max-h-[75vh] overflow-y-auto text-xs">
+      <form id="editPpabForm" onsubmit="event.preventDefault(); saveEditedPpab(event)" class="flex-1 overflow-y-auto p-6 space-y-5 text-xs">
         <input type="hidden" id="editItemNo">
         <div class="p-4 bg-indigo-50/80 border border-indigo-100 rounded-2xl space-y-3">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -825,21 +846,21 @@
           <div id="editFilesList" class="space-y-2 mt-2"></div>
         </div>
 
-        <div class="p-4 bg-slate-50 border-t border-slate-200 -mx-6 -mb-6 mt-6 flex items-center justify-between">
-          <button type="button" onclick="deleteCurrentEditItem()" class="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 font-semibold rounded-xl text-xs flex items-center gap-1.5 transition"><i data-lucide="trash-2" class="w-4 h-4"></i> Hapus Paket</button>
-          <div class="flex items-center gap-2">
-            <button type="button" onclick="closeEditModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
-            <button type="submit" id="btnSubmitEdit" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs shadow-sm flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"><i data-lucide="check" class="w-4 h-4"></i> Simpan Perubahan</button>
-          </div>
-        </div>
       </form>
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0">
+        <button type="button" onclick="deleteCurrentEditItem()" class="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 font-semibold rounded-xl text-xs flex items-center gap-1.5 transition"><i data-lucide="trash-2" class="w-4 h-4"></i> Hapus Paket</button>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
+          <button type="button" id="btnSubmitEdit" onclick="document.getElementById('editPpabForm').requestSubmit()" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs shadow-sm flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"><i data-lucide="check" class="w-4 h-4"></i> Simpan Perubahan</button>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- MODAL TAMBAH -->
   <div id="addModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-      <div class="p-5 bg-brand-600 text-white flex items-center justify-between">
+    <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 flex flex-col max-h-[85vh]">
+      <div class="p-5 bg-brand-600 text-white flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2.5">
           <div class="p-2 bg-white/10 rounded-lg"><i data-lucide="plus-circle" class="w-5 h-5"></i></div>
           <div><h4 class="text-sm font-bold">Tambah Paket PPAB Baru (Opex / Capex)</h4><p class="text-[11px] text-indigo-100">Masukkan rincian pengadaan dan nilai pajak</p></div>
@@ -847,7 +868,7 @@
         <button onclick="closeAddModal()" class="text-indigo-200 hover:text-white p-1 rounded-lg hover:bg-white/10"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
 
-      <form id="addPpabForm" onsubmit="saveNewPpab(event)" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-xs">
+      <form id="addPpabForm" onsubmit="event.preventDefault(); saveNewPpab(event)" class="flex-1 overflow-y-auto p-6 space-y-4 text-xs">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div><label class="block font-semibold text-slate-700 mb-1">Tanggal Mulai</label><input type="date" required id="formTgl" class="w-full px-3 py-2 border border-slate-200 rounded-xl"></div>
           <div><label class="block font-semibold text-slate-700 mb-1">Target / Tgl Selesai</label><input type="date" id="formTglSelesai" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-emerald-700 font-medium"></div>
@@ -897,9 +918,9 @@
           <div id="addFilesList" class="space-y-2 mt-2"></div>
         </div>
 
-        <div class="p-4 bg-slate-50 border-t border-slate-200 -mx-6 -mb-6 mt-6 flex justify-end gap-2">
+        <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-end gap-2">
           <button type="button" onclick="closeAddModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
-          <button type="submit" id="btnSubmitAdd" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">Simpan Entri PPAB</button>
+          <button type="button" id="btnSubmitAdd" onclick="document.getElementById('addPpabForm').requestSubmit()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl text-xs shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">Simpan Entri PPAB</button>
         </div>
       </form>
     </div>
@@ -910,14 +931,54 @@
     <span id="toastMessage">Perubahan berhasil disimpan!</span>
   </div>
 
+  <!-- CUSTOM CONFIRM MODAL -->
+  <div id="confirmModal" class="fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+      <div id="confirmHeader" class="p-5 bg-gradient-to-r from-rose-500 to-red-600 text-white flex items-center justify-center">
+        <div class="p-3 bg-white/15 rounded-full">
+          <i data-lucide="alert-triangle" class="w-8 h-8"></i>
+        </div>
+      </div>
+      <div class="p-6 text-center">
+        <h4 id="confirmTitle" class="text-sm font-bold text-slate-800 mb-2">Konfirmasi</h4>
+        <p id="confirmMessage" class="text-xs text-slate-500 mb-6">Apakah Anda yakin?</p>
+        <div class="flex items-center justify-center gap-3">
+          <button onclick="resolveConfirm(false)" id="confirmCancelBtn" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs transition">Batal</button>
+          <button onclick="resolveConfirm(true)" id="confirmOkBtn" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-xl text-xs shadow-sm transition">Ya, Hapus</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DAFTAR BARANG (KPI Lihat Daftar) -->
+  <div id="inventoryListModal" class="fixed inset-0 z-[55] bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+      <div class="p-5 bg-gradient-to-r from-blue-600 to-indigo-700 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2.5"><div class="p-2 bg-white/10 rounded-lg"><i data-lucide="package" class="w-5 h-5"></i></div><div><h4 class="text-sm font-bold" id="invListModalTitle">Daftar Barang</h4><p class="text-[11px] text-blue-100" id="invListModalSubtitle">Filter barang</p></div></div>
+        <button onclick="closeInventoryListModal()" class="text-blue-200 hover:text-white p-1 rounded-lg hover:bg-white/10"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="p-5 max-h-[60vh] overflow-y-auto">
+        <table class="w-full text-left text-xs text-slate-600">
+          <thead class="bg-slate-50 border-b border-slate-200"><tr><th class="py-2 px-3">No</th><th class="py-2 px-3">Nama Barang</th><th class="py-2 px-3">Kode</th><th class="py-2 px-3">Kategori</th><th class="py-2 px-3 text-center">Stok</th><th class="py-2 px-3">Status</th><th class="py-2 px-3">Lokasi</th></tr></thead>
+          <tbody id="invListModalBody" class="divide-y divide-slate-100"></tbody>
+        </table>
+        <p id="invListModalEmpty" class="text-center text-slate-400 text-xs py-8 hidden">Tidak ada data barang</p>
+      </div>
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+        <span id="invListModalCount" class="text-xs text-slate-500 font-semibold">0 barang</span>
+        <button onclick="closeInventoryListModal()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-xs shadow-sm transition">Tutup</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL ADD/EDIT INVENTORY -->
   <div id="inventoryModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-      <div class="p-5 bg-gradient-to-r from-emerald-600 to-teal-700 text-white flex items-center justify-between">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 flex flex-col max-h-[85vh]">
+      <div class="p-5 bg-gradient-to-r from-emerald-600 to-teal-700 text-white flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2.5"><div class="p-2 bg-white/10 rounded-lg"><i data-lucide="package" class="w-5 h-5"></i></div><div><h4 class="text-sm font-bold" id="inventoryModalTitle">Tambah Barang Inventaris</h4><p class="text-[11px] text-emerald-100">Lengkapi data barang inventaris</p></div></div>
         <button onclick="closeInventoryModal()" class="text-emerald-200 hover:text-white p-1 rounded-lg hover:bg-white/10"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-      <form id="inventoryForm" onsubmit="event.preventDefault(); saveInventoryItem(event)" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-xs">
+      <form id="inventoryForm" onsubmit="event.preventDefault(); saveInventoryItem(event)" class="flex-1 overflow-y-auto p-6 space-y-4 text-xs">
         <input type="hidden" id="invEditId">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div><label class="block font-semibold text-slate-700 mb-1">Nama Barang *</label><input type="text" required id="invNamaBarang" class="w-full px-3 py-2 border border-slate-200 rounded-xl"></div>
@@ -946,11 +1007,11 @@
           <input type="file" accept="image/*" onchange="handleInventoryImageUpload(event)" class="text-xs w-full">
           <div id="invImagePreview" class="mt-2"></div>
         </div>
-        <div class="p-4 bg-slate-50 border-t border-slate-200 -mx-6 -mb-6 mt-6 flex items-center justify-between">
-          <button type="button" onclick="closeInventoryModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
-          <button type="button" onclick="saveInventoryItem(event)" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-xs shadow-sm">Simpan Barang</button>
-        </div>
       </form>
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0">
+        <button type="button" onclick="closeInventoryModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
+        <button type="button" onclick="document.getElementById('inventoryForm').requestSubmit()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-xs shadow-sm">Simpan Barang</button>
+      </div>
     </div>
   </div>
 
@@ -985,12 +1046,12 @@
 
   <!-- MODAL ADD BORROWING -->
   <div id="borrowingModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-      <div class="p-5 bg-gradient-to-r from-amber-600 to-orange-600 text-white flex items-center justify-between">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 flex flex-col max-h-[85vh]">
+      <div class="p-5 bg-gradient-to-r from-amber-600 to-orange-600 text-white flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2.5"><div class="p-2 bg-white/10 rounded-lg"><i data-lucide="hand-metal" class="w-5 h-5"></i></div><div><h4 class="text-sm font-bold" id="borrowModalTitle">Pinjam Barang</h4><p class="text-[11px] text-amber-100">Form peminjaman inventaris</p></div></div>
         <button onclick="closeBorrowingModal()" class="text-amber-200 hover:text-white p-1 rounded-lg hover:bg-white/10"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-      <form id="borrowingForm" onsubmit="saveBorrowing(event)" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-xs">
+      <form id="borrowingForm" onsubmit="event.preventDefault(); saveBorrowing(event)" class="flex-1 overflow-y-auto p-6 space-y-4 text-xs">
         <input type="hidden" id="borrowEditId">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div><label class="block font-semibold text-slate-700 mb-1">Nama Peminjam *</label><input type="text" required id="borrowNama" class="w-full px-3 py-2 border border-slate-200 rounded-xl"></div>
@@ -1006,9 +1067,10 @@
           <div><label class="block font-semibold text-slate-700 mb-1">Tgl Kembali (Target)</label><input type="date" id="borrowTglKembali" class="w-full px-3 py-2 border border-slate-200 rounded-xl"></div>
         </div>
         <div><label class="block font-semibold text-slate-700 mb-1">Keterangan</label><textarea id="borrowKeterangan" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs"></textarea></div>
-        <div class="p-4 bg-slate-50 border-t border-slate-200 -mx-6 -mb-6 mt-6 flex items-center justify-between">
-          <button type="button" onclick="closeBorrowingModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
-          <button type="submit" class="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-xl text-xs shadow-sm">Simpan Peminjaman</button>
+      </form>
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0">
+        <button type="button" onclick="closeBorrowingModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
+        <button type="button" onclick="document.getElementById('borrowingForm').requestSubmit()" class="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-xl text-xs shadow-sm">Simpan Peminjaman</button>
         </div>
       </form>
     </div>
@@ -1016,12 +1078,12 @@
 
   <!-- MODAL RETURN BORROWING -->
   <div id="returnModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-      <div class="p-5 bg-gradient-to-r from-emerald-600 to-green-600 text-white flex items-center justify-between">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 flex flex-col max-h-[85vh]">
+      <div class="p-5 bg-gradient-to-r from-emerald-600 to-green-600 text-white flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2.5"><div class="p-2 bg-white/10 rounded-lg"><i data-lucide="rotate-ccw" class="w-5 h-5"></i></div><div><h4 class="text-sm font-bold">Pengembalian Barang</h4><p class="text-[11px] text-emerald-100">Catat pengembalian pinjaman</p></div></div>
         <button onclick="closeReturnModal()" class="text-emerald-200 hover:text-white p-1 rounded-lg hover:bg-white/10"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-      <form id="returnForm" onsubmit="saveReturn(event)" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-xs">
+      <form id="returnForm" onsubmit="event.preventDefault(); saveReturn(event)" class="flex-1 overflow-y-auto p-6 space-y-4 text-xs">
         <input type="hidden" id="returnBorrowId">
         <div class="bg-slate-50 p-3 rounded-xl border border-slate-200"><p class="text-xs text-slate-600" id="returnInfo"></p></div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1029,22 +1091,23 @@
           <div><label class="block font-semibold text-slate-700 mb-1">Kondisi Saat Kembali *</label><select required id="returnKondisi" class="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold"><option value="Baik">Baik</option><option value="Rusak Ringan">Rusak Ringan</option><option value="Rusak Berat">Rusak Berat</option></select></div>
         </div>
         <div><label class="block font-semibold text-slate-700 mb-1">Keterangan</label><textarea id="returnKeterangan" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs"></textarea></div>
-        <div class="p-4 bg-slate-50 border-t border-slate-200 -mx-6 -mb-6 mt-6 flex items-center justify-between">
-          <button type="button" onclick="closeReturnModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
-          <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-xs shadow-sm">Kembalikan Barang</button>
-        </div>
+      </form>
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0">
+        <button type="button" onclick="closeReturnModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
+        <button type="button" onclick="document.getElementById('returnForm').requestSubmit()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-xs shadow-sm">Kembalikan Barang</button>
+      </div>
       </form>
     </div>
   </div>
 
   <!-- MODAL ADD EXPENDITURE -->
   <div id="expendModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-      <div class="p-5 bg-gradient-to-r from-rose-600 to-pink-600 text-white flex items-center justify-between">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 flex flex-col max-h-[85vh]">
+      <div class="p-5 bg-gradient-to-r from-rose-600 to-pink-600 text-white flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2.5"><div class="p-2 bg-white/10 rounded-lg"><i data-lucide="log-out" class="w-5 h-5"></i></div><div><h4 class="text-sm font-bold">Pengeluaran Inventaris</h4><p class="text-[11px] text-rose-100">Mutasi, disposisi, atau pemakaian</p></div></div>
         <button onclick="closeExpendModal()" class="text-rose-200 hover:text-white p-1 rounded-lg hover:bg-white/10"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-      <form id="expendForm" onsubmit="saveExpenditure(event)" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-xs">
+      <form id="expendForm" onsubmit="event.preventDefault(); saveExpenditure(event)" class="flex-1 overflow-y-auto p-6 space-y-4 text-xs">
         <input type="hidden" id="expendEditId">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div><label class="block font-semibold text-slate-700 mb-1">Tipe Pengeluaran *</label><select required id="expendTipe" class="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold"><option value="Mutasi">Mutasi</option><option value="Disposisi">Disposisi</option><option value="Pemakaian">Pemakaian</option></select></div>
@@ -1060,28 +1123,53 @@
           <div><label class="block font-semibold text-slate-700 mb-1">Tujuan Lokasi</label><input type="text" id="expendTujuan" class="w-full px-3 py-2 border border-slate-200 rounded-xl"></div>
         </div>
         <div><label class="block font-semibold text-slate-700 mb-1">Keterangan</label><textarea id="expendKeterangan" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs"></textarea></div>
-        <div class="p-4 bg-slate-50 border-t border-slate-200 -mx-6 -mb-6 mt-6 flex items-center justify-between">
-          <button type="button" onclick="closeExpendModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
-          <button type="submit" class="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-xl text-xs shadow-sm">Simpan Pengeluaran</button>
-        </div>
+      </form>
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0">
+        <button type="button" onclick="closeExpendModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
+        <button type="button" onclick="document.getElementById('expendForm').requestSubmit()" class="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-xl text-xs shadow-sm">Simpan Pengeluaran</button>
+      </div>
       </form>
     </div>
   </div>
 
   <!-- MODAL ADD DELIVERY -->
   <div id="deliveryModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-      <div class="p-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex items-center justify-between">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 flex flex-col max-h-[85vh]">
+      <div class="p-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2.5"><div class="p-2 bg-white/10 rounded-lg"><i data-lucide="send" class="w-5 h-5"></i></div><div><h4 class="text-sm font-bold" id="deliveryModalTitle">Tambah Pengiriman</h4><p class="text-[11px] text-blue-100">Catat pengiriman ke konsumen</p></div></div>
         <button onclick="closeDeliveryModal()" class="text-blue-200 hover:text-white p-1 rounded-lg hover:bg-white/10"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-      <form id="deliveryForm" onsubmit="saveDelivery(event)" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-xs">
+      <form id="deliveryForm" onsubmit="event.preventDefault(); saveDelivery(event)" class="flex-1 overflow-y-auto p-6 space-y-4 text-xs">
         <input type="hidden" id="deliveryEditId">
         <input type="hidden" id="deliveryJenis">
-        <div><label class="block font-semibold text-slate-700 mb-1">Nama Konsumen *</label><input type="text" required id="deliveryKonsumen" class="w-full px-3 py-2 border border-slate-200 rounded-xl"></div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div><label class="block font-semibold text-slate-700 mb-1">Jumlah *</label><input type="number" min="1" required id="deliveryJumlah" value="1" class="w-full px-3 py-2 border border-slate-200 rounded-xl"></div>
+          <div><label class="block font-semibold text-slate-700 mb-1">Nama Konsumen *</label><input type="text" required id="deliveryKonsumen" class="w-full px-3 py-2 border border-slate-200 rounded-xl" oninput="refreshKebunSuggestions()"></div>
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block font-semibold text-slate-700">Nama Kebun</label>
+              <button type="button" onclick="addDeliveryKebunRow()" class="text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-1"><i data-lucide="plus" class="w-3 h-3"></i> Tambah</button>
+            </div>
+            <div id="deliveryKebunList" class="space-y-1"></div>
+          </div>
+        </div>
+        <!-- SINGLE-ITEM FIELD (untuk Buku Laporan & AWS) -->
+        <div id="singleItemSection">
+          <div class="grid grid-cols-1 gap-4">
+            <div><label class="block font-semibold text-slate-700 mb-1">Nama Barang *</label><select required id="deliveryNamaBarang" class="w-full px-3 py-2 border border-slate-200 rounded-xl"><option value="">-- Pilih Barang --</option></select><p class="text-[10px] text-slate-400 mt-1">Stok: <span id="deliveryStockInfo" class="font-bold text-slate-600">0</span></p></div>
+          </div>
+        </div>
+        <!-- MULTI-ITEM FIELD (untuk Souvenir & Ombrometer) -->
+        <div id="multiItemSection" class="hidden">
+          <div class="flex items-center justify-between mb-2">
+            <label class="block font-semibold text-slate-700">Barang yang Dikirim *</label>
+            <button type="button" onclick="addDeliveryItemRow()" class="text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-1"><i data-lucide="plus" class="w-3 h-3"></i> Tambah Barang</button>
+          </div>
+          <div id="deliveryItemsList" class="space-y-2"></div>
+          <p class="text-[10px] text-slate-400 mt-2">Stok tersedia: <span id="deliveryMultiStockInfo" class="font-bold text-slate-600">-</span></p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div><label class="block font-semibold text-slate-700 mb-1">Tanggal Kirim *</label><input type="date" required id="deliveryTanggal" class="w-full px-3 py-2 border border-slate-200 rounded-xl"></div>
+          <div></div>
         </div>
         <div><label class="block font-semibold text-slate-700 mb-1">Keterangan</label><textarea id="deliveryKeterangan" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs"></textarea></div>
         <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
@@ -1089,11 +1177,11 @@
           <input type="file" onchange="handleDeliveryFileUpload(event)" class="text-xs w-full">
           <div id="deliveryFilesList" class="space-y-1 mt-1"></div>
         </div>
-        <div class="p-4 bg-slate-50 border-t border-slate-200 -mx-6 -mb-6 mt-6 flex items-center justify-between">
-          <button type="button" onclick="closeDeliveryModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
-          <button type="submit" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-xs shadow-sm">Simpan Pengiriman</button>
-        </div>
       </form>
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0">
+        <button type="button" onclick="closeDeliveryModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
+        <button type="button" onclick="document.getElementById('deliveryForm').requestSubmit()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-xs shadow-sm">Simpan Pengiriman</button>
+      </div>
     </div>
   </div>
 
@@ -1106,7 +1194,7 @@
     const SESSION_TIMEOUT = 3600000;
     const RENCANA_STORAGE_KEY = 'ppab_rencana_anggaran_v15';
     const DEFAULT_PIN = 'admin2026';
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbycA1vDShtogBWknxrCo8L6Cb9RXEk7Bx1BDclykrV0SzCUkki2JUdZMwDIvsgXrmiK/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxW3QXfQHGncCxK26_WM2r6zwQTLPWCr0_2VxUVWuDNPm9B4U2FGGfk6KcFEe7-HAL6ew/exec";
 
     let rawDatabase = [];
     let database = [];
@@ -1194,6 +1282,68 @@
         toast.classList.remove('hidden'); toast.classList.add('flex');
         setTimeout(() => { toast.classList.add('hidden'); toast.classList.remove('flex'); }, 3500);
       }
+    }
+
+    let _confirmResolve = null;
+
+    function showConfirm(title, message, options = {}) {
+      return new Promise(resolve => {
+        _confirmResolve = resolve;
+        document.getElementById('confirmTitle').textContent = title;
+        document.getElementById('confirmMessage').textContent = message;
+        const header = document.getElementById('confirmHeader');
+        const okBtn = document.getElementById('confirmOkBtn');
+        const cancelBtn = document.getElementById('confirmCancelBtn');
+        if (options.danger === false) {
+          header.className = 'p-5 bg-gradient-to-r from-amber-500 to-orange-500 text-white flex items-center justify-center';
+          okBtn.className = 'px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl text-xs shadow-sm transition';
+          okBtn.textContent = options.okText || 'Ya, Keluar';
+        } else {
+          header.className = 'p-5 bg-gradient-to-r from-rose-500 to-red-600 text-white flex items-center justify-center';
+          okBtn.className = 'px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-xl text-xs shadow-sm transition';
+          okBtn.textContent = options.okText || 'Ya, Hapus';
+        }
+        cancelBtn.textContent = options.cancelText || 'Batal';
+        document.getElementById('confirmModal').classList.remove('hidden');
+        try { lucide.createIcons(); } catch(e){}
+      });
+    }
+
+    function resolveConfirm(value) {
+      document.getElementById('confirmModal').classList.add('hidden');
+      if (_confirmResolve) { _confirmResolve(value); _confirmResolve = null; }
+    }
+
+    function showInventoryListModal(title, items, subtitle) {
+      document.getElementById('invListModalTitle').textContent = title;
+      document.getElementById('invListModalSubtitle').textContent = subtitle || 'Daftar barang inventaris';
+      const tbody = document.getElementById('invListModalBody');
+      const emptyMsg = document.getElementById('invListModalEmpty');
+      tbody.innerHTML = '';
+      if (items.length === 0) {
+        emptyMsg.classList.remove('hidden');
+        document.getElementById('invListModalCount').textContent = '0 barang';
+      } else {
+        emptyMsg.classList.add('hidden');
+        document.getElementById('invListModalCount').textContent = items.length + ' barang';
+        items.forEach((item, idx) => {
+          tbody.innerHTML += `<tr class="hover:bg-slate-50 transition">
+            <td class="py-2 px-3 font-bold text-slate-800">${idx + 1}</td>
+            <td class="py-2 px-3">${item.nama_barang || '-'}</td>
+            <td class="py-2 px-3 font-mono text-[10px]">${item.kode_barang || '-'}</td>
+            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700">${item.kategori || '-'}</span></td>
+            <td class="py-2 px-3 text-center font-bold ${item.jumlah === 0 ? 'text-rose-500' : 'text-emerald-600'}">${item.jumlah}</td>
+            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${item.status === 'Baik' ? 'bg-emerald-100 text-emerald-700' : item.status === 'Rusak' ? 'bg-rose-100 text-rose-700' : item.status === 'Dipinjam' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-600'}">${item.status || '-'}</span></td>
+            <td class="py-2 px-3 text-[11px]">${item.lokasi || '-'}</td>
+          </tr>`;
+        });
+      }
+      document.getElementById('inventoryListModal').classList.remove('hidden');
+      try { lucide.createIcons(); } catch(e){}
+    }
+
+    function closeInventoryListModal() {
+      document.getElementById('inventoryListModal').classList.add('hidden');
     }
 
     const formatIDR = (num) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
@@ -1366,12 +1516,12 @@
          }
          
          d.nilai = parseFloat(d.nilai) || 0;
-         d.jumlah = parseFloat(d.jumlah) || 0;
-         d.progres = parseFloat(d.progres) || 0;
-         d.dpp = parseFloat(d.dpp) || 0;
-         d.ppn = parseFloat(d.ppn) || 0;
          d.jml_item = parseInt(d.jml_item) || 0;
          d.brg_msk = parseInt(d.brg_msk) || 0;
+         d.progres = d.jml_item > 0 ? Math.min(100, Math.round((d.brg_msk / d.jml_item) * 100)) : 0;
+         // Recalculate tax
+         const taxRes = computeTaxDetails(d.nilai, d.tax_type || (d.ppn > 0 ? 'dpp11_12' : 'non_ppn'));
+         d.dpp = taxRes.dpp; d.ppn = taxRes.ppn; d.jumlah = taxRes.total;
          
          if (!d.no_ppab) d.no_ppab = '-';
          if (!d.perihal) d.perihal = '-';
@@ -1381,12 +1531,14 @@
          if (!d.tanggal_selesai) d.tanggal_selesai = '-';
          if (!d.st_anggaran) d.st_anggaran = 'Opex';
          
-         if (!d.status) {
-             if (d.progres === 100) d.status = 'Selesai';
-             else if (d.progres > 0) d.status = 'Progres';
-             else d.status = 'Belum Proses';
-         }
+         d.status = d.progres === 100 ? 'Selesai' : (d.progres > 0 ? 'Progres' : 'Belum Proses');
          return d;
+      });
+
+      let maxNo = 0;
+      rawDatabase.forEach(d => { if (Number(d.no) > maxNo) maxNo = Number(d.no); });
+      rawDatabase.forEach(d => {
+        if (!d.no || d.no === 0) { maxNo++; d.no = maxNo; }
       });
 
       if (selectedYear === 'ALL') {
@@ -1435,15 +1587,15 @@
       }
     }
 
-    function logoutAdmin() {
-      if (confirm("Apakah Anda ingin keluar dari Mode Admin?")) {
-        isAdmin = false; 
-        localStorage.removeItem(SESSION_KEY);
-        localStorage.removeItem(SESSION_TIME_KEY);
-        updateAuthUI(); 
-        refreshAll(false); 
-        showToast("Anda telah keluar dari Mode Admin.");
-      }
+    async function logoutAdmin() {
+      const ok = await showConfirm('Keluar Mode Admin', 'Apakah Anda ingin keluar dari Mode Admin?', { danger: false, okText: 'Ya, Keluar' });
+      if (!ok) return;
+      isAdmin = false; 
+      localStorage.removeItem(SESSION_KEY);
+      localStorage.removeItem(SESSION_TIME_KEY);
+      updateAuthUI(); 
+      refreshAll(false); 
+      showToast("Anda telah keluar dari Mode Admin.");
     }
 
     function toggleDeliveryDropdown() {
@@ -2551,10 +2703,23 @@
     function openEditModal(no) {
       if (!isAdmin) return;
       const noNum = parseInt(no) || Number(no) || 0;
-      const item = database.find(d => Number(d.no) === noNum || String(d.no) === String(no));
+      let item = null;
+      
+      if (noNum > 0) {
+        item = database.find(d => Number(d.no) === noNum);
+      }
+      if (!item && no !== undefined && no !== null && String(no) !== '0') {
+        item = database.find(d => String(d.no) === String(no));
+      }
+      if (!item && noNum === 0) {
+        const noPpab = typeof no === 'string' ? no : '';
+        if (noPpab) {
+          item = database.find(d => d.no_ppab === noPpab);
+        }
+      }
       if (!item) return;
 
-      currentEditNo = noNum;
+      currentEditNo = item.no;
       temporaryEditFiles = item.files ? JSON.parse(JSON.stringify(item.files)) : [];
 
       const rawItem = rawDatabase.find(d => Number(d.no) === noNum || String(d.no) === String(no));
@@ -2645,25 +2810,57 @@
       showToast(`Paket #${no} dan berkas berhasil disimpan!`);
     }
 
-    function deleteCurrentEditItem() {
-      alert('DEBUG: deleteCurrentEditItem dipanggil, currentEditNo=' + currentEditNo + ', isAdmin=' + isAdmin);
-      if (!currentEditNo || !isAdmin) return;
-      if (confirm(`Apakah Anda yakin ingin menghapus paket #${currentEditNo} beserta seluruh lampiran filenya?`)) {
-        const editNoNum = Number(currentEditNo);
-        const item = rawDatabase.find(d => Number(d.no) === editNoNum);
-        
-        if (item && item.no_ppab && item.no_ppab !== '-') {
-           const delYear = extractYearFromDate(item.tanggal);
-           const folderPath = "Pengadaan/" + delYear + "/" + item.no_ppab.replace(/\//g, '_');
-           fetch(WEB_APP_URL, { 
-             method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, 
-             body: JSON.stringify({ action: "deleteFolderByPath", folderPath: folderPath }) 
-           });
-        }
-        
-        rawDatabase = rawDatabase.filter(d => Number(d.no) !== editNoNum);
-        saveDatabase(); closeEditModal(); showToast(`Paket #${currentEditNo} telah dihapus.`);
+    async function deleteCurrentEditItem() {
+      if (currentEditNo === null || currentEditNo === undefined || !isAdmin) return;
+      
+      let itemIndex = -1;
+      let item = null;
+      const editNoNum = Number(currentEditNo);
+      
+      if (editNoNum > 0) {
+        itemIndex = rawDatabase.findIndex(d => Number(d.no) === editNoNum);
       }
+      
+      if (itemIndex === -1) {
+        const formNoPpab = (document.getElementById('editNoPpab') || {}).value || '';
+        const formPerihal = (document.getElementById('editPerihal') || {}).value || '';
+        if (formNoPpab || formPerihal) {
+          itemIndex = rawDatabase.findIndex(d => 
+            (d.no_ppab && formNoPpab && d.no_ppab === formNoPpab) &&
+            (d.perihal && formPerihal && d.perihal === formPerihal)
+          );
+        }
+      }
+      
+      if (itemIndex === -1) {
+        showToast('Error: Item tidak ditemukan untuk dihapus', true);
+        return;
+      }
+      
+      item = rawDatabase[itemIndex];
+      const confirmTitle = 'Hapus Paket PPAB';
+      const confirmMsg = item.no_ppab && item.no_ppab !== '-' 
+        ? `Hapus paket "${item.perihal}" (No. PPAB: ${item.no_ppab}) beserta seluruh lampiran filenya?`
+        : `Hapus paket "${item.perihal || 'Tanpa Perihal'}" beserta seluruh lampiran filenya?`;
+      
+      const ok = await showConfirm(confirmTitle, confirmMsg);
+      if (!ok) return;
+      
+      if (item.no_ppab && item.no_ppab !== '-') {
+        try {
+          const delYear = extractYearFromDate(item.tanggal);
+          const folderPath = "Pengadaan/" + delYear + "/" + item.no_ppab.replace(/\//g, '_');
+          fetch(WEB_APP_URL, { 
+            method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, 
+            body: JSON.stringify({ action: "deleteFolderByPath", folderPath: folderPath }) 
+          });
+        } catch(e) {}
+      }
+      
+      rawDatabase.splice(itemIndex, 1);
+      saveDatabase(); 
+      closeEditModal(); 
+      showToast(`Paket "${item.perihal || ''}" telah dihapus.`);
     }
 
     function viewDetail(no) {
@@ -2858,7 +3055,19 @@
       try { borrowingRecords = JSON.parse(localStorage.getItem(BORROW_STORAGE_KEY)) || []; } catch(e) { borrowingRecords = []; }
       try { inventoryExpenditures = JSON.parse(localStorage.getItem(EXPEND_STORAGE_KEY)) || []; } catch(e) { inventoryExpenditures = []; }
       try { consumerDeliveries = JSON.parse(localStorage.getItem(DELIVERY_STORAGE_KEY)) || []; } catch(e) { consumerDeliveries = []; }
+      syncInventoryStatus();
       checkLowStock();
+    }
+
+    function syncInventoryStatus() {
+      let changed = false;
+      inventoryItems.forEach(item => {
+        if (item.jumlah === 0 && item.status !== 'Tidak Tersedia' && item.kategori !== 'Dijual Kembali') {
+          item.status = 'Tidak Tersedia';
+          changed = true;
+        }
+      });
+      if (changed) saveInventoryData(false);
     }
 
     async function loadInventoryFromCloud() {
@@ -2867,21 +3076,36 @@
         const res = await fetch(WEB_APP_URL + cacheBuster);
         const data = await res.json();
         if (data.inventory && Array.isArray(data.inventory)) {
-          inventoryItems = data.inventory;
+          inventoryItems = data.inventory.map((item, idx) => {
+            item.id = parseInt(item.id) || (idx + 1);
+            item.jumlah = parseInt(item.jumlah) || 0;
+            return item;
+          });
           localStorage.setItem(INV_STORAGE_KEY, JSON.stringify(inventoryItems));
         }
         if (data.borrowing && Array.isArray(data.borrowing)) {
-          borrowingRecords = data.borrowing;
+          borrowingRecords = data.borrowing.map((item, idx) => {
+            item.id = parseInt(item.id) || (idx + 1);
+            return item;
+          });
           localStorage.setItem(BORROW_STORAGE_KEY, JSON.stringify(borrowingRecords));
         }
         if (data.expenditures && Array.isArray(data.expenditures)) {
-          inventoryExpenditures = data.expenditures;
+          inventoryExpenditures = data.expenditures.map((item, idx) => {
+            item.id = parseInt(item.id) || (idx + 1);
+            return item;
+          });
           localStorage.setItem(EXPEND_STORAGE_KEY, JSON.stringify(inventoryExpenditures));
         }
         if (data.deliveries && Array.isArray(data.deliveries)) {
-          consumerDeliveries = data.deliveries;
+          consumerDeliveries = data.deliveries.map((item, idx) => {
+            item.id = parseInt(item.id) || (idx + 1);
+            item.jumlah = parseInt(item.jumlah) || 0;
+            return item;
+          });
           localStorage.setItem(DELIVERY_STORAGE_KEY, JSON.stringify(consumerDeliveries));
         }
+        syncInventoryStatus();
         checkLowStock();
       } catch(e) {
         console.warn('Gagal load inventaris dari cloud, menggunakan localStorage:', e);
@@ -2892,7 +3116,7 @@
     // ======================================================================
     // INVENTARIS: Peringatan Stok Menipis (ATK, Habis Pakai, Souvenir ≤ 3)
     // ======================================================================
-    const LOW_STOCK_CATEGORIES = ['Alat Tulis Kantor', 'Alat Habis Pakai', 'Souvenir', 'Dijual Kembali'];
+    const LOW_STOCK_CATEGORIES = ['Alat Tulis Kantor', 'Alat Habis Pakai', 'Souvenir'];
     const LOW_STOCK_THRESHOLD = 3;
 
     const LOW_STOCK_EXCLUDE = ['buku laporan'];
@@ -2994,9 +3218,14 @@
       localStorage.setItem(DELIVERY_STORAGE_KEY, JSON.stringify(consumerDeliveries));
       if (syncCloud) {
         showToast("Menyinkronkan data inventaris ke Cloud...", false);
+        const invDateFields = ['tanggal_perolehan','tgl_pinjam','tgl_kembali','tanggal_kirim','tanggal'];
+        const cleanInv = inventoryItems.map(d => { const c = Object.assign({}, d); invDateFields.forEach(f => { if (c[f] && typeof c[f] === 'string') c[f] = c[f].split('T')[0] || c[f]; }); return c; });
+        const cleanBorr = borrowingRecords.map(d => { const c = Object.assign({}, d); invDateFields.forEach(f => { if (c[f] && typeof c[f] === 'string') c[f] = c[f].split('T')[0] || c[f]; }); return c; });
+        const cleanExp = inventoryExpenditures.map(d => { const c = Object.assign({}, d); invDateFields.forEach(f => { if (c[f] && typeof c[f] === 'string') c[f] = c[f].split('T')[0] || c[f]; }); return c; });
+        const cleanDel = consumerDeliveries.map(d => { const c = Object.assign({}, d); invDateFields.forEach(f => { if (c[f] && typeof c[f] === 'string') c[f] = c[f].split('T')[0] || c[f]; }); return c; });
         fetch(WEB_APP_URL, {
           method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ action: "saveInventoryAll", inventory: inventoryItems, borrowing: borrowingRecords, expenditures: inventoryExpenditures, deliveries: consumerDeliveries })
+          body: JSON.stringify({ action: "saveInventoryAll", inventory: cleanInv, borrowing: cleanBorr, expenditures: cleanExp, deliveries: cleanDel })
         }).then(() => showToast("Data inventaris berhasil disinkronkan!"))
           .catch(() => showToast("Gagal sinkron inventaris ke cloud", true));
       }
@@ -3107,20 +3336,66 @@
       filterInventory();
     }
 
-    function filterInventoryByStatus(status) {
-      document.getElementById('invStatusFilter').value = status;
-      switchTab('inv-data');
-      filterInventory();
+    function filterInventoryByStatus(status, kategori) {
+      let items;
+      if (!status) {
+        if (kategori) {
+          items = inventoryItems.filter(i => i.kategori === kategori);
+          showInventoryListModal('Semua Barang (' + kategori + ')', items, 'Seluruh data inventaris kategori ' + kategori);
+        } else {
+          items = inventoryItems;
+          showInventoryListModal('Semua Barang', items, 'Seluruh data inventaris');
+        }
+        return;
+      }
+      if (kategori) {
+        items = inventoryItems.filter(i => i.kategori === kategori && i.status === status);
+      } else {
+        items = inventoryItems.filter(i => i.status === status);
+      }
+      const label = kategori ? status + ' (' + kategori + ')' : 'Status: ' + status;
+      showInventoryListModal(label, items, 'Barang dengan status "' + status + '"' + (kategori ? ' di kategori ' + kategori : ''));
     }
 
-    function filterInventoryByStokHabis() {
-      document.getElementById('invKategoriFilter').value = '';
-      document.getElementById('invKondisiFilter').value = '';
-      document.getElementById('invStatusFilter').value = '';
-      switchTab('inv-data');
-      currentFilteredInvData = inventoryItems.filter(item => item.jumlah === 0);
-      currentInvPage = 1;
-      renderInvDataTable();
+    function filterInventoryByKondisi(kondisi, kategori) {
+      let items;
+      if (kategori) {
+        items = inventoryItems.filter(i => i.kategori === kategori && i.kondisi === kondisi);
+      } else {
+        items = inventoryItems.filter(i => i.kondisi === kondisi);
+      }
+      showInventoryListModal('Kondisi: ' + kondisi, items, 'Barang dengan kondisi "' + kondisi + '"');
+    }
+
+    function filterInventoryByKondisiRusak(kategori) {
+      let items;
+      if (kategori) {
+        items = inventoryItems.filter(i => i.kategori === kategori && i.kondisi && i.kondisi.includes('Rusak'));
+      } else {
+        items = inventoryItems.filter(i => i.kondisi && i.kondisi.includes('Rusak'));
+      }
+      showInventoryListModal('Kondisi: Rusak', items, 'Barang dengan kondisi rusak');
+    }
+
+    function filterInventoryByStokHabis(kategoriList) {
+      let items;
+      if (kategoriList && kategoriList.length > 0) {
+        items = inventoryItems.filter(i => i.jumlah === 0 && kategoriList.includes(i.kategori));
+        showInventoryListModal('Barang Stok Habis', items, 'Barang dengan jumlah = 0 di kategori ' + kategoriList.join(', '));
+      } else {
+        items = inventoryItems.filter(i => i.jumlah === 0);
+        showInventoryListModal('Barang Stok Habis', items, 'Barang dengan jumlah = 0');
+      }
+    }
+
+    function filterDijualKembaliTersedia() {
+      const items = inventoryItems.filter(i => i.kategori === 'Dijual Kembali' && i.jumlah > 0);
+      showInventoryListModal('Tersedia (Dijual Kembali)', items, 'Barang Dijual Kembali yang masih tersedia (stok > 0)');
+    }
+
+    function filterDijualKembaliDikirim() {
+      const items = inventoryItems.filter(i => i.kategori === 'Dijual Kembali' && i.jumlah === 0 && i.status === 'Tersedia');
+      showInventoryListModal('Status: Dikirim', items, 'Barang Dijual Kembali yang sudah dikirim');
     }
 
     function renderInvDataTable() {
@@ -3478,25 +3753,42 @@
       }
     }
 
-    function deleteInventoryItem(id) {
+    async function deleteInventoryItem(id) {
       if (!isAdmin) return;
-      const item = inventoryItems.find(i => i.id === id);
-      if (!item) return;
-      if (!confirm(`Yakin ingin menghapus "${item.nama_barang}" (${item.kode_barang})? Folder gambar di Google Drive juga akan dihapus.`)) return;
+      const numId = Number(id);
+      let itemIndex = -1;
       
-      // Hapus folder gambar dari Google Drive
-      if (item.kode_barang) {
-        const folderName = item.kode_barang.replace(/\//g, '_');
-        const invYear = extractYearFromDate(item.tanggal_perolehan);
-        fetch(WEB_APP_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ action: "deleteFolderByPath", folderPath: "Inventaris/" + invYear + "/" + folderName }) });
+      if (numId > 0) {
+        itemIndex = inventoryItems.findIndex(i => Number(i.id) === numId);
       }
       
-      inventoryItems = inventoryItems.filter(i => i.id !== id);
+      if (itemIndex === -1 && typeof id === 'string' && id) {
+        itemIndex = inventoryItems.findIndex(i => String(i.kode_barang) === String(id));
+      }
+      
+      if (itemIndex === -1) {
+        showToast('Error: Item inventaris tidak ditemukan', true);
+        return;
+      }
+      
+      const item = inventoryItems[itemIndex];
+      const ok = await showConfirm('Hapus Barang Inventaris', `Yakin ingin menghapus "${item.nama_barang}" (${item.kode_barang})? Folder gambar di Google Drive juga akan dihapus.`);
+      if (!ok) return;
+      
+      if (item.kode_barang) {
+        try {
+          const folderName = item.kode_barang.replace(/\//g, '_');
+          const invYear = extractYearFromDate(item.tanggal_perolehan);
+          fetch(WEB_APP_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({ action: "deleteFolderByPath", folderPath: "Inventaris/" + invYear + "/" + folderName }) });
+        } catch(e) {}
+      }
+      
+      inventoryItems.splice(itemIndex, 1);
       saveInventoryData();
       checkLowStock();
       filterInventory();
-      showToast(`Barang "${item.nama_barang}" dan folder gambar berhasil dihapus.`);
+      showToast(`Barang "${item.nama_barang}" berhasil dihapus.`);
     }
 
     // ======================================================================
@@ -3873,7 +4165,7 @@
         tr.innerHTML = `<td class="py-3 px-4 font-bold text-slate-800">${r.no_peminjaman}</td>
           <td class="py-3 px-4">${r.nama_peminjam}</td><td class="py-3 px-4">${r.dept_unit}</td>
           <td class="py-3 px-4">${r.nama_barang}</td><td class="py-3 px-4 text-center">${r.jumlah_dipinjam}</td>
-          <td class="py-3 px-4">${r.tgl_pinjam}</td><td class="py-3 px-4">${r.tgl_kembali}</td>
+          <td class="py-3 px-4">${formatDateOnly(r.tgl_pinjam)}</td><td class="py-3 px-4">${formatDateOnly(r.tgl_kembali)}</td>
           <td class="py-3 px-4 text-center">${stBadge}</td>
           <td class="py-3 px-4 text-center">${r.status === 'Dipinjam' ? `<button onclick="openReturnModal(${r.id})" class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-lg text-[10px] font-bold hover:bg-emerald-200">Kembalikan</button>` : '-'}</td>`;
         tbody.appendChild(tr);
@@ -3975,33 +4267,183 @@
           <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold border ${tipeColor}">${r.tipe}</span></td>
           <td class="py-3 px-4">${r.nama_barang}</td><td class="py-3 px-4 text-center">${r.jumlah}</td>
           <td class="py-3 px-4">${r.asal_lokasi}</td><td class="py-3 px-4">${r.tujuan_lokasi}</td>
-          <td class="py-3 px-4">${r.tanggal}</td>
+          <td class="py-3 px-4">${formatDateOnly(r.tanggal)}</td>
           <td class="py-3 px-4 text-center">${isAdmin ? `<button onclick="deleteExpenditure(${r.id})" class="text-rose-500 hover:text-rose-700 text-[10px] font-bold">Hapus</button>` : ''}</td>`;
         tbody.appendChild(tr);
       });
     }
 
-    function deleteExpenditure(id) {
-      if (!confirm('Hapus catatan pengeluaran ini?')) return;
-      inventoryExpenditures = inventoryExpenditures.filter(x => x.id !== id);
-      saveInventoryData(); filterExpenditures();
+    async function deleteExpenditure(id) {
+      if (!isAdmin) return;
+      const numId = Number(id);
+      let itemIndex = -1;
+      
+      if (numId > 0) {
+        itemIndex = inventoryExpenditures.findIndex(x => Number(x.id) === numId);
+      }
+      
+      if (itemIndex === -1) {
+        showToast('Error: Data pengeluaran tidak ditemukan', true);
+        return;
+      }
+      
+      const item = inventoryExpenditures[itemIndex];
+      const confirmMsg = item.nama_barang 
+        ? `Hapus pengeluaran "${item.nama_barang}" (${item.jumlah || 0} unit)?`
+        : 'Hapus catatan pengeluaran ini?';
+      const ok = await showConfirm('Hapus Pengeluaran', confirmMsg);
+      if (!ok) return;
+      
+      inventoryExpenditures.splice(itemIndex, 1);
+      saveInventoryData(); 
+      filterExpenditures();
+      showToast(`Pengeluaran "${item.nama_barang || ''}" berhasil dihapus.`);
     }
 
     // ======================================================================
     // PENGIRIMAN KONSUMEN: CRUD
     // ======================================================================
+    const MULTI_ITEM_JENIS = ['Souvenir', 'Ombrometer'];
+
     function openAddDeliveryModal(jenis) {
       if (!isAdmin) return;
       document.getElementById('deliveryModalTitle').textContent = 'Tambah Pengiriman ' + jenis;
       document.getElementById('deliveryForm').reset();
       document.getElementById('deliveryEditId').value = '';
       document.getElementById('deliveryJenis').value = jenis;
+      document.getElementById('deliveryKebunList').innerHTML = '';
+      kebunRowCount = 0;
+      addDeliveryKebunRow();
       temporaryDeliveryFiles = [];
       document.getElementById('deliveryFilesList').innerHTML = '';
       document.getElementById('deliveryTanggal').value = new Date().toISOString().split('T')[0];
+
+      const isMulti = MULTI_ITEM_JENIS.includes(jenis);
+      document.getElementById('singleItemSection').classList.toggle('hidden', isMulti);
+      document.getElementById('multiItemSection').classList.toggle('hidden', !isMulti);
+
+      if (isMulti) {
+        document.getElementById('deliveryItemsList').innerHTML = '';
+        addDeliveryItemRow();
+        updateDeliveryMultiStockInfo(jenis);
+      } else {
+        populateDeliveryNamaBarang(jenis);
+      }
       document.getElementById('deliveryModal').classList.remove('hidden');
     }
     function closeDeliveryModal() { document.getElementById('deliveryModal').classList.add('hidden'); }
+
+    function getKebunByKonsumen(namaKonsumen) {
+      if (!namaKonsumen) return [];
+      const kebunSet = new Set();
+      consumerDeliveries.forEach(d => {
+        if (d.nama_konsumen && d.nama_konsumen.toLowerCase() === namaKonsumen.toLowerCase() && d.nama_kebun) {
+          d.nama_kebun.split(',').map(k => k.trim()).filter(Boolean).forEach(k => kebunSet.add(k));
+        }
+      });
+      return [...kebunSet];
+    }
+
+    let kebunRowCount = 0;
+    function addDeliveryKebunRow(value, qty) {
+      const container = document.getElementById('deliveryKebunList');
+      const rowId = kebunRowCount++;
+      const konsumen = document.getElementById('deliveryKonsumen').value;
+      const suggestions = getKebunByKonsumen(konsumen);
+      const datalistId = 'kebunList_' + rowId;
+      const escapedValue = (value || '').replace(/"/g, '&quot;');
+      const jenis = document.getElementById('deliveryJenis').value;
+      const isMulti = MULTI_ITEM_JENIS.includes(jenis);
+      const qtyHtml = isMulti ? '' : `<input type="number" min="1" value="${qty || 1}" class="w-16 px-2 py-2 border border-slate-200 rounded-xl text-xs text-center kebun-qty" placeholder="Jml">`;
+      const row = document.createElement('div');
+      row.className = 'flex items-center gap-1 delivery-kebun-row';
+      row.innerHTML = `<input type="text" value="${escapedValue}" list="${datalistId}" placeholder="Nama Kebun" class="flex-1 px-3 py-2 border border-slate-200 rounded-xl text-xs kebun-input">
+        ${qtyHtml}
+        <datalist id="${datalistId}">${suggestions.map(s => '<option value="' + s.replace(/"/g, '&quot;') + '">').join('')}</datalist>
+        <button type="button" onclick="this.parentElement.remove()" class="text-rose-400 hover:text-rose-600 text-xs font-bold px-1">✕</button>`;
+      container.appendChild(row);
+    }
+
+    function refreshKebunSuggestions() {
+      const konsumen = document.getElementById('deliveryKonsumen').value;
+      const suggestions = getKebunByKonsumen(konsumen);
+      document.querySelectorAll('.delivery-kebun-row').forEach(row => {
+        const datalist = row.querySelector('datalist');
+        if (datalist) {
+          datalist.innerHTML = suggestions.map(s => '<option value="' + s + '">').join('');
+        }
+      });
+    }
+
+    function addDeliveryItemRow() {
+      const jenis = document.getElementById('deliveryJenis').value;
+      const row = document.createElement('div');
+      row.className = 'flex gap-2 items-center delivery-item-row';
+      row.innerHTML = `
+        <select class="flex-1 px-3 py-2 border border-slate-200 rounded-xl text-xs item-select" required onchange="updateDeliveryMultiStockInfo('${jenis}')">
+          <option value="">-- Pilih Barang --</option>
+        </select>
+        <input type="number" min="1" value="1" class="w-20 px-3 py-2 border border-slate-200 rounded-xl text-xs item-qty text-center" required>
+        <button type="button" onclick="removeDeliveryItemRow(this)" class="w-8 h-8 flex items-center justify-center text-rose-500 hover:bg-rose-50 rounded-lg text-xs font-bold flex-shrink-0">✕</button>
+      `;
+      document.getElementById('deliveryItemsList').appendChild(row);
+      populateItemSelect(row.querySelector('.item-select'), jenis);
+      try { lucide.createIcons(); } catch(e){}
+    }
+
+    function removeDeliveryItemRow(btn) {
+      const rows = document.querySelectorAll('.delivery-item-row');
+      if (rows.length <= 1) { showToast("Minimal 1 barang harus dipilih!", true); return; }
+      btn.closest('.delivery-item-row').remove();
+      const jenis = document.getElementById('deliveryJenis').value;
+      updateDeliveryMultiStockInfo(jenis);
+    }
+
+    function populateItemSelect(selectEl, jenis) {
+      selectEl.innerHTML = '<option value="">-- Pilih Barang --</option>';
+      const keywords = DELIVERY_INVENTORY_MAP[jenis] || [];
+      inventoryItems
+        .filter(i => {
+          if (keywords.length === 0) return true;
+          return keywords.some(kw => (i.nama_barang || '').toLowerCase().includes(kw));
+        })
+        .filter(i => i.jumlah > 0)
+        .forEach(item => {
+          const opt = document.createElement('option');
+          opt.value = item.nama_barang;
+          opt.textContent = item.nama_barang + ' (stok: ' + item.jumlah + ')';
+          selectEl.appendChild(opt);
+        });
+    }
+
+    function updateDeliveryMultiStockInfo(jenis) {
+      const keywords = DELIVERY_INVENTORY_MAP[jenis] || [];
+      const matchingItems = inventoryItems.filter(i => {
+        if (keywords.length === 0) return true;
+        return keywords.some(kw => (i.nama_barang || '').toLowerCase().includes(kw));
+      }).filter(i => i.jumlah > 0);
+      const info = matchingItems.map(i => i.nama_barang + '(' + i.jumlah + ')').join(' ');
+      document.getElementById('deliveryMultiStockInfo').textContent = info || 'Stok habis';
+    }
+
+    function populateDeliveryNamaBarang(jenis) {
+      const select = document.getElementById('deliveryNamaBarang');
+      select.innerHTML = '<option value="">-- Pilih Barang --</option>';
+      const keywords = DELIVERY_INVENTORY_MAP[jenis] || [];
+      const matchingItems = inventoryItems.filter(i => {
+        if (keywords.length === 0) return true;
+        return keywords.some(kw => (i.nama_barang || '').toLowerCase().includes(kw));
+      }).filter(i => i.jumlah > 0);
+      let totalStock = 0;
+      matchingItems.forEach(item => {
+        totalStock += item.jumlah;
+        const opt = document.createElement('option');
+        opt.value = item.nama_barang;
+        opt.textContent = item.nama_barang + ' (stok: ' + item.jumlah + ')';
+        select.appendChild(opt);
+      });
+      document.getElementById('deliveryStockInfo').textContent = totalStock;
+    }
 
     async function handleDeliveryFileUpload(e) {
       const file = e.target.files[0]; if (!file) return;
@@ -4039,57 +4481,30 @@
       'Buku Laporan': ['buku laporan'],
       'AWS': ['aws'],
       'Ombrometer': ['tabung curah hujan', 'gelas ukur', 'ombrometer'],
-      'Souvenir': ['plakat','vandel','pin','mug','jam','payung','goodie bag','blocknote','baju','tas','sertifikat','e-tol']
+      'Souvenir': ['plakat','vandel','pin','mug','jam','payung','goodie bag','blocknote','baju','tas','topi','sertifikat','e-tol']
     };
 
-    function reduceInventoryForDelivery(jenis, jumlah) {
-      const keywords = DELIVERY_INVENTORY_MAP[jenis] || [];
-      if (keywords.length === 0) return [];
+    function reduceInventoryForDelivery(jenis, items) {
+      // items = [{nama: 'Tas', jumlah: 4}, {nama: 'Baju', jumlah: 2}] atau jumlah (backward compat)
+      if (!Array.isArray(items)) items = [{ nama: '', jumlah: items }];
       const reduced = [];
-      let remaining = jumlah;
-
-      // Untuk Souvenir: kurangi dari kategori "Souvenir"
-      if (jenis === 'Souvenir') {
-        inventoryItems.forEach(item => {
-          if (item.kategori !== 'Souvenir') return;
-          if (remaining <= 0) return;
-          const namaLower = (item.nama_barang || '').toLowerCase();
-          const matches = keywords.some(kw => namaLower.includes(kw));
-          if (matches && item.jumlah > 0) {
-            const reduce = Math.min(item.jumlah, remaining);
-            item.jumlah -= reduce;
-            remaining -= reduce;
-            reduced.push({ nama: item.nama_barang, kode: item.kode_barang, dikurangi: reduce, sisa: item.jumlah });
+      items.forEach(item => {
+        if (!item.nama || item.jumlah <= 0) return;
+        const inv = inventoryItems.find(i => i.nama_barang === item.nama);
+        if (inv && inv.jumlah >= item.jumlah) {
+          inv.jumlah -= item.jumlah;
+          if (inv.jumlah === 0) {
+            inv.status = inv.kategori === 'Dijual Kembali' ? 'Tersedia' : 'Tidak Tersedia';
           }
-        });
-        // Jika masih ada sisa tapi tidak ada item spesifik yang cocok, kurangi dari item Souvenir manapun
-        if (remaining > 0) {
-          inventoryItems.forEach(item => {
-            if (item.kategori !== 'Souvenir') return;
-            if (remaining <= 0) return;
-            if (item.jumlah > 0 && !reduced.find(r => r.kode === item.kode_barang)) {
-              const reduce = Math.min(item.jumlah, remaining);
-              item.jumlah -= reduce;
-              remaining -= reduce;
-              reduced.push({ nama: item.nama_barang, kode: item.kode_barang, dikurangi: reduce, sisa: item.jumlah });
-            }
-          });
+          reduced.push({ nama: inv.nama_barang, kode: inv.kode_barang, dikurangi: item.jumlah, sisa: inv.jumlah });
+        } else if (inv) {
+          // Partial reduce jika stok kurang
+          const reduce = inv.jumlah;
+          inv.jumlah = 0;
+          inv.status = inv.kategori === 'Dijual Kembali' ? 'Tersedia' : 'Tidak Tersedia';
+          reduced.push({ nama: inv.nama_barang, kode: inv.kode_barang, dikurangi: reduce, sisa: 0 });
         }
-      } else {
-        // Untuk selain Souvenir: kurangi dari kategori "Dijual Kembali"
-        inventoryItems.forEach(item => {
-          if (item.kategori !== 'Dijual Kembali') return;
-          if (remaining <= 0) return;
-          const namaLower = (item.nama_barang || '').toLowerCase();
-          const matches = keywords.some(kw => namaLower.includes(kw));
-          if (matches && item.jumlah > 0) {
-            const reduce = Math.min(item.jumlah, remaining);
-            item.jumlah -= reduce;
-            remaining -= reduce;
-            reduced.push({ nama: item.nama_barang, kode: item.kode_barang, dikurangi: reduce, sisa: item.jumlah });
-          }
-        });
-      }
+      });
       return reduced;
     }
 
@@ -4097,18 +4512,58 @@
       e.preventDefault();
       if (!isAdmin) return;
       const jenis = document.getElementById('deliveryJenis').value;
-      const jumlah = parseInt(document.getElementById('deliveryJumlah').value) || 1;
-      
-      // Validasi stok untuk jenis pengiriman yang membutuhkan inventory
-      const keywords = DELIVERY_INVENTORY_MAP[jenis] || [];
-      if (keywords.length > 0) {
-        const hasStock = inventoryItems.some(i => 
-          keywords.some(kw => (i.nama_barang||'').toLowerCase().includes(kw)) && i.jumlah > 0
-        );
-        if (!hasStock) {
-          showToast("Stok barang untuk pengiriman " + jenis + " habis!", true);
-          return;
+      const isMulti = MULTI_ITEM_JENIS.includes(jenis);
+      let items = [];
+
+      // Kumpulkan kebun rows
+      const kebunRows = document.querySelectorAll('.delivery-kebun-row');
+      const kebunList = [];
+      kebunRows.forEach(row => {
+        const nama = row.querySelector('.kebun-input').value.trim();
+        const qtyInput = row.querySelector('.kebun-qty');
+        const qty = qtyInput ? (parseInt(qtyInput.value) || 0) : 0;
+        if (nama) kebunList.push({ nama, jumlah: qty });
+      });
+
+      if (isMulti) {
+        // Multi-item: kumpulkan dari rows
+        const rows = document.querySelectorAll('.delivery-item-row');
+        rows.forEach(row => {
+          const nama = row.querySelector('.item-select').value;
+          const qty = parseInt(row.querySelector('.item-qty').value) || 0;
+          if (nama && qty > 0) items.push({ nama, jumlah: qty });
+        });
+        if (items.length === 0) { showToast("Pilih minimal 1 barang!", true); return; }
+        for (const item of items) {
+          const inv = inventoryItems.find(i => i.nama_barang === item.nama);
+          if (!inv || inv.jumlah < item.jumlah) {
+            showToast("Stok " + item.nama + " tidak cukup! (tersedia: " + (inv ? inv.jumlah : 0) + ")", true);
+            return;
+          }
         }
+      } else {
+        // Single-item: jumlah dari tiap kebun row
+        if (kebunList.length === 0) { showToast("Tambahkan minimal 1 kebun!", true); return; }
+        const namaBarang = document.getElementById('deliveryNamaBarang').value;
+        if (!namaBarang) { showToast("Pilih nama barang!", true); return; }
+        // Validasi stok total
+        const totalKebunJumlah = kebunList.reduce((s, k) => s + k.jumlah, 0);
+        const keywords = DELIVERY_INVENTORY_MAP[jenis] || [];
+        if (keywords.length > 0) {
+          let totalStock = 0;
+          inventoryItems.forEach(i => {
+            if (keywords.some(kw => (i.nama_barang||'').toLowerCase().includes(kw))) {
+              totalStock += i.jumlah;
+            }
+          });
+          if (totalStock === 0) { showToast("Stok barang untuk pengiriman " + jenis + " habis!", true); return; }
+          if (totalKebunJumlah > totalStock) { showToast("Total jumlah (" + totalKebunJumlah + ") melebihi stok tersedia (" + totalStock + ")!", true); return; }
+        }
+        // Validasi per kebun
+        for (const kebun of kebunList) {
+          if (kebun.jumlah <= 0) { showToast("Jumlah untuk kebun '" + kebun.nama + "' harus lebih dari 0!", true); return; }
+        }
+        items = [{ nama: namaBarang, jumlah: totalKebunJumlah }];
       }
       
       let maxId = consumerDeliveries.length > 0 ? Math.max(...consumerDeliveries.map(d => parseInt(d.id)||0)) + 1 : 1;
@@ -4119,31 +4574,56 @@
       const pad = (n) => String(n).padStart(2, '0');
       const waktuWIB = `${wibTime.getFullYear()}-${pad(wibTime.getMonth()+1)}-${pad(wibTime.getDate())} ${pad(wibTime.getHours())}:${pad(wibTime.getMinutes())}:${pad(wibTime.getSeconds())}`;
       
-      const record = {
-        id: maxId, no_pengiriman: 'KIRIM-' + String(maxId).padStart(4,'0'),
-        jenis_pengiriman: jenis,
-        nama_konsumen: document.getElementById('deliveryKonsumen').value,
-        jumlah: jumlah,
-        tanggal_kirim: document.getElementById('deliveryTanggal').value,
-        waktu_kirim_wib: waktuWIB,
-        files: [...temporaryDeliveryFiles],
-        keterangan: document.getElementById('deliveryKeterangan').value || '-',
-        jam_update: getCurrentTimestamp()
-      };
-      consumerDeliveries.push(record);
+      const namaKonsumen = document.getElementById('deliveryKonsumen').value;
+      const tanggalKirim = document.getElementById('deliveryTanggal').value;
+      const keterangan = document.getElementById('deliveryKeterangan').value || '-';
+      const namaBarangStr = items.map(i => i.nama).join(', ');
 
-      // Auto-reduce inventory untuk kategori "Dijual Kembali"
-      const reduced = reduceInventoryForDelivery(jenis, jumlah);
-      if (reduced.length > 0) {
-        let msg = 'Stok inventaris dikurangi: ';
-        msg += reduced.map(r => `${r.nama} (-${r.dikurangi}, sisa ${r.sisa})`).join(', ');
-        showToast(msg);
-        checkLowStock();
+      if (isMulti) {
+        // Multi-item: 1 record dengan semua kebun (nama saja)
+        const record = {
+          id: maxId, no_pengiriman: 'KIRIM-' + String(maxId).padStart(4,'0'),
+          jenis_pengiriman: jenis,
+          nama_konsumen: namaKonsumen,
+          nama_kebun: kebunList.map(k => k.nama).join(', ') || '-',
+          items: items,
+          nama_barang: namaBarangStr,
+          jumlah: items.reduce((s, i) => s + i.jumlah, 0),
+          tanggal_kirim: tanggalKirim,
+          waktu_kirim_wib: waktuWIB,
+          files: [...temporaryDeliveryFiles],
+          keterangan: keterangan,
+          jam_update: getCurrentTimestamp()
+        };
+        consumerDeliveries.push(record);
+        reduceInventoryForDelivery(jenis, items);
+      } else {
+        // Single-item: 1 record per kebun
+        kebunList.forEach(kebun => {
+          const record = {
+            id: maxId, no_pengiriman: 'KIRIM-' + String(maxId).padStart(4,'0'),
+            jenis_pengiriman: jenis,
+            nama_konsumen: namaKonsumen,
+            nama_kebun: kebun.nama,
+            items: [{ nama: items[0].nama, jumlah: kebun.jumlah }],
+            nama_barang: items[0].nama,
+            jumlah: kebun.jumlah,
+            tanggal_kirim: tanggalKirim,
+            waktu_kirim_wib: waktuWIB,
+            files: [...temporaryDeliveryFiles],
+            keterangan: keterangan,
+            jam_update: getCurrentTimestamp()
+          };
+          consumerDeliveries.push(record);
+          reduceInventoryForDelivery(jenis, [{ nama: items[0].nama, jumlah: kebun.jumlah }]);
+          maxId++;
+        });
       }
 
       saveInventoryData();
       closeDeliveryModal();
       showToast(`Pengiriman ${jenis} berhasil dicatat!`);
+      checkLowStock();
       renderDeliveryTables();
     }
 
@@ -4175,19 +4655,23 @@
         if (recentTbody) {
           recentTbody.innerHTML = '';
           items.slice(0, 5).forEach(d => {
-            recentTbody.innerHTML += `<tr class="border-b border-slate-50"><td class="py-2 px-3 text-xs">${d.nama_konsumen}</td><td class="py-2 px-3 text-center text-xs">${d.jumlah}</td><td class="py-2 px-3 text-xs">${d.tanggal_kirim}</td></tr>`;
+            const dItems = d.items || [{ nama: d.nama_barang, jumlah: d.jumlah }];
+            const itemsStr = dItems.map(i => i.nama).join(', ');
+            recentTbody.innerHTML += `<tr class="border-b border-slate-50"><td class="py-2 px-3 text-xs">${d.nama_konsumen}</td><td class="py-2 px-3 text-xs">${d.nama_kebun || '-'}</td><td class="py-2 px-3 text-xs text-[11px]">${itemsStr}</td><td class="py-2 px-3 text-center text-xs">${d.jumlah}</td><td class="py-2 px-3 text-xs">${formatDateOnly(d.tanggal_kirim)}</td></tr>`;
           });
         }
 
         const fullTbody = document.getElementById(bodyMap[type]);
         if (fullTbody) {
           fullTbody.innerHTML = '';
-          if (items.length === 0) { fullTbody.innerHTML = '<tr><td colspan="7" class="py-8 text-center text-slate-400">Tidak ada data pengiriman</td></tr>'; return; }
+          if (items.length === 0) { fullTbody.innerHTML = '<tr><td colspan="9" class="py-8 text-center text-slate-400">Tidak ada data pengiriman</td></tr>'; return; }
           items.forEach(d => {
+            const dItems = d.items || [{ nama: d.nama_barang, jumlah: d.jumlah }];
+            const itemsStr = dItems.map(i => `<span class="inline-block bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded text-[10px] font-semibold mr-1">${i.nama}</span>`).join('');
             const tr = document.createElement('tr'); tr.className = 'hover:bg-slate-50 transition';
             tr.innerHTML = `<td class="py-3 px-4 font-bold text-slate-800">${d.no_pengiriman}</td>
-              <td class="py-3 px-4">${d.nama_konsumen}</td><td class="py-3 px-4 text-center">${d.jumlah}</td>
-              <td class="py-3 px-4">${d.tanggal_kirim}</td>
+              <td class="py-3 px-4">${d.nama_konsumen}</td><td class="py-3 px-4 text-xs">${d.nama_kebun || '-'}</td><td class="py-3 px-4 text-[11px]">${itemsStr}</td><td class="py-3 px-4 text-center font-bold">${d.jumlah}</td>
+              <td class="py-3 px-4">${formatDateOnly(d.tanggal_kirim)}</td>
               <td class="py-3 px-4 text-center">${d.files && d.files.length > 0 ? `<span class="text-brand-600 font-bold text-[10px]">${d.files.length} Berkas</span>` : '-'}</td>
               <td class="py-3 px-4 text-[11px]">${d.keterangan || '-'}</td>
               <td class="py-3 px-4 text-center">${isAdmin ? `<button onclick="deleteDelivery(${d.id})" class="text-rose-500 hover:text-rose-700 text-[10px] font-bold">Hapus</button>` : ''}</td>`;
@@ -4197,35 +4681,51 @@
       });
     }
 
-    function deleteDelivery(id) {
-      if (!confirm('Hapus catatan pengiriman ini?')) return;
-      const deleted = consumerDeliveries.find(d => d.id === id);
-      if (deleted) {
-        // Kembalikan stok inventory
-        const keywords = DELIVERY_INVENTORY_MAP[deleted.jenis_pengiriman] || [];
-        if (keywords.length > 0) {
-          let remaining = deleted.jumlah || 0;
-          inventoryItems.forEach(item => {
-            if (remaining <= 0) return;
-            const matches = keywords.some(kw => (item.nama_barang||'').toLowerCase().includes(kw));
-            if (matches && item.jumlah >= 0) {
-              item.jumlah += remaining;
-              remaining = 0;
-            }
-          });
-        }
+    async function deleteDelivery(id) {
+      if (!isAdmin) return;
+      const numId = Number(id);
+      let itemIndex = -1;
+      
+      if (numId > 0) {
+        itemIndex = consumerDeliveries.findIndex(d => Number(d.id) === numId);
       }
-      consumerDeliveries = consumerDeliveries.filter(d => d.id !== id);
-      saveInventoryData(); renderDeliveryTables();
+      
+      if (itemIndex === -1) {
+        showToast('Error: Data pengiriman tidak ditemukan', true);
+        return;
+      }
+      
+      const deleted = consumerDeliveries[itemIndex];
+      const itemsList = deleted.items || [{ nama: deleted.nama_barang, jumlah: deleted.jumlah }];
+      const itemsStr = itemsList.map(i => i.nama + '(' + i.jumlah + ')').join(', ');
+      const confirmMsg = deleted.nama_konsumen 
+        ? `Hapus pengiriman "${deleted.nama_konsumen}" (${deleted.jenis_pengiriman}, ${itemsStr})?`
+        : 'Hapus catatan pengiriman ini?';
+      const ok = await showConfirm('Hapus Pengiriman', confirmMsg);
+      if (!ok) return;
+      
+      // Restore stok per-item
+      itemsList.forEach(item => {
+        if (!item.nama || item.jumlah <= 0) return;
+        const inv = inventoryItems.find(i => i.nama_barang === item.nama);
+        if (inv) inv.jumlah += item.jumlah;
+      });
+      
+      consumerDeliveries.splice(itemIndex, 1);
+      saveInventoryData(); 
+      renderDeliveryTables();
+      showToast(`Pengiriman "${deleted.nama_konsumen || ''}" berhasil dihapus.`);
     }
 
     // ======================================================================
     // DASHBOARD INVENTARIS: Charts
     // ======================================================================
     function renderInvDashboard() {
-      // KPI dari 3 Sub-Dashboard
-      // Aset Tetap & Peminjaman
-      const asetTetapItems = inventoryItems.filter(i => i.kategori === 'Aset Tetap' || i.kategori === 'Alat Bantu Kerja');
+      // KPI dari Sub-Dashboard
+      // Aset Tetap
+      const asetTetapItems = inventoryItems.filter(i => i.kategori === 'Aset Tetap');
+      // Alat Bantu Kerja
+      const abkItems = inventoryItems.filter(i => i.kategori === 'Alat Bantu Kerja');
       const dipinjamItems = inventoryItems.filter(i => i.status === 'Dipinjam');
       
       // Habis Pakai & ATK
@@ -4251,7 +4751,6 @@
         borrowTbody.innerHTML = '';
         const dipinjamRecords = borrowingRecords.filter(r => r.status === 'Dipinjam').slice(0, 5);
         dipinjamRecords.forEach(r => {
-          // Cari stok barang yang dipinjam
           const invItem = inventoryItems.find(i => i.id === r.item_id || i.nama_barang === r.nama_barang);
           const stok = invItem ? invItem.jumlah : '-';
           borrowTbody.innerHTML += `<tr class="border-b border-slate-50"><td class="py-2 px-3">${r.nama_peminjam}</td><td class="py-2 px-3">${r.nama_barang}</td><td class="py-2 px-3 text-center">${r.jumlah_dipinjam}</td><td class="py-2 px-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${stok > 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}">${stok}</span></td><td class="py-2 px-3">${r.tgl_pinjam}</td></tr>`;
@@ -4265,7 +4764,7 @@
       const ctxKat = createFreshCanvas('wrapInvKategori', 'chartInvKategoriCvs');
       if (ctxKat) {
         const labels = Object.keys(kategoriMap); const data = Object.values(kategoriMap);
-        const colors = ['#4f46e5','#0ea5e9','#f59e0b','#10b981','#f43f5e','#8b5cf6','#06b6d4','#84cc16'];
+        const colors = ['#4f46e5','#14b8a6','#f59e0b','#10b981','#f43f5e','#8b5cf6','#06b6d4','#84cc16'];
         new Chart(ctxKat, { type: 'doughnut', data: { labels, datasets: [{ data, backgroundColor: colors.slice(0, labels.length), borderWidth: 2, borderColor: '#fff' }] },
           options: { responsive: true, maintainAspectRatio: false, 
             onClick: function(evt, elements) {
@@ -4285,12 +4784,11 @@
       
       if (asetTable) {
         asetTable.innerHTML = '';
-        const asetOnly = inventoryItems.filter(i => i.kategori === 'Aset Tetap' || i.kategori === 'Alat Bantu Kerja');
-        asetOnly.slice(0, 5).forEach(i => {
+        asetTetapItems.slice(0, 5).forEach(i => {
           const stokColor = i.jumlah === 0 ? 'bg-rose-100 text-rose-700' : (i.jumlah <= 3 ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700');
           asetTable.innerHTML += `<tr class="border-b border-slate-50"><td class="py-2 px-3">${i.nama_barang}</td><td class="py-2 px-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${stokColor}">${i.jumlah}</span></td></tr>`;
         });
-        if (asetOnly.length === 0) asetTable.innerHTML = '<tr><td colspan="2" class="py-4 text-center text-slate-400 text-xs">Tidak ada data aset tetap</td></tr>';
+        if (asetTetapItems.length === 0) asetTable.innerHTML = '<tr><td colspan="2" class="py-4 text-center text-slate-400 text-xs">Tidak ada data aset tetap</td></tr>';
       }
       
       if (atkTable) {
@@ -4329,8 +4827,8 @@
       document.getElementById('invDijualKpiTotalVal').textContent = formatIDR(totalVal);
       document.getElementById('invDijualKpiTersedia').textContent = tersedia;
       document.getElementById('invDijualKpiPctTersedia').textContent = total > 0 ? ((tersedia/total)*100).toFixed(1)+'%' : '0%';
-      document.getElementById('invDijualKpiTerjual').textContent = terjual;
-      document.getElementById('invDijualKpiPctTerjual').textContent = total > 0 ? ((terjual/total)*100).toFixed(1)+'%' : '0%';
+      document.getElementById('invDijualKpiDikirim').textContent = terjual;
+      document.getElementById('invDijualKpiPctDikirim').textContent = total > 0 ? ((terjual/total)*100).toFixed(1)+'%' : '0%';
       document.getElementById('invDijualKpiHabis').textContent = habis;
       document.getElementById('invDijualKpiPctHabis').textContent = total > 0 ? ((habis/total)*100).toFixed(1)+'%' : '0%';
 
@@ -4360,7 +4858,7 @@
         const datasets = deliveryTypes.map((type, i) => ({
           label: type,
           data: monthlyData[type],
-          backgroundColor: ['#8b5cf6', '#ec4899', '#10b981', '#f59e0b'][i],
+          backgroundColor: ['#6366f1', '#ec4899', '#14b8a6', '#f59e0b'][i],
           borderWidth: 1
         }));
         
@@ -4376,7 +4874,7 @@
       const ctxKat = createFreshCanvas('wrapInvDijualKategori', 'chartInvDijualKategoriCvs');
       if (ctxKat) {
         const labels = Object.keys(kategoriMap); const data = Object.values(kategoriMap);
-        const colors = ['#8b5cf6','#a78bfa','#c4b5fd','#ddd6fe'];
+        const colors = ['#6366f1','#ec4899','#f97316','#14b8a6','#8b5cf6'];
         new Chart(ctxKat, { type: 'doughnut', data: { labels, datasets: [{ data, backgroundColor: colors.slice(0, labels.length), borderWidth: 2, borderColor: '#fff' }] },
           options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } }, datalabels: { display: false } }, cutout: '60%' } });
       }
@@ -4393,34 +4891,21 @@
     }
 
     // ======================================================================
-    // DASHBOARD ASET TETAP & PEMINJAMAN
+    // DASHBOARD ASET TETAP
     // ======================================================================
-    function renderInvAsetPinjam() {
-      const asetItems = inventoryItems.filter(i => i.kategori === 'Aset Tetap' || i.kategori === 'Alat Bantu Kerja');
+    function renderInvAset() {
+      const asetItems = inventoryItems.filter(i => i.kategori === 'Aset Tetap');
       const total = asetItems.length;
       const dipinjam = asetItems.filter(i => i.status === 'Dipinjam').length;
       const rusak = asetItems.filter(i => i.status === 'Rusak').length;
+      const baik = asetItems.filter(i => i.status === 'Baik' || i.kondisi === 'Baik').length;
       const totalVal = asetItems.reduce((s,i) => s + (i.nilai_perolehan||0), 0);
-      const alatBantu = asetItems.filter(i => i.kategori === 'Alat Bantu Kerja').length;
 
       document.getElementById('invAsetKpiTotal').textContent = total;
       document.getElementById('invAsetKpiTotalVal').textContent = formatIDR(totalVal);
       document.getElementById('invAsetKpiDipinjam').textContent = dipinjam;
-      document.getElementById('invAsetKpiAlatBantu').textContent = alatBantu;
+      document.getElementById('invAsetKpiBaik').textContent = baik;
       document.getElementById('invAsetKpiRusak').textContent = rusak;
-
-      // Tabel peminjaman terkini
-      const tbody = document.getElementById('invAsetBorrowTable');
-      if (tbody) {
-        tbody.innerHTML = '';
-        borrowingRecords.filter(r => r.status === 'Dipinjam').slice(0, 5).forEach(r => {
-          // Cari stok barang yang dipinjam
-          const invItem = inventoryItems.find(i => i.id === r.item_id || i.nama_barang === r.nama_barang);
-          const stok = invItem ? invItem.jumlah : '-';
-          tbody.innerHTML += `<tr class="border-b border-slate-50"><td class="py-2 px-3">${r.nama_peminjam}</td><td class="py-2 px-3">${r.nama_barang}</td><td class="py-2 px-3 text-center">${r.jumlah_dipinjam}</td><td class="py-2 px-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${stok > 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}">${stok}</span></td><td class="py-2 px-3">${r.tgl_pinjam}</td></tr>`;
-        });
-        if (borrowingRecords.filter(r => r.status === 'Dipinjam').length === 0) tbody.innerHTML = '<tr><td colspan="5" class="py-4 text-center text-slate-400 text-xs">Tidak ada peminjaman aktif</td></tr>';
-      }
 
       // Chart lokasi
       const lokasiMap = {};
@@ -4428,19 +4913,79 @@
       const ctxLoc = createFreshCanvas('wrapInvAsetLokasi', 'chartInvAsetLokasiCvs');
       if (ctxLoc) {
         const labels = Object.keys(lokasiMap); const data = Object.values(lokasiMap);
-        new Chart(ctxLoc, { type: 'bar', data: { labels, datasets: [{ data, backgroundColor: '#6366f1', borderRadius: 6 }] },
+        const lokasiColors = ['#3b82f6','#8b5cf6','#06b6d4','#10b981','#f59e0b','#f43f5e','#ec4899','#14b8a6'];
+        new Chart(ctxLoc, { type: 'bar', data: { labels, datasets: [{ data, backgroundColor: data.map((_, i) => lokasiColors[i % lokasiColors.length]), borderRadius: 8, barThickness: 28 }] },
           options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false }, datalabels: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } }, y: { grid: { display: false } } } } });
       }
 
-      // Tabel list barang aset tetap & alat bantu kerja
+      // Chart nama aset (pie per nama barang)
+      const namaMap = {};
+      asetItems.forEach(i => { namaMap[i.nama_barang] = (namaMap[i.nama_barang]||0) + (i.jumlah || 1); });
+      const ctxKondisi = createFreshCanvas('wrapInvAsetKondisi', 'chartInvAsetKondisiCvs');
+      if (ctxKondisi) {
+        const kLabels = Object.keys(namaMap); const kData = Object.values(namaMap);
+        const asetColors = ['#3b82f6','#8b5cf6','#06b6d4','#10b981','#f59e0b','#f43f5e','#ec4899','#14b8a6','#84cc16','#f97316'];
+        new Chart(ctxKondisi, { type: 'doughnut', data: { labels: kLabels, datasets: [{ data: kData, backgroundColor: asetColors.slice(0, kLabels.length), borderWidth: 2, borderColor: '#fff' }] },
+          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } }, datalabels: { display: false } }, cutout: '60%' } });
+      }
+
+      // Tabel list barang
       const tbodyList = document.getElementById('invAsetListTable');
       if (tbodyList) {
         tbodyList.innerHTML = '';
-        asetItems.slice(0, 8).forEach(i => {
+        asetItems.slice(0, 10).forEach(i => {
           const kondisiColor = i.kondisi === 'Baik' ? 'bg-emerald-50 text-emerald-700' : (i.kondisi === 'Rusak Ringan' ? 'bg-amber-50 text-amber-700' : 'bg-rose-50 text-rose-700');
-          tbodyList.innerHTML += `<tr class="border-b border-slate-50"><td class="py-2 px-3">${i.nama_barang}</td><td class="py-2 px-3 text-[10px]">${i.kode_barang}</td><td class="py-2 px-3 text-[10px]">${i.kategori}</td><td class="py-2 px-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${kondisiColor}">${i.kondisi}</span></td></tr>`;
+          tbodyList.innerHTML += `<tr class="border-b border-slate-50"><td class="py-2 px-3">${i.nama_barang}</td><td class="py-2 px-3 text-[10px]">${i.kode_barang}</td><td class="py-2 px-3 text-[10px]">${i.lokasi_ruangan || '-'}</td><td class="py-2 px-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${kondisiColor}">${i.kondisi || 'Baik'}</span></td><td class="py-2 px-3 text-center font-bold">${i.jumlah}</td></tr>`;
         });
-        if (asetItems.length === 0) tbodyList.innerHTML = '<tr><td colspan="4" class="py-4 text-center text-slate-400 text-xs">Tidak ada data aset tetap & alat bantu kerja</td></tr>';
+        if (asetItems.length === 0) tbodyList.innerHTML = '<tr><td colspan="5" class="py-4 text-center text-slate-400 text-xs">Tidak ada data aset tetap</td></tr>';
+      }
+    }
+
+    // ======================================================================
+    // DASHBOARD ALAT BANTU KERJA
+    // ======================================================================
+    function renderInvABK() {
+      const abkItems = inventoryItems.filter(i => i.kategori === 'Alat Bantu Kerja');
+      const total = abkItems.length;
+      const dipinjam = abkItems.filter(i => i.status === 'Dipinjam').length;
+      const rusak = abkItems.filter(i => i.status === 'Rusak').length;
+      const baik = abkItems.filter(i => i.status === 'Baik' || i.kondisi === 'Baik').length;
+
+      document.getElementById('invAbkKpiTotal').textContent = total;
+      document.getElementById('invAbkKpiDipinjam').textContent = dipinjam;
+      document.getElementById('invAbkKpiBaik').textContent = baik;
+      document.getElementById('invAbkKpiRusak').textContent = rusak;
+
+      // Chart lokasi
+      const lokasiMap = {};
+      abkItems.forEach(i => { const loc = i.lokasi_ruangan || '-'; lokasiMap[loc] = (lokasiMap[loc]||0) + 1; });
+      const ctxLoc = createFreshCanvas('wrapInvAbkLokasi', 'chartInvAbkLokasiCvs');
+      if (ctxLoc) {
+        const labels = Object.keys(lokasiMap); const data = Object.values(lokasiMap);
+        new Chart(ctxLoc, { type: 'bar', data: { labels, datasets: [{ data, backgroundColor: data.map((_, i) => ['#14b8a6','#06b6d4','#3b82f6','#8b5cf6','#10b981'][i % 5]), borderRadius: 8, barThickness: 28 }] },
+          options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false }, datalabels: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } }, y: { grid: { display: false } } } } });
+      }
+
+      // Chart kondisi
+      const kondisiMap = {};
+      abkItems.forEach(i => { const k = i.kondisi || 'Baik'; kondisiMap[k] = (kondisiMap[k]||0) + 1; });
+      const ctxKondisi = createFreshCanvas('wrapInvAbkKondisi', 'chartInvAbkKondisiCvs');
+      if (ctxKondisi) {
+        const kLabels = Object.keys(kondisiMap); const kData = Object.values(kondisiMap);
+        const kColors = kLabels.map(l => l === 'Baik' ? '#10b981' : l === 'Rusak Ringan' ? '#f59e0b' : '#f43f5e');
+        new Chart(ctxKondisi, { type: 'doughnut', data: { labels: kLabels, datasets: [{ data: kData, backgroundColor: kColors, borderWidth: 2, borderColor: '#fff' }] },
+          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } }, datalabels: { display: false } }, cutout: '60%' } });
+      }
+
+      // Tabel list barang
+      const tbodyList = document.getElementById('invAbkListTable');
+      if (tbodyList) {
+        tbodyList.innerHTML = '';
+        abkItems.slice(0, 10).forEach(i => {
+          const kondisiColor = i.kondisi === 'Baik' ? 'bg-emerald-50 text-emerald-700' : (i.kondisi === 'Rusak Ringan' ? 'bg-amber-50 text-amber-700' : 'bg-rose-50 text-rose-700');
+          tbodyList.innerHTML += `<tr class="border-b border-slate-50"><td class="py-2 px-3">${i.nama_barang}</td><td class="py-2 px-3 text-[10px]">${i.kode_barang}</td><td class="py-2 px-3 text-[10px]">${i.lokasi_ruangan || '-'}</td><td class="py-2 px-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${kondisiColor}">${i.kondisi || 'Baik'}</span></td><td class="py-2 px-3 text-center font-bold">${i.jumlah}</td></tr>`;
+        });
+        if (abkItems.length === 0) tbodyList.innerHTML = '<tr><td colspan="5" class="py-4 text-center text-slate-400 text-xs">Tidak ada data alat bantu kerja</td></tr>';
       }
     }
 
@@ -4478,7 +5023,7 @@
       const ctxKat = createFreshCanvas('wrapInvAtkKategori', 'chartInvAtkKategoriCvs');
       if (ctxKat) {
         const labels = Object.keys(kategoriMap); const data = Object.values(kategoriMap);
-        const colors = ['#f59e0b','#f97316','#ec4899'];
+        const colors = ['#f43f5e','#8b5cf6','#14b8a6','#f59e0b'];
         new Chart(ctxKat, { type: 'doughnut', data: { labels, datasets: [{ data, backgroundColor: colors.slice(0, labels.length), borderWidth: 2, borderColor: '#fff' }] },
           options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } }, datalabels: { display: false } }, cutout: '60%' } });
       }
@@ -4520,9 +5065,8 @@
     }
 
     function filterInventoryByKategoriAset(kategori) {
-      document.getElementById('invKategoriFilter').value = kategori;
-      switchTab('inv-data');
-      filterInventory();
+      const items = inventoryItems.filter(i => i.kategori === kategori);
+      showInventoryListModal('Daftar ' + kategori, items, 'Barang kategori "' + kategori + '"');
     }
 
     // ======================================================================
@@ -4537,6 +5081,7 @@
       ];
       const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
       const currentYear = new Date().getFullYear();
+      const chartColors = ['#4f46e5','#10b981','#f59e0b','#ef4444','#8b5cf6','#ec4899','#06b6d4','#84cc16','#f97316','#6366f1'];
 
       types.forEach(t => {
         const items = consumerDeliveries.filter(d => d.jenis_pengiriman === t.key && new Date(d.tanggal_kirim).getFullYear() === currentYear);
@@ -4544,18 +5089,41 @@
         items.forEach(d => { const m = new Date(d.tanggal_kirim).getMonth(); monthlyData[m] += (d.jumlah || 0); });
         const ctx = createFreshCanvas(t.chartId, t.chartId + 'Cvs');
         if (ctx) {
-          new Chart(ctx, { type: 'bar', data: { labels: months, datasets: [{ label: 'Jumlah Terkirim', data: monthlyData, backgroundColor: '#4f46e5', borderRadius: 4 }] },
+          new Chart(ctx, { type: 'bar', data: { labels: months, datasets: [{ label: 'Jumlah Terkirim', data: monthlyData, backgroundColor: monthlyData.map((_, i) => ['#3b82f6','#8b5cf6','#06b6d4','#10b981','#f59e0b','#f43f5e','#ec4899','#14b8a6','#84cc16','#f97316','#6366f1','#a855f7'][i]), borderRadius: 4 }] },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { grid: { display: false } } } } });
         }
 
-        // Chart per konsumen
+        // Chart per konsumen (group by nama_konsumen saja)
         const konsumenMap = {};
-        items.forEach(d => { konsumenMap[d.nama_konsumen] = (konsumenMap[d.nama_konsumen]||0) + (d.jumlah||0); });
+        items.forEach(d => { const konsumenLabel = d.nama_konsumen || 'Tanpa Nama'; konsumenMap[konsumenLabel] = (konsumenMap[konsumenLabel]||0) + (d.jumlah||0); });
         const sortedKonsumen = Object.entries(konsumenMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
         const ctxK = createFreshCanvas(t.chartId + 'Konsumen', t.chartId + 'KonsumenCvs');
         if (ctxK && sortedKonsumen.length > 0) {
-          new Chart(ctxK, { type: 'bar', data: { labels: sortedKonsumen.map(k => k[0]), datasets: [{ label: 'Jumlah', data: sortedKonsumen.map(k => k[1]), backgroundColor: '#10b981', borderRadius: 4 }] },
+          new Chart(ctxK, { type: 'bar', data: { labels: sortedKonsumen.map(k => k[0]), datasets: [{ label: 'Jumlah', data: sortedKonsumen.map(k => k[1]), backgroundColor: sortedKonsumen.map((_, i) => ['#10b981','#14b8a6','#06b6d4','#3b82f6','#8b5cf6','#f59e0b','#f43f5e','#ec4899','#84cc16','#f97316'][i % 10]), borderRadius: 4 }] },
             options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false }, datalabels: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } }, y: { grid: { display: false } } } } });
+        }
+
+        // Chart Komposisi Barang (doughnut) untuk multi-item types
+        if (MULTI_ITEM_JENIS.includes(t.key)) {
+          const itemMap = {};
+          items.forEach(d => {
+            const dItems = d.items || [{ nama: d.nama_barang, jumlah: d.jumlah }];
+            dItems.forEach(i => {
+              itemMap[i.nama] = (itemMap[i.nama] || 0) + i.jumlah;
+            });
+          });
+          const sortedItems = Object.entries(itemMap).sort((a,b) => b[1] - a[1]);
+          const ctxComp = createFreshCanvas(t.chartId + 'Komposisi', t.chartId + 'KomposisiCvs');
+          if (ctxComp && sortedItems.length > 0) {
+            new Chart(ctxComp, {
+              type: 'doughnut',
+              data: {
+                labels: sortedItems.map(s => s[0]),
+                datasets: [{ data: sortedItems.map(s => s[1]), backgroundColor: chartColors.slice(0, sortedItems.length), borderWidth: 2, borderColor: '#fff' }]
+              },
+              options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 }, padding: 8 } } } }
+            });
+          }
         }
       });
     }
@@ -4563,11 +5131,11 @@
     // ======================================================================
     // ROUTING: Updated switchTab for all 17 views
     // ======================================================================
-    const allTabs = ['dashboard','masterdata','vendors','analytics','rencana','inv-dashboard','inv-dashboard-dijual','inv-aset-pinjam','inv-atk-habispakai','inv-data','inv-borrowing','inv-expend','kirim-bukulaporan','kirim-bukulaporan-db','kirim-aws','kirim-aws-db','kirim-ombrometer','kirim-ombrometer-db','kirim-souvenir','kirim-souvenir-db'];
+    const allTabs = ['dashboard','masterdata','vendors','analytics','rencana','inv-dashboard','inv-dashboard-dijual','inv-aset','inv-abk','inv-atk-habispakai','inv-data','inv-borrowing','inv-expend','kirim-bukulaporan','kirim-bukulaporan-db','kirim-aws','kirim-aws-db','kirim-ombrometer','kirim-ombrometer-db','kirim-souvenir','kirim-souvenir-db'];
     const tabTitles = {
       'dashboard': 'Dashboard Pengadaan Barang & Jasa', 'masterdata': 'Data Master & Berkas', 'vendors': 'Rekapitulasi Vendor',
       'analytics': 'Analisis Pos Anggaran', 'rencana': 'Rencana Anggaran',
-      'inv-dashboard': 'Dashboard Inventaris', 'inv-dashboard-dijual': 'Dashboard Dijual Kembali', 'inv-aset-pinjam': 'Dashboard Aset Tetap & Peminjaman', 'inv-atk-habispakai': 'Dashboard Habis Pakai & ATK', 'inv-data': 'Data Inventaris', 'inv-borrowing': 'Peminjaman & Pengembalian', 'inv-expend': 'Pengeluaran Inventaris',
+      'inv-dashboard': 'Dashboard Inventaris', 'inv-dashboard-dijual': 'Dashboard Dijual Kembali', 'inv-aset': 'Dashboard Aset Tetap', 'inv-abk': 'Dashboard Alat Bantu Kerja', 'inv-atk-habispakai': 'Dashboard Habis Pakai & ATK', 'inv-data': 'Data Inventaris', 'inv-borrowing': 'Peminjaman & Pengembalian', 'inv-expend': 'Pengeluaran Inventaris',
       'kirim-bukulaporan': 'Buku Laporan', 'kirim-bukulaporan-db': 'DB Pengiriman Buku Laporan',
       'kirim-aws': 'AWS', 'kirim-aws-db': 'DB Pengiriman AWS',
       'kirim-ombrometer': 'Ombrometer', 'kirim-ombrometer-db': 'DB Pengiriman Ombrometer',
@@ -4598,7 +5166,7 @@
       // Sembunyikan/tampilkan tombol "Tambah Barang" di tab inventaris
       const btnTopAddInv = document.getElementById('btnTopAddInv');
       if (btnTopAddInv && isAdmin) {
-        const invTabs = ['inv-dashboard', 'inv-dashboard-dijual', 'inv-aset-pinjam', 'inv-atk-habispakai', 'inv-data', 'inv-borrowing', 'inv-expend'];
+        const invTabs = ['inv-dashboard', 'inv-dashboard-dijual', 'inv-aset', 'inv-abk', 'inv-atk-habispakai', 'inv-data', 'inv-borrowing', 'inv-expend'];
         if (invTabs.includes(tabId)) {
           btnTopAddInv.classList.remove('hidden'); btnTopAddInv.classList.add('inline-flex');
         } else {
@@ -4620,7 +5188,7 @@
       // Tampilkan/sembunyikan sub-menu Dashboard Inventaris
       const invSubDashboard = document.getElementById('invSubDashboardMenu');
       if (invSubDashboard) {
-        const invTabs = ['inv-dashboard', 'inv-dashboard-dijual', 'inv-aset-pinjam', 'inv-atk-habispakai', 'inv-data', 'inv-borrowing', 'inv-expend'];
+        const invTabs = ['inv-dashboard', 'inv-dashboard-dijual', 'inv-aset', 'inv-abk', 'inv-atk-habispakai', 'inv-data', 'inv-borrowing', 'inv-expend'];
         if (invTabs.includes(tabId)) {
           invSubDashboard.classList.remove('hidden');
         } else {
@@ -4634,7 +5202,8 @@
         if (tabId === 'rencana') { try { renderRencanaSection(); } catch(e){} }
         if (tabId === 'inv-dashboard') { try { renderInvDashboard(); } catch(e){} }
         if (tabId === 'inv-dashboard-dijual') { try { renderInvDashboardDijual(); } catch(e){} }
-        if (tabId === 'inv-aset-pinjam') { try { renderInvAsetPinjam(); } catch(e){} }
+        if (tabId === 'inv-aset') { try { renderInvAset(); } catch(e){} }
+        if (tabId === 'inv-abk') { try { renderInvABK(); } catch(e){} }
         if (tabId === 'inv-atk-habispakai') { try { renderInvAtkHabisPakai(); } catch(e){} }
         if (tabId === 'inv-data') { try { filterInventory(); } catch(e){} }
         if (tabId === 'inv-borrowing') { try { filterBorrowing(); } catch(e){} }
@@ -4671,11 +5240,24 @@
             body: JSON.stringify({ action: "saveRencana", data: rencanaDataAllYears }) });
           showToast("Rencana Anggaran berhasil disimpan ke Cloud!");
         } else {
-          const cleanDatabase = rawDatabase.filter(d => String(d.no_ppab) !== "SYSTEM_BUDGET_PLAN_DATA");
+          const dateFields = ['tanggal','tanggal_selesai'];
+          const invDateFields = ['tanggal_perolehan','tgl_pinjam','tgl_kembali','tanggal_kirim','tanggal'];
+          const cleanDatabase = rawDatabase
+            .filter(d => String(d.no_ppab) !== "SYSTEM_BUDGET_PLAN_DATA")
+            .map(d => {
+              const c = Object.assign({}, d);
+              dateFields.forEach(f => { if (c[f] && typeof c[f] === 'string') c[f] = c[f].split('T')[0] || c[f]; });
+              delete c._prevStatus;
+              return c;
+            });
+          const cleanInv = inventoryItems.map(d => { const c = Object.assign({}, d); invDateFields.forEach(f => { if (c[f] && typeof c[f] === 'string') c[f] = c[f].split('T')[0] || c[f]; }); return c; });
+          const cleanBorr = borrowingRecords.map(d => { const c = Object.assign({}, d); invDateFields.forEach(f => { if (c[f] && typeof c[f] === 'string') c[f] = c[f].split('T')[0] || c[f]; }); return c; });
+          const cleanExp = inventoryExpenditures.map(d => { const c = Object.assign({}, d); invDateFields.forEach(f => { if (c[f] && typeof c[f] === 'string') c[f] = c[f].split('T')[0] || c[f]; }); return c; });
+          const cleanDel = consumerDeliveries.map(d => { const c = Object.assign({}, d); invDateFields.forEach(f => { if (c[f] && typeof c[f] === 'string') c[f] = c[f].split('T')[0] || c[f]; }); return c; });
           await fetch(WEB_APP_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify({ action: "saveDatabase", data: cleanDatabase }) });
           await fetch(WEB_APP_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({ action: "saveInventoryAll", inventory: inventoryItems, borrowing: borrowingRecords, expenditures: inventoryExpenditures, deliveries: consumerDeliveries }) });
+            body: JSON.stringify({ action: "saveInventoryAll", inventory: cleanInv, borrowing: cleanBorr, expenditures: cleanExp, deliveries: cleanDel }) });
           showToast("Semua data berhasil disinkronkan ke Cloud!");
         }
       } catch (error) {
@@ -4705,6 +5287,44 @@
           if (planIndex !== -1) { try { rencanaDataAllYears = JSON.parse(data[planIndex].perihal); } catch(e) {} data.splice(planIndex, 1); }
           rawDatabase = data;
         }
+        // === NORMALISASI: Strip timestamps & recalculate computed fields ===
+        rawDatabase.forEach(d => {
+          // Strip timestamps
+          ['tanggal','tanggal_selesai'].forEach(f => {
+            if (d[f] && typeof d[f] === 'string') d[f] = d[f].split('T')[0] || d[f];
+          });
+          // Parse JSON fields
+          if (!Array.isArray(d.items_breakdown)) { try { d.items_breakdown = JSON.parse(d.items_breakdown); } catch(e) {} if (!Array.isArray(d.items_breakdown)) d.items_breakdown = []; }
+          if (d.items_breakdown.length > 0 && typeof d.items_breakdown[0] === 'string') { try { d.items_breakdown = JSON.parse(d.items_breakdown[0]); } catch(e) {} if (!Array.isArray(d.items_breakdown)) d.items_breakdown = []; }
+          d.items_breakdown = d.items_breakdown.map(item => ({ name: item.name || item.nama || item.nama_barang || 'Barang', qty_order: parseInt(item.qty_order) || 0, qty_received: parseInt(item.qty_received) || 0 }));
+          if (!Array.isArray(d.files)) { try { d.files = JSON.parse(d.files); } catch(e) {} if (!Array.isArray(d.files)) d.files = []; }
+          // Recalculate computed fields
+          d.jml_item = parseInt(d.jml_item) || 0;
+          d.brg_msk = parseInt(d.brg_msk) || 0;
+          d.nilai = parseFloat(d.nilai) || 0;
+          d.progres = d.jml_item > 0 ? Math.min(100, Math.round((d.brg_msk / d.jml_item) * 100)) : 0;
+          // Recalculate tax
+          const taxRes = computeTaxDetails(d.nilai, d.tax_type || (d.ppn > 0 ? 'dpp11_12' : 'non_ppn'));
+          d.dpp = taxRes.dpp; d.ppn = taxRes.ppn; d.jumlah = taxRes.total;
+          // Recalculate status
+          d.status = d.progres === 100 ? 'Selesai' : (d.progres > 0 ? 'Progres' : 'Belum Proses');
+          // Defaults
+          if (!d.no_ppab) d.no_ppab = '-';
+          if (!d.perihal) d.perihal = '-';
+          if (!d.vendor) d.vendor = '-';
+          if (!d.mata_anggaran) d.mata_anggaran = '-';
+          if (!d.tanggal) d.tanggal = '-';
+          if (!d.tanggal_selesai) d.tanggal_selesai = '-';
+          if (!d.st_anggaran) d.st_anggaran = 'Opex';
+        });
+        // Normalisasi Inventory: strip timestamps
+        [inventoryItems, borrowingRecords, inventoryExpenditures, consumerDeliveries].forEach(arr => {
+          arr.forEach(item => {
+            ['tanggal_perolehan','tgl_pinjam','tgl_kembali','tanggal_kirim','tanggal'].forEach(f => {
+              if (item[f] && typeof item[f] === 'string') item[f] = item[f].split('T')[0] || item[f];
+            });
+          });
+        });
         localStorage.setItem(STORAGE_KEY, JSON.stringify(rawDatabase));
         localStorage.setItem(RENCANA_STORAGE_KEY, JSON.stringify(rencanaDataAllYears));
         localStorage.setItem(INV_STORAGE_KEY, JSON.stringify(inventoryItems));
