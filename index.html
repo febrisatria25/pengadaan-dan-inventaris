@@ -53,7 +53,7 @@
   <div id="mobileOverlay" class="fixed inset-0 bg-slate-900/50 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
 
   <!-- Sidebar -->
-  <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-50 w-64 bg-slate-900 text-slate-300 flex flex-col justify-between transition-transform duration-300 transform -translate-x-full lg:translate-x-0 shrink-0 shadow-xl z-50">
+  <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-50 w-64 bg-slate-900 text-slate-300 flex flex-col justify-between transition-transform duration-300 transform -translate-x-full lg:translate-x-0 shrink-0 shadow-xl">
     <div>
       <div class="h-auto py-4 flex items-center justify-between px-5 border-b border-slate-800">
         <div class="flex items-center gap-3 cursor-pointer select-none" onclick="handleSecretLogoClick()" title="Pengadaan dan Inventaris UPJKP">
@@ -156,11 +156,12 @@
           <div class="flex items-center gap-4 bg-white/10 p-3.5 rounded-xl backdrop-blur-md shrink-0 border border-white/10"><div class="text-right"><p class="text-[11px] text-slate-300 font-medium">Realisasi Selesai</p><p class="text-xl font-extrabold text-emerald-400" id="heroRealisasiPct">0.0%</p></div><div class="w-12 h-12 rounded-full border-4 border-emerald-400/30 border-t-emerald-400 flex items-center justify-center font-bold text-xs"><i data-lucide="trending-up" class="w-5 h-5 text-emerald-400"></i></div></div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Anggaran</span><div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center"><i data-lucide="wallet" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-slate-900 mt-2" id="kpiTotalAnggaran">Rp 0</p><div class="flex items-center gap-1.5 mt-2 text-xs text-slate-500"><span class="font-bold text-indigo-600" id="kpiTotalPaket">0</span><span>Paket Terdaftar</span></div></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Realisasi Selesai</span><div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center"><i data-lucide="check-circle" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-emerald-600 mt-2" id="kpiRealisasiSelesai">Rp 0</p><div class="flex items-center justify-between mt-2 text-xs text-slate-500 font-medium"><span id="kpiCountSelesai">0 Paket Selesai</span><span class="font-bold text-emerald-600" id="kpiPctSelesai">0.0%</span></div></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sedang Progres</span><div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center"><i data-lucide="clock" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-amber-600 mt-2" id="kpiProgres">Rp 0</p><div class="flex items-center justify-between mt-2 text-xs text-slate-500 font-medium"><span id="kpiCountProgres">0 Paket Berjalan</span><span class="font-bold text-amber-600" id="kpiPctProgres">0.0%</span></div></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Pending / Belum Proses</span><div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center"><i data-lucide="alert-circle" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-rose-600 mt-2" id="kpiPending">Rp 0</p><div class="flex items-center justify-between mt-2 text-xs text-slate-500 font-medium"><span id="kpiCountPending">0 Paket Pending</span><span class="font-bold text-rose-600" id="kpiPctPending">0.0%</span></div></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div onclick="showStatusDetails('all')" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md hover:border-indigo-300 transition-all"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Anggaran</span><div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center"><i data-lucide="wallet" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-slate-900 mt-2" id="kpiTotalAnggaran">Rp 0</p><div class="flex items-center gap-1.5 mt-2 text-xs text-slate-500"><span class="font-bold text-indigo-600" id="kpiTotalPaket">0</span><span>Paket Terdaftar</span></div></div>
+          <div onclick="showStatusDetails('Selesai')" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md hover:border-emerald-300 transition-all"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Realisasi Selesai</span><div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center"><i data-lucide="check-circle" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-emerald-600 mt-2" id="kpiRealisasiSelesai">Rp 0</p><div class="flex items-center justify-between mt-2 text-xs text-slate-500 font-medium"><span id="kpiCountSelesai">0 Paket Selesai</span><span class="font-bold text-emerald-600" id="kpiPctSelesai">0.0%</span></div></div>
+          <div onclick="showStatusDetails('Progres')" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md hover:border-amber-300 transition-all"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sedang Progres</span><div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center"><i data-lucide="clock" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-amber-600 mt-2" id="kpiProgres">Rp 0</p><div class="flex items-center justify-between mt-2 text-xs text-slate-500 font-medium"><span id="kpiCountProgres">0 Paket Berjalan</span><span class="font-bold text-amber-600" id="kpiPctProgres">0.0%</span></div></div>
+          <div onclick="showStatusDetails('Belum Proses')" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md hover:border-rose-300 transition-all"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Pending / Belum Proses</span><div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center"><i data-lucide="alert-circle" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-rose-600 mt-2" id="kpiPending">Rp 0</p><div class="flex items-center justify-between mt-2 text-xs text-slate-500 font-medium"><span id="kpiCountPending">0 Paket Pending</span><span class="font-bold text-rose-600" id="kpiPctPending">0.0%</span></div></div>
+          <div onclick="showStatusDetails('Dibatalkan')" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md hover:border-slate-400 transition-all"><div class="flex items-center justify-between"><span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Dibatalkan</span><div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center"><i data-lucide="x-circle" class="w-4 h-4"></i></div></div><p class="text-xl font-extrabold text-slate-600 mt-2" id="kpiDibatalkan">Rp 0</p><div class="flex items-center justify-between mt-2 text-xs text-slate-500 font-medium"><span id="kpiCountDibatalkan">0 Paket Dibatalkan</span><span class="font-bold text-slate-600" id="kpiPctDibatalkan">0.0%</span></div></div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -182,10 +183,11 @@
           </div>
           <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
             <div><h3 class="text-sm font-bold text-slate-900">Distribusi Status Paket</h3><p class="text-xs text-slate-400 mb-2">Porsi status dari total paket terdata</p><div class="h-48 w-full relative flex items-center justify-center" id="wrapStatusOverview"><canvas id="chartStatusOverview"></canvas></div></div>
-            <div class="grid grid-cols-3 gap-2 pt-3 border-t border-slate-100 text-center text-xs">
+            <div class="grid grid-cols-4 gap-2 pt-3 border-t border-slate-100 text-center text-xs">
               <div class="p-1.5 rounded-lg bg-emerald-50 text-emerald-800"><span class="block text-[10px] font-bold text-emerald-600 uppercase">Selesai</span><span class="font-extrabold text-sm" id="pctLegendSelesai">0%</span></div>
               <div class="p-1.5 rounded-lg bg-amber-50 text-amber-800"><span class="block text-[10px] font-bold text-amber-600 uppercase">Progres</span><span class="font-extrabold text-sm" id="pctLegendProgres">0%</span></div>
               <div class="p-1.5 rounded-lg bg-rose-50 text-rose-800"><span class="block text-[10px] font-bold text-rose-600 uppercase">Pending</span><span class="font-extrabold text-sm" id="pctLegendPending">0%</span></div>
+              <div class="p-1.5 rounded-lg bg-slate-100 text-slate-800"><span class="block text-[10px] font-bold text-slate-600 uppercase">Dibatalkan</span><span class="font-extrabold text-sm" id="pctLegendDibatalkan">0%</span></div>
             </div>
           </div>
         </div>
@@ -219,7 +221,7 @@
                 <input type="text" id="masterSearchInput" oninput="filterMasterData(true)" placeholder="Cari No PPAB, Perihal, Pos Anggaran, Vendor..." class="w-full pl-10 pr-4 py-2 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500">
               </div>
               <select id="masterTipeFilter" onchange="filterMasterData(true)" class="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-xl font-bold text-slate-800"><option value="">Semua Tipe (Opex & Capex)</option><option value="Opex">🔵 OPEX (Operasional)</option><option value="Capex">🟣 CAPEX (Belanja Modal)</option></select>
-              <select id="masterStatusFilter" onchange="filterMasterData(true)" class="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-xl font-medium"><option value="">Semua Status</option><option value="Selesai">Selesai (Semua Item Masuk)</option><option value="Progres">Dalam Progres (Sebagian Masuk)</option><option value="Belum Proses">Pending (Belum Ada Masuk)</option></select>
+              <select id="masterStatusFilter" onchange="filterMasterData(true)" class="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-xl font-medium"><option value="">Semua Status</option><option value="Selesai">Selesai (Semua Item Masuk)</option><option value="Progres">Dalam Progres (Sebagian Masuk)</option><option value="Belum Proses">Pending (Belum Ada Masuk)</option><option value="Dibatalkan">Dibatalkan</option></select>
               <select id="masterMAFilter" onchange="filterMasterData(true)" class="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-xl font-medium"><option value="">Semua Pos Anggaran</option><option value="HPP Rekomendasi Pupuk">HPP Rekomendasi Pupuk</option><option value="HPP Jasa Informasi Digital">HPP Jasa Informasi Digital</option><option value="HPP Training">HPP Training</option><option value="HPP Bantuan Teknis">HPP Bantuan Teknis</option></select>
             </div>
           </div>
@@ -888,7 +890,7 @@
         <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
           <div class="flex items-center justify-between"><span class="font-bold text-slate-800 text-xs">Item / Rincian Barang</span><button type="button" onclick="addModalNewItemRow()" class="text-brand-600 font-bold text-[11px] hover:underline">+ Tambah Item</button></div>
           <div id="addModalItemsContainer" class="space-y-2">
-            <div class="flex items-center gap-2 add-item-row"><input type="text" placeholder="Nama Barang..." required class="add-item-name flex-1 px-3 py-1.5 border border-slate-200 rounded-lg text-xs"><input type="number" min="1" value="100" required class="add-item-qty-order w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs"><input type="number" min="0" value="0" required class="add-item-qty-rec w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs"></div>
+            <div class="flex items-center gap-2 add-item-row"><input type="text" placeholder="Nama Barang..." required class="add-item-name flex-1 px-3 py-1.5 border border-slate-200 rounded-lg text-xs"><input type="number" min="0" value="0" required class="add-item-qty-order w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs"><input type="number" min="0" value="0" required class="add-item-qty-rec w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs"></div>
           </div>
         </div>
         
@@ -1070,9 +1072,8 @@
       </form>
       <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0">
         <button type="button" onclick="closeBorrowingModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
-        <button type="button" onclick="document.getElementById('borrowingForm').requestSubmit()" class="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-xl text-xs shadow-sm">Simpan Peminjaman</button>
+        <button type="button" onclick="document.getElementById('borrowingForm').requestSubmit()" class="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-xl text-xs shadow-sm">Simpan Peminjaman        </button>
         </div>
-      </form>
     </div>
   </div>
 
@@ -1096,7 +1097,6 @@
         <button type="button" onclick="closeReturnModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs">Batal</button>
         <button type="button" onclick="document.getElementById('returnForm').requestSubmit()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-xs shadow-sm">Kembalikan Barang</button>
       </div>
-      </form>
     </div>
   </div>
 
@@ -1333,7 +1333,7 @@
             <td class="py-2 px-3 font-mono text-[10px]">${item.kode_barang || '-'}</td>
             <td class="py-2 px-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700">${item.kategori || '-'}</span></td>
             <td class="py-2 px-3 text-center font-bold ${item.jumlah === 0 ? 'text-rose-500' : 'text-emerald-600'}">${item.jumlah}</td>
-            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${item.status === 'Baik' ? 'bg-emerald-100 text-emerald-700' : item.status === 'Rusak' ? 'bg-rose-100 text-rose-700' : item.status === 'Dipinjam' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-600'}">${item.status || '-'}</span></td>
+            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${item.kondisi === 'Baik' ? 'bg-emerald-100 text-emerald-700' : item.kondisi === 'Rusak Ringan' ? 'bg-amber-100 text-amber-700' : item.kondisi === 'Rusak Berat' ? 'bg-rose-100 text-rose-700' : 'bg-slate-100 text-slate-600'}">${item.kondisi || '-'}</span></td>
             <td class="py-2 px-3 text-[11px]">${item.lokasi || '-'}</td>
           </tr>`;
         });
@@ -1531,7 +1531,9 @@
          if (!d.tanggal_selesai) d.tanggal_selesai = '-';
          if (!d.st_anggaran) d.st_anggaran = 'Opex';
          
-         d.status = d.progres === 100 ? 'Selesai' : (d.progres > 0 ? 'Progres' : 'Belum Proses');
+         if (d.status !== 'Dibatalkan') {
+           d.status = d.progres === 100 ? 'Selesai' : (d.progres > 0 ? 'Progres' : 'Belum Proses');
+         }
          return d;
       });
 
@@ -1677,14 +1679,17 @@
       const selesai = database.filter(d => d.status === 'Selesai');
       const progres = database.filter(d => d.status === 'Progres');
       const pending = database.filter(d => d.status === 'Belum Proses');
+      const dibatalkan = database.filter(d => d.status === 'Dibatalkan');
 
       const totalSelesai = selesai.reduce((acc, curr) => acc + (curr.jumlah || 0), 0);
       const totalProgres = progres.reduce((acc, curr) => acc + (curr.jumlah || 0), 0);
       const totalPending = pending.reduce((acc, curr) => acc + (curr.jumlah || 0), 0);
+      const totalDibatalkan = dibatalkan.reduce((acc, curr) => acc + (curr.jumlah || 0), 0);
 
       const pctSelesai = totalAnggaran > 0 ? (totalSelesai / totalAnggaran * 100).toFixed(1) : "0.0";
       const pctProgres = totalAnggaran > 0 ? (totalProgres / totalAnggaran * 100).toFixed(1) : "0.0";
       const pctPending = totalAnggaran > 0 ? (totalPending / totalAnggaran * 100).toFixed(1) : "0.0";
+      const pctDibatalkan = totalAnggaran > 0 ? (totalDibatalkan / totalAnggaran * 100).toFixed(1) : "0.0";
 
       document.getElementById('heroRealisasiPct').innerText = `${pctSelesai}%`;
       document.getElementById('kpiTotalAnggaran').innerText = formatIDR(totalAnggaran);
@@ -1703,9 +1708,14 @@
       document.getElementById('kpiCountPending').innerText = `${pending.length} Paket Pending`;
       document.getElementById('kpiPctPending').innerText = `${pctPending}%`;
 
+      document.getElementById('kpiDibatalkan').innerText = formatIDR(totalDibatalkan);
+      document.getElementById('kpiCountDibatalkan').innerText = `${dibatalkan.length} Paket Dibatalkan`;
+      document.getElementById('kpiPctDibatalkan').innerText = `${pctDibatalkan}%`;
+
       document.getElementById('pctLegendSelesai').innerText = `${pctSelesai}%`;
       document.getElementById('pctLegendProgres').innerText = `${pctProgres}%`;
       document.getElementById('pctLegendPending').innerText = `${pctPending}%`;
+      document.getElementById('pctLegendDibatalkan').innerText = `${pctDibatalkan}%`;
     }
 
     function renderTypeBadge(type) {
@@ -1749,7 +1759,7 @@
         row.innerHTML = `
           <td class="py-3 px-4 font-semibold text-slate-800 whitespace-nowrap">${r.no_ppab}</td>
           <td class="py-3 px-4 text-center whitespace-nowrap">${renderTypeBadge(r.st_anggaran)}</td>
-          <td class="py-3 px-4 text-slate-700 font-semibold max-w-[170px] truncate" title="${r.perihal}">${r.perihal}</td>
+          <td class="py-3 px-4 text-slate-700 font-semibold max-w-[200px]"><div class="leading-tight">${r.perihal}</div></td>
           <td class="py-3 px-4 max-w-[240px]">${renderItemChips(r.items_breakdown)}</td>
           <td class="py-3 px-4 text-center whitespace-nowrap" onclick="viewDetail(${r.no})">${renderFileBadges(r.files)}</td>
           <td class="py-3 px-4 text-right font-bold text-slate-900 whitespace-nowrap">${formatIDR(r.jumlah)}</td>
@@ -1802,7 +1812,7 @@
           <td class="py-3 px-4 text-center font-bold text-slate-400">${displayNo}</td>
           <td class="py-3 px-4 text-slate-800 whitespace-nowrap"><div class="font-bold text-slate-900">${r.no_ppab}</div><div class="text-[10px] text-slate-400 font-medium">${formatDateOnly(r.tanggal)}</div></td>
           <td class="py-3 px-4 text-center whitespace-nowrap">${renderTypeBadge(r.st_anggaran)}</td>
-          <td class="py-3 px-4 text-slate-800 font-semibold max-w-[140px] truncate" title="${r.perihal}"><div>${r.perihal}</div></td>
+          <td class="py-3 px-4 text-slate-800 font-semibold max-w-[200px]"><div class="leading-tight">${r.perihal}</div></td>
           <td class="py-3 px-4 max-w-[220px]">
             <div class="flex items-center justify-between mb-1"><span class="text-[10px] font-bold text-slate-500 uppercase">${totalItemsCount} Jenis:</span><span class="text-[10px] font-semibold text-brand-600">${completeItemsCount}/${totalItemsCount} Lengkap</span></div>
             <div class="flex flex-wrap">${renderItemChips(r.items_breakdown)}</div>
@@ -1941,7 +1951,7 @@
       else {
         filteredData.forEach(r => {
           const row = document.createElement('tr'); row.className = 'hover:bg-slate-50 transition border-b border-slate-50';
-          row.innerHTML = `<td class="py-3 px-4 whitespace-nowrap"><div class="font-bold text-slate-900">${r.no_ppab}</div><div class="text-[10px] text-slate-500">Mulai: <span class="font-semibold">${formatDateOnly(r.tanggal)}</span></div><div class="text-[10px] text-slate-500 mt-0.5">Target/Selesai: <span class="font-bold text-emerald-600">${r.tanggal_selesai && r.tanggal_selesai !== '-' ? formatDateOnly(r.tanggal_selesai) : 'Belum Selesai'}</span></div></td><td class="py-3 px-4 max-w-[180px] truncate font-semibold text-slate-700" title="${r.perihal}">${r.perihal}</td><td class="py-3 px-4 text-[11px]">${r.mata_anggaran}</td><td class="py-3 px-4 text-right font-black text-brand-700 whitespace-nowrap">${formatIDR(r.jumlah)}</td><td class="py-3 px-4 text-center">${getStatusBadge(r.status)}</td><td class="py-3 px-4 text-center"><button onclick="closeVendorDetailModal(); viewDetail(${r.no})" class="inline-flex items-center text-slate-600 hover:text-white font-bold px-2.5 py-1.5 bg-slate-100 hover:bg-slate-900 rounded-lg transition text-[10px] uppercase tracking-wider">Rincian</button></td>`;
+          row.innerHTML = `<td class="py-3 px-4 whitespace-nowrap"><div class="font-bold text-slate-900">${r.no_ppab}</div><div class="text-[10px] text-slate-500">Mulai: <span class="font-semibold">${formatDateOnly(r.tanggal)}</span></div><div class="text-[10px] text-slate-500 mt-0.5">Target/Selesai: <span class="font-bold text-emerald-600">${r.tanggal_selesai && r.tanggal_selesai !== '-' ? formatDateOnly(r.tanggal_selesai) : 'Belum Selesai'}</span></div></td><td class="py-3 px-4 max-w-[200px] font-semibold text-slate-700"><div class="leading-tight">${r.perihal}</div></td><td class="py-3 px-4 text-[11px]">${r.mata_anggaran}</td><td class="py-3 px-4 text-right font-black text-brand-700 whitespace-nowrap">${formatIDR(r.jumlah)}</td><td class="py-3 px-4 text-center">${getStatusBadge(r.status)}</td><td class="py-3 px-4 text-center"><button onclick="closeVendorDetailModal(); viewDetail(${r.no})" class="inline-flex items-center text-slate-600 hover:text-white font-bold px-2.5 py-1.5 bg-slate-100 hover:bg-slate-900 rounded-lg transition text-[10px] uppercase tracking-wider">Rincian</button></td>`;
           tbody.appendChild(row);
         });
       }
@@ -1960,7 +1970,7 @@
       else {
         filteredData.forEach(r => {
           const row = document.createElement('tr'); row.className = 'hover:bg-slate-50 transition border-b border-slate-50';
-          row.innerHTML = `<td class="py-3 px-4 whitespace-nowrap"><div class="font-bold text-slate-900">${r.no_ppab}</div><div class="text-[10px] text-slate-400">${formatDateOnly(r.tanggal)}</div></td><td class="py-3 px-4 max-w-[180px] truncate font-semibold text-slate-700" title="${r.perihal}">${r.perihal}</td><td class="py-3 px-4">${r.vendor !== '-' ? r.vendor : '<span class="text-slate-400 italic text-[11px]">Belum Ditunjuk</span>'}</td><td class="py-3 px-4 text-right font-black text-brand-700 whitespace-nowrap">${formatIDR(r.jumlah)}</td><td class="py-3 px-4 text-center">${getStatusBadge(r.status)}</td><td class="py-3 px-4 text-center"><button onclick="closeMaDetailModal(); viewDetail(${r.no})" class="inline-flex items-center text-slate-600 hover:text-white font-bold px-2.5 py-1.5 bg-slate-100 hover:bg-slate-900 rounded-lg transition text-[10px] uppercase tracking-wider">Rincian</button></td>`;
+          row.innerHTML = `<td class="py-3 px-4 whitespace-nowrap"><div class="font-bold text-slate-900">${r.no_ppab}</div><div class="text-[10px] text-slate-400">${formatDateOnly(r.tanggal)}</div></td><td class="py-3 px-4 max-w-[200px] font-semibold text-slate-700"><div class="leading-tight">${r.perihal}</div></td><td class="py-3 px-4">${r.vendor !== '-' ? r.vendor : '<span class="text-slate-400 italic text-[11px]">Belum Ditunjuk</span>'}</td><td class="py-3 px-4 text-right font-black text-brand-700 whitespace-nowrap">${formatIDR(r.jumlah)}</td><td class="py-3 px-4 text-center">${getStatusBadge(r.status)}</td><td class="py-3 px-4 text-center"><button onclick="closeMaDetailModal(); viewDetail(${r.no})" class="inline-flex items-center text-slate-600 hover:text-white font-bold px-2.5 py-1.5 bg-slate-100 hover:bg-slate-900 rounded-lg transition text-[10px] uppercase tracking-wider">Rincian</button></td>`;
           tbody.appendChild(row);
         });
       }
@@ -1968,6 +1978,38 @@
       try { lucide.createIcons(); } catch(e){}
     }
     function closeMaDetailModal() { document.getElementById('maDetailModal').classList.add('hidden'); }
+
+    function showStatusDetails(status) {
+      let filteredData;
+      let titleText;
+      if (status === 'all') {
+        filteredData = [...database];
+        titleText = 'Semua Paket PPAB';
+      } else {
+        filteredData = database.filter(d => d.status === status);
+        titleText = 'Paket: ' + status;
+      }
+      filteredData.sort((a, b) => b.no - a.no);
+
+      const totalNilai = filteredData.reduce((acc, r) => acc + (r.jumlah || 0), 0);
+      document.getElementById('modalMaTitle').innerText = titleText;
+      document.getElementById('modalMaSubtitle').innerText = `Total: ${filteredData.length} Paket | Nilai: ${formatIDR(totalNilai)}`;
+
+      const tbody = document.getElementById('maDetailTableBody');
+      tbody.innerHTML = '';
+      if (filteredData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-slate-400 italic">Tidak ada data paket untuk kategori ini.</td></tr>';
+      } else {
+        filteredData.forEach(r => {
+          const row = document.createElement('tr');
+          row.className = 'hover:bg-slate-50 transition border-b border-slate-50';
+          row.innerHTML = `<td class="py-3 px-4 whitespace-nowrap"><div class="font-bold text-slate-900">${r.no_ppab}</div><div class="text-[10px] text-slate-400">${formatDateOnly(r.tanggal)}</div></td><td class="py-3 px-4 max-w-[200px] font-semibold text-slate-700"><div class="leading-tight">${r.perihal}</div></td><td class="py-3 px-4">${r.vendor !== '-' ? r.vendor : '<span class="text-slate-400 italic text-[11px]">Belum Ditunjuk</span>'}</td><td class="py-3 px-4 text-right font-black text-brand-700 whitespace-nowrap">${formatIDR(r.jumlah)}</td><td class="py-3 px-4 text-center">${getStatusBadge(r.status)}</td><td class="py-3 px-4 text-center"><button onclick="closeMaDetailModal(); viewDetail(${r.no})" class="inline-flex items-center text-slate-600 hover:text-white font-bold px-2.5 py-1.5 bg-slate-100 hover:bg-slate-900 rounded-lg transition text-[10px] uppercase tracking-wider">Rincian</button></td>`;
+          tbody.appendChild(row);
+        });
+      }
+      document.getElementById('maDetailModal').classList.remove('hidden');
+      try { lucide.createIcons(); } catch(e){}
+    }
 
     function renderRencanaSection() {
       const isRencanaVisible = !document.getElementById('view-rencana').classList.contains('hidden');
@@ -2329,17 +2371,18 @@
         const totalSelesai = database.filter(d => d.status === 'Selesai').reduce((a, b) => a + (b.jumlah || 0), 0);
         const totalProgres = database.filter(d => d.status === 'Progres').reduce((a, b) => a + (b.jumlah || 0), 0);
         const totalPending = database.filter(d => d.status === 'Belum Proses').reduce((a, b) => a + (b.jumlah || 0), 0);
+        const totalDibatalkanChart = database.filter(d => d.status === 'Dibatalkan').reduce((a, b) => a + (b.jumlah || 0), 0);
 
-        let dDataStatus = [totalSelesai, totalProgres, totalPending];
-        let dBgStatus = ['#10b981', '#f59e0b', '#f43f5e'];
-        if (totalSelesai===0 && totalProgres===0 && totalPending===0) { dDataStatus = [1]; dBgStatus = ['#f1f5f9']; }
+        let dDataStatus = [totalSelesai, totalProgres, totalPending, totalDibatalkanChart];
+        let dBgStatus = ['#10b981', '#f59e0b', '#f43f5e', '#94a3b8'];
+        if (totalSelesai===0 && totalProgres===0 && totalPending===0 && totalDibatalkanChart===0) { dDataStatus = [1]; dBgStatus = ['#f1f5f9']; }
 
         const ctxPie = createFreshCanvas('wrapStatusOverview', 'chartStatusOverview');
         if (ctxPie) {
           chartDoughnutInstance = new Chart(ctxPie, {
             type: 'doughnut',
             data: {
-              labels: ['Selesai', 'Progres', 'Pending'],
+              labels: ['Selesai', 'Progres', 'Pending', 'Dibatalkan'],
               datasets: [{ data: dDataStatus, backgroundColor: dBgStatus, borderWidth: 0 }]
             },
             options: {
@@ -2503,7 +2546,7 @@
       const container = document.getElementById('itemsContainer');
       const count = container.children.length + 1;
       const card = document.createElement('div'); card.className = 'item-row-card bg-slate-50 p-3 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center gap-3 transition-all hover:border-slate-300';
-      card.innerHTML = `<div class="flex-1 space-y-1"><div class="flex items-center justify-between"><label class="text-[10px] font-bold uppercase text-slate-400">Nama Item #${count}</label><div class="item-status-container"><span class="item-status-badge text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">✕ Belum Masuk</span></div></div><input type="text" placeholder="Nama barang / item..." required class="item-name-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 focus:ring-2 focus:ring-brand-500"></div><div class="flex items-center gap-2 shrink-0"><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Dipesan</label><input type="number" min="1" value="100" oninput="recalcMultiItemsProgress()" required class="item-qty-order-input w-20 px-2 py-1.5 text-center bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-900 focus:ring-2 focus:ring-brand-500"></div><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Masuk (Diterima)</label><input type="number" min="0" value="0" oninput="recalcMultiItemsProgress()" required class="item-qty-rec-input w-24 px-2 py-1.5 text-center bg-white border border-emerald-300 rounded-lg text-xs font-extrabold text-emerald-600 focus:ring-2 focus:ring-emerald-500"></div><button type="button" onclick="removeItemRow(this)" title="Hapus Item" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg self-end mb-0.5 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div>`;
+      card.innerHTML = `<div class="flex-1 space-y-1"><div class="flex items-center justify-between"><label class="text-[10px] font-bold uppercase text-slate-400">Nama Item #${count}</label><div class="item-status-container"><span class="item-status-badge text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">✕ Belum Masuk</span></div></div><input type="text" placeholder="Nama barang / item..." required class="item-name-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 focus:ring-2 focus:ring-brand-500"></div><div class="flex items-center gap-2 shrink-0"><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Dipesan</label><input type="number" min="0" value="0" oninput="recalcMultiItemsProgress()" required class="item-qty-order-input w-20 px-2 py-1.5 text-center bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-900 focus:ring-2 focus:ring-brand-500"></div><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Masuk (Diterima)</label><input type="number" min="0" value="0" oninput="recalcMultiItemsProgress()" required class="item-qty-rec-input w-24 px-2 py-1.5 text-center bg-white border border-emerald-300 rounded-lg text-xs font-extrabold text-emerald-600 focus:ring-2 focus:ring-emerald-500"></div><button type="button" onclick="removeItemRow(this)" title="Hapus Item" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg self-end mb-0.5 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div>`;
       container.appendChild(card);
       try { lucide.createIcons(); } catch(e){}
       recalcMultiItemsProgress();
@@ -2794,7 +2837,7 @@
         vendor: document.getElementById('editVendor').value || '-',
         items_breakdown: itemsList, files: temporaryEditFiles,
         jml_item: totalOrder, brg_msk: totalReceived,
-        nilai: taxRes.nilai, tax_type: taxRes.taxType, dpp: taxRes.dpp, ppn: taxRes.ppn, jumlah: taxRes.total,
+        nilai: taxRes.nilai, tax_type: document.getElementById('editTaxType').value, dpp: taxRes.dpp, ppn: taxRes.ppn, jumlah: taxRes.total,
         progres: pct, status: document.getElementById('editStatus').value,
         "Jam Update": getCurrentTimestamp()
       };
@@ -2947,7 +2990,7 @@
       div.className = 'flex items-center gap-2 add-item-row';
       div.innerHTML = `
         <input type="text" placeholder="Nama Barang..." required class="add-item-name flex-1 px-3 py-1.5 border border-slate-200 rounded-lg text-xs">
-        <input type="number" min="1" value="100" required class="add-item-qty-order w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs">
+        <input type="number" min="0" value="0" required class="add-item-qty-order w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs">
         <input type="number" min="0" value="0" required class="add-item-qty-rec w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs">
         <button type="button" onclick="this.parentElement.remove()" class="text-rose-500 hover:text-rose-700 p-1">✕</button>
       `;
@@ -2992,7 +3035,7 @@
         st_anggaran: stAnggaran,
         no_kak: '-', no_pr_ppab: '-', no_pr_sap: '-',
         perihal: document.getElementById('formPerihal').value || '-',
-        nilai: taxRes.nilai, tax_type: taxRes.taxType, dpp: taxRes.dpp, ppn: taxRes.ppn, jumlah: taxRes.total,
+        nilai: taxRes.nilai, tax_type: document.getElementById('formTaxType').value, dpp: taxRes.dpp, ppn: taxRes.ppn, jumlah: taxRes.total,
         mata_anggaran: mataAnggaran, vendor: document.getElementById('formVendor').value || '-',
         items_breakdown: itemsList, files: temporaryAddFiles,
         jml_item: totalOrder, brg_msk: totalReceived, progres: pct, status: statusCalc,
@@ -5307,7 +5350,9 @@
           const taxRes = computeTaxDetails(d.nilai, d.tax_type || (d.ppn > 0 ? 'dpp11_12' : 'non_ppn'));
           d.dpp = taxRes.dpp; d.ppn = taxRes.ppn; d.jumlah = taxRes.total;
           // Recalculate status
-          d.status = d.progres === 100 ? 'Selesai' : (d.progres > 0 ? 'Progres' : 'Belum Proses');
+          if (d.status !== 'Dibatalkan') {
+            d.status = d.progres === 100 ? 'Selesai' : (d.progres > 0 ? 'Progres' : 'Belum Proses');
+          }
           // Defaults
           if (!d.no_ppab) d.no_ppab = '-';
           if (!d.perihal) d.perihal = '-';
