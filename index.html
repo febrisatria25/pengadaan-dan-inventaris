@@ -1907,6 +1907,7 @@
     function renderVendorSection() {
       const vendorMap = {};
       database.forEach(d => {
+        if (d.status === 'Dibatalkan') return;
         const v = (d.vendor && d.vendor !== '-') ? d.vendor : 'Belum Ditunjuk';
         if (!vendorMap[v]) vendorMap[v] = { count: 0, total: 0, selesai: 0, outstanding: 0 };
         vendorMap[v].count += 1;
@@ -2218,6 +2219,7 @@
 
       const maMap = {};
       database.forEach(d => {
+        if (d.status === 'Dibatalkan') return;
         const stType = String(d.st_anggaran || 'opex').toLowerCase();
         if (stType !== selectedType) return;
         const maName = d.mata_anggaran || 'Lain-lain';
@@ -2296,6 +2298,7 @@
       const opexMap = {}; const capexMap = {}; const vendorSpeedMap = {};
 
       database.forEach(d => {
+        if (d.status === 'Dibatalkan') return;
         const maName = d.mata_anggaran || 'Lain-lain';
         const type = String(d.st_anggaran || 'Opex').toLowerCase();
         if (type === 'opex') {
@@ -2397,6 +2400,7 @@
       if (isVendorVisible) {
         const vendorSums = {};
         database.forEach(d => {
+          if (d.status === 'Dibatalkan') return;
           const v = (d.vendor && d.vendor !== '-') ? d.vendor : 'Belum Ditunjuk';
           vendorSums[v] = (vendorSums[v] || 0) + (d.jumlah || 0);
         });
