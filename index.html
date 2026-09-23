@@ -478,8 +478,8 @@
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div><h3 class="text-base font-bold text-slate-900">Data Inventaris Barang</h3><p class="text-xs text-slate-500">Kelola seluruh aset dan inventaris UPJKP</p></div>
               <div class="flex items-center gap-2">
-                <button onclick="openImportFromPPAB()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm transition"><i data-lucide="download" class="w-4 h-4"></i> Import dari PPAB</button>
-                <button onclick="openAddInventoryModal()" class="bg-brand-600 hover:bg-brand-700 text-white px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm transition"><i data-lucide="plus" class="w-4 h-4"></i> Tambah Barang</button>
+                <button onclick="openImportFromPPAB()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm transition"><i data-lucide="download" class="w-3.5 h-3.5"></i> Import dari PPAB</button>
+                <button onclick="openAddInventoryModal()" class="bg-brand-600 hover:bg-brand-700 text-white px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm transition"><i data-lucide="plus" class="w-3.5 h-3.5"></i> Tambah Barang</button>
               </div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
@@ -947,7 +947,7 @@
         <button onclick="closeAddModal()" class="text-indigo-200 hover:text-white p-1 rounded-lg hover:bg-white/10"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
 
-      <form id="addPpabForm" onsubmit="event.preventDefault(); saveNewPpab(event)" class="flex-1 overflow-y-auto p-6 space-y-4 text-xs">
+      <form id="addPpabForm" onsubmit="event.preventDefault(); saveNewPpab(event)" novalidate class="flex-1 overflow-y-auto p-6 space-y-4 text-xs">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div><label class="block font-semibold text-slate-700 mb-1">Tanggal Mulai</label><input type="date" required id="formTgl" class="w-full px-3 py-2 border border-slate-200 rounded-xl"></div>
           <div><label class="block font-semibold text-slate-700 mb-1">Target / Tgl Selesai</label><input type="date" id="formTglSelesai" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-emerald-700 font-medium"></div>
@@ -967,7 +967,7 @@
         <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
           <div class="flex items-center justify-between"><span class="font-bold text-slate-800 text-xs">Item / Rincian Barang</span><button type="button" onclick="addModalNewItemRow()" class="text-brand-600 font-bold text-[11px] hover:underline">+ Tambah Item</button></div>
           <div id="addModalItemsContainer" class="space-y-2">
-            <div class="flex items-center gap-2 add-item-row"><input type="text" placeholder="Nama Barang..." required class="add-item-name flex-1 px-3 py-1.5 border border-slate-200 rounded-lg text-xs"><input type="number" min="0" value="0" required class="add-item-qty-order w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs"><input type="number" min="0" value="0" required class="add-item-qty-rec w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs"></div>
+            <div class="flex items-center gap-2 add-item-row"><input type="text" placeholder="Nama Barang..." required class="add-item-name flex-1 px-3 py-1.5 border border-slate-200 rounded-lg text-xs"><input type="text" value="pcs" placeholder="pcs/box" class="add-item-satuan w-16 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs"><input type="text" placeholder="Harga Satuan" oninput="formatInputRibuan(event); recalcAddItemsProgress()" class="add-item-harga w-28 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs font-bold"><input type="number" min="0" value="0" required oninput="recalcAddItemsProgress()" class="add-item-qty-order w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs"><input type="number" min="0" value="0" required oninput="recalcAddItemsProgress()" class="add-item-qty-rec w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs"><button type="button" onclick="this.parentElement.remove(); recalcAddItemsProgress()" class="text-rose-500 hover:text-rose-700 p-1">✕</button></div>
           </div>
         </div>
         
@@ -1271,7 +1271,7 @@
     const SESSION_TIMEOUT = 3600000;
     const RENCANA_STORAGE_KEY = 'ppab_rencana_anggaran_v15';
     const DEFAULT_PIN = 'admin2026';
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxW3QXfQHGncCxK26_WM2r6zwQTLPWCr0_2VxUVWuDNPm9B4U2FGGfk6KcFEe7-HAL6ew/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzMP8NcDAz8yvONSTC8g2NY8BhtudUl1tMO-_d-jlzcVrOKCrrZT6kkkUTJAmRsjNdI4w/exec";
 
     let rawDatabase = [];
     let database = [];
@@ -1581,11 +1581,7 @@
            try { d.items_breakdown = JSON.parse(d.items_breakdown[0]); } catch(e) {}
            if (!Array.isArray(d.items_breakdown)) d.items_breakdown = [];
          }
-         d.items_breakdown = d.items_breakdown.map(item => ({
-           name: item.name || item.nama || item.nama_barang || 'Barang',
-           qty_order: parseInt(item.qty_order) || 0,
-           qty_received: parseInt(item.qty_received) || 0
-         }));
+          d.items_breakdown = d.items_breakdown.map(item => ({ name: item.name || item.nama || item.nama_barang || 'Barang', satuan: item.satuan || 'pcs', harga_satuan: item.harga_satuan || 0, qty_order: parseInt(item.qty_order) || 0, qty_received: parseInt(item.qty_received) || 0 }));
          
          if (!Array.isArray(d.files)) {
            try { d.files = JSON.parse(d.files); } catch(e) {}
@@ -2611,12 +2607,14 @@
     function renderEditItemRows(items) {
       const container = document.getElementById('itemsContainer');
       container.innerHTML = '';
-      if (!items || items.length === 0) items = [{ name: 'Barang Utama', qty_order: 100, qty_received: 0 }];
+      if (!items || items.length === 0) items = [{ name: 'Barang Utama', satuan: 'pcs', harga_satuan: 0, qty_order: 100, qty_received: 0 }];
       items.forEach((item, idx) => {
         const ord = item.qty_order || 0; const rec = item.qty_received || 0;
+        const sat = item.satuan || 'pcs';
+        const hrg = item.harga_satuan || 0;
         let statusTag = (rec >= ord && ord > 0) ? '<span class="item-status-badge text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">✓ Lengkap</span>' : (rec > 0 ? `<span class="item-status-badge text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">⏳ Sebagian (${rec}/${ord})</span>` : '<span class="item-status-badge text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">✕ Belum Masuk</span>');
         const card = document.createElement('div'); card.className = 'item-row-card bg-slate-50 p-3 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center gap-3 transition-all hover:border-slate-300';
-        card.innerHTML = `<div class="flex-1 space-y-1"><div class="flex items-center justify-between"><label class="text-[10px] font-bold uppercase text-slate-400">Nama Item #${idx + 1}</label><div class="item-status-container">${statusTag}</div></div><input type="text" value="${item.name || ''}" placeholder="Nama barang / item..." required class="item-name-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 focus:ring-2 focus:ring-brand-500"></div><div class="flex items-center gap-2 shrink-0"><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Dipesan</label><input type="number" min="1" value="${ord}" oninput="recalcMultiItemsProgress()" required class="item-qty-order-input w-20 px-2 py-1.5 text-center bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-900 focus:ring-2 focus:ring-brand-500"></div><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Masuk (Diterima)</label><input type="number" min="0" value="${rec}" oninput="recalcMultiItemsProgress()" required class="item-qty-rec-input w-24 px-2 py-1.5 text-center bg-white border border-emerald-300 rounded-lg text-xs font-extrabold text-emerald-600 focus:ring-2 focus:ring-emerald-500"></div><button type="button" onclick="removeItemRow(this)" title="Hapus Item" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg self-end mb-0.5 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div>`;
+        card.innerHTML = `<div class="flex-1 space-y-1"><div class="flex items-center justify-between"><label class="text-[10px] font-bold uppercase text-slate-400">Nama Item #${idx + 1}</label><div class="item-status-container">${statusTag}</div></div><input type="text" value="${item.name || ''}" placeholder="Nama barang / item..." required class="item-name-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 focus:ring-2 focus:ring-brand-500"></div><div class="flex items-center gap-2 shrink-0"><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Satuan</label><input type="text" value="${sat}" placeholder="pcs/box" oninput="recalcMultiItemsProgress()" class="item-satuan-input w-16 px-2 py-1.5 text-center bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 focus:ring-2 focus:ring-brand-500"></div><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Harga Satuan (Rp)</label><input type="text" value="${hrg ? hrg.toLocaleString('id-ID') : ''}" placeholder="0" oninput="formatInputRibuan(event); recalcMultiItemsProgress()" class="item-harga-input w-28 px-2 py-1.5 text-center bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-900 focus:ring-2 focus:ring-brand-500"></div><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Dipesan</label><input type="number" min="1" value="${ord}" oninput="recalcMultiItemsProgress()" required class="item-qty-order-input w-20 px-2 py-1.5 text-center bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-900 focus:ring-2 focus:ring-brand-500"></div><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Masuk (Diterima)</label><input type="number" min="0" value="${rec}" oninput="recalcMultiItemsProgress()" required class="item-qty-rec-input w-24 px-2 py-1.5 text-center bg-white border border-emerald-300 rounded-lg text-xs font-extrabold text-emerald-600 focus:ring-2 focus:ring-emerald-500"></div><button type="button" onclick="removeItemRow(this)" title="Hapus Item" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg self-end mb-0.5 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div>`;
         container.appendChild(card);
       });
       try { lucide.createIcons(); } catch(e){}
@@ -2627,7 +2625,7 @@
       const container = document.getElementById('itemsContainer');
       const count = container.children.length + 1;
       const card = document.createElement('div'); card.className = 'item-row-card bg-slate-50 p-3 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center gap-3 transition-all hover:border-slate-300';
-      card.innerHTML = `<div class="flex-1 space-y-1"><div class="flex items-center justify-between"><label class="text-[10px] font-bold uppercase text-slate-400">Nama Item #${count}</label><div class="item-status-container"><span class="item-status-badge text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">✕ Belum Masuk</span></div></div><input type="text" placeholder="Nama barang / item..." required class="item-name-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 focus:ring-2 focus:ring-brand-500"></div><div class="flex items-center gap-2 shrink-0"><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Dipesan</label><input type="number" min="0" value="0" oninput="recalcMultiItemsProgress()" required class="item-qty-order-input w-20 px-2 py-1.5 text-center bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-900 focus:ring-2 focus:ring-brand-500"></div><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Masuk (Diterima)</label><input type="number" min="0" value="0" oninput="recalcMultiItemsProgress()" required class="item-qty-rec-input w-24 px-2 py-1.5 text-center bg-white border border-emerald-300 rounded-lg text-xs font-extrabold text-emerald-600 focus:ring-2 focus:ring-emerald-500"></div><button type="button" onclick="removeItemRow(this)" title="Hapus Item" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg self-end mb-0.5 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div>`;
+      card.innerHTML = `<div class="flex-1 space-y-1"><div class="flex items-center justify-between"><label class="text-[10px] font-bold uppercase text-slate-400">Nama Item #${count}</label><div class="item-status-container"><span class="item-status-badge text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">✕ Belum Masuk</span></div></div><input type="text" placeholder="Nama barang / item..." required class="item-name-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 focus:ring-2 focus:ring-brand-500"></div><div class="flex items-center gap-2 shrink-0"><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Satuan</label><input type="text" value="pcs" placeholder="pcs/box" oninput="recalcMultiItemsProgress()" class="item-satuan-input w-16 px-2 py-1.5 text-center bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 focus:ring-2 focus:ring-brand-500"></div><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Harga Satuan (Rp)</label><input type="text" placeholder="0" oninput="formatInputRibuan(event); recalcMultiItemsProgress()" class="item-harga-input w-28 px-2 py-1.5 text-center bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-900 focus:ring-2 focus:ring-brand-500"></div><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Dipesan</label><input type="number" min="0" value="0" oninput="recalcMultiItemsProgress()" required class="item-qty-order-input w-20 px-2 py-1.5 text-center bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-900 focus:ring-2 focus:ring-brand-500"></div><div><label class="text-[10px] font-bold uppercase text-slate-400 block text-center">Masuk (Diterima)</label><input type="number" min="0" value="0" oninput="recalcMultiItemsProgress()" required class="item-qty-rec-input w-24 px-2 py-1.5 text-center bg-white border border-emerald-300 rounded-lg text-xs font-extrabold text-emerald-600 focus:ring-2 focus:ring-emerald-500"></div><button type="button" onclick="removeItemRow(this)" title="Hapus Item" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg self-end mb-0.5 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div>`;
       container.appendChild(card);
       try { lucide.createIcons(); } catch(e){}
       recalcMultiItemsProgress();
@@ -2641,12 +2639,15 @@
 
     function recalcMultiItemsProgress() {
       const cards = document.querySelectorAll('.item-row-card');
-      let totalOrder = 0; let totalReceived = 0; let completeCount = 0;
+      let totalOrder = 0; let totalReceived = 0; let completeCount = 0; let totalHargaItems = 0;
       cards.forEach(card => {
         const orderVal = parseInt(card.querySelector('.item-qty-order-input').value) || 0;
         const recVal = parseInt(card.querySelector('.item-qty-rec-input').value) || 0;
+        const hargaInput = card.querySelector('.item-harga-input');
+        const hargaVal = hargaInput ? parseRibuan(hargaInput.value) : 0;
         const statusContainer = card.querySelector('.item-status-container');
         totalOrder += orderVal; totalReceived += recVal;
+        totalHargaItems += hargaVal * orderVal;
         if (recVal >= orderVal && orderVal > 0) { completeCount++; statusContainer.innerHTML = '<span class="item-status-badge text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">✓ Lengkap</span>'; } 
         else if (recVal > 0) { statusContainer.innerHTML = `<span class="item-status-badge text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">⏳ Sebagian (${recVal}/${orderVal})</span>`; } 
         else { statusContainer.innerHTML = '<span class="item-status-badge text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">✕ Belum Masuk</span>'; }
@@ -2659,6 +2660,8 @@
       if (statusSelect.value !== 'Dibatalkan') {
         if (pct === 100) statusSelect.value = 'Selesai'; else if (pct > 0) statusSelect.value = 'Progres'; else statusSelect.value = 'Belum Proses';
       }
+      document.getElementById('editNilai').value = totalHargaItems.toLocaleString('id-ID');
+      calculateEditTaxTotals();
     }
 
     function renderEditFilesList() {
@@ -2873,6 +2876,8 @@
       calculateEditTaxTotals();
       renderEditItemRows(item.items_breakdown);
       renderEditFilesList();
+      const editSubmitBtn = document.getElementById('btnSubmitEdit');
+      if (editSubmitBtn) editSubmitBtn.disabled = false;
 
       closeDetailModal();
       document.getElementById('editModal').classList.remove('hidden');
@@ -2884,54 +2889,81 @@
     function saveEditedPpab(e) {
       e.preventDefault();
       if (!isAdmin) return;
+
+      const formTgl = document.getElementById('editTanggal').value.trim();
+      const formPpab = document.getElementById('editNoPpab').value.trim();
+      const formPerihal = document.getElementById('editPerihal').value.trim();
+      if (!formTgl || !formPpab || !formPerihal) {
+        const missing = [];
+        if (!formTgl) missing.push('Tanggal Mulai');
+        if (!formPpab) missing.push('Nomor PPAB');
+        if (!formPerihal) missing.push('Perihal Pengadaan');
+        showToast('Field wajib belum diisi: ' + missing.join(', '), true);
+        return;
+      }
+
       const noVal = document.getElementById('editItemNo').value;
       const no = parseInt(noVal) || Number(noVal) || 0;
       const itemIndex = rawDatabase.findIndex(d => Number(d.no) === no || String(d.no) === String(noVal));
       if (itemIndex === -1) return;
 
-      const cards = document.querySelectorAll('.item-row-card');
-      const itemsList = []; let totalOrder = 0; let totalReceived = 0;
-      cards.forEach(card => {
-        const nameVal = card.querySelector('.item-name-input').value.trim() || 'Barang';
-        const ordVal = parseInt(card.querySelector('.item-qty-order-input').value) || 0;
-        const recVal = parseInt(card.querySelector('.item-qty-rec-input').value) || 0;
-        itemsList.push({ name: nameVal, qty_order: ordVal, qty_received: recVal });
-        totalOrder += ordVal; totalReceived += recVal;
-      });
+      const submitBtn = document.getElementById('btnSubmitEdit');
+      if (submitBtn) { submitBtn.disabled = true; }
 
-      const pct = totalOrder > 0 ? Math.min(100, Math.round((totalReceived / totalOrder) * 100)) : 0;
-      const nilaiInput = parseRibuan(document.getElementById('editNilai').value) || 0;
-      const taxRes = computeTaxDetails(nilaiInput, document.getElementById('editTaxType').value);
-      const stAnggaran = document.getElementById('editStAnggaran').value || 'Opex';
-      const mataAnggaran = stAnggaran === 'Capex' ? (document.getElementById('editMAInput').value.trim() || 'Capex - Belanja Modal') : document.getElementById('editMASelect').value;
+      try {
+        const cards = document.querySelectorAll('.item-row-card');
+        const itemsList = []; let totalOrder = 0; let totalReceived = 0;
+        cards.forEach(card => {
+          const nameVal = card.querySelector('.item-name-input').value.trim() || 'Barang';
+          const satVal = card.querySelector('.item-satuan-input').value.trim() || 'pcs';
+          const hargaVal = parseRibuan(card.querySelector('.item-harga-input').value) || 0;
+          const ordVal = parseInt(card.querySelector('.item-qty-order-input').value) || 0;
+          const recVal = parseInt(card.querySelector('.item-qty-rec-input').value) || 0;
+          itemsList.push({ name: nameVal, satuan: satVal, harga_satuan: hargaVal, qty_order: ordVal, qty_received: recVal });
+          totalOrder += ordVal; totalReceived += recVal;
+        });
 
-      rawDatabase[itemIndex] = {
-        ...rawDatabase[itemIndex],
-        tanggal: document.getElementById('editTanggal').value || '-',
-        tanggal_selesai: document.getElementById('editTglSelesai').value || '-',
-        no_ppab: document.getElementById('editNoPpab').value || '-',
-        st_anggaran: stAnggaran,
-        no_kak: document.getElementById('editNoKak').value || '-',
-        no_pr_sap: document.getElementById('editNoPrSap').value || '-',
-        perihal: document.getElementById('editPerihal').value || '-',
-        mata_anggaran: mataAnggaran,
-        vendor: document.getElementById('editVendor').value || '-',
-        items_breakdown: itemsList, files: temporaryEditFiles,
-        jml_item: totalOrder, brg_msk: totalReceived,
-        nilai: taxRes.nilai, tax_type: document.getElementById('editTaxType').value, dpp: taxRes.dpp, ppn: taxRes.ppn, jumlah: taxRes.total,
-        progres: pct, status: document.getElementById('editStatus').value,
-        "Jam Update": getCurrentTimestamp()
-      };
+        const pct = totalOrder > 0 ? Math.min(100, Math.round((totalReceived / totalOrder) * 100)) : 0;
+        const nilaiInput = parseRibuan(document.getElementById('editNilai').value) || 0;
+        const taxRes = computeTaxDetails(nilaiInput, document.getElementById('editTaxType').value);
+        const stAnggaran = document.getElementById('editStAnggaran').value || 'Opex';
+        const mataAnggaran = stAnggaran === 'Capex' ? (document.getElementById('editMAInput').value.trim() || 'Capex - Belanja Modal') : document.getElementById('editMASelect').value;
 
-      saveDatabase();
-      closeEditModal();
-      if (document.getElementById('editStatus').value === 'Selesai') {
-        autoTransferPPABToInventory(rawDatabase[itemIndex]);
+        const prevStatus = rawDatabase[itemIndex]._prevStatus || rawDatabase[itemIndex].status;
+        const newStatus = document.getElementById('editStatus').value;
+
+        rawDatabase[itemIndex] = {
+          ...rawDatabase[itemIndex],
+          tanggal: document.getElementById('editTanggal').value || '-',
+          tanggal_selesai: document.getElementById('editTglSelesai').value || '-',
+          no_ppab: document.getElementById('editNoPpab').value || '-',
+          st_anggaran: stAnggaran,
+          no_kak: document.getElementById('editNoKak').value || '-',
+          no_pr_sap: document.getElementById('editNoPrSap').value || '-',
+          perihal: document.getElementById('editPerihal').value || '-',
+          mata_anggaran: mataAnggaran,
+          vendor: document.getElementById('editVendor').value || '-',
+          items_breakdown: itemsList, files: temporaryEditFiles,
+          jml_item: totalOrder, brg_msk: totalReceived,
+          nilai: taxRes.nilai, tax_type: document.getElementById('editTaxType').value, dpp: taxRes.dpp, ppn: taxRes.ppn, jumlah: taxRes.total,
+          progres: pct, status: newStatus,
+          "Jam Update": getCurrentTimestamp()
+        };
+
+        if (newStatus === 'Selesai' && prevStatus !== 'Selesai') {
+          autoTransferPPABToInventory(rawDatabase[itemIndex]);
+        }
+        if (newStatus === 'Dibatalkan' && prevStatus === 'Selesai') {
+          rollbackInventoryFromPPAB(rawDatabase[itemIndex]);
+        }
+        rawDatabase[itemIndex]._prevStatus = newStatus;
+        saveDatabase();
+        saveInventoryData();
+        closeEditModal();
+        showToast(`Paket #${no} dan berkas berhasil disimpan!`);
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
       }
-      if (document.getElementById('editStatus').value === 'Dibatalkan' && rawDatabase[itemIndex]._prevStatus === 'Selesai') {
-        rollbackInventoryFromPPAB(rawDatabase[itemIndex]);
-      }
-      showToast(`Paket #${no} dan berkas berhasil disimpan!`);
     }
 
     async function deleteCurrentEditItem() {
@@ -2999,11 +3031,16 @@
 
       const items = item.items_breakdown || [];
       let itemRowsHtml = '';
+      let subtotalAll = 0;
       items.forEach((it, idx) => {
         const ord = it.qty_order || 0; const rec = it.qty_received || 0; const rem = Math.max(0, ord - rec);
+        const sat = it.satuan || '-';
+        const hrg = it.harga_satuan || 0;
+        const subtotal = hrg * ord;
+        subtotalAll += subtotal;
         const itemPct = ord > 0 ? Math.min(100, Math.round((rec / ord) * 100)) : 0;
         let statusTag = (rec >= ord && ord > 0) ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">✓ Lengkap</span>' : (rec > 0 ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">⏳ Sebagian</span>' : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">✕ Belum</span>');
-        itemRowsHtml += `<tr class="hover:bg-slate-50 font-medium"><td class="py-2 px-3 text-center text-slate-400 font-bold">${idx + 1}</td><td class="py-2 px-3 font-semibold text-slate-800">${it.name}</td><td class="py-2 px-3 text-center font-bold text-slate-900">${ord}</td><td class="py-2 px-3 text-center font-extrabold text-emerald-600">${rec}</td><td class="py-2 px-3 text-center font-bold text-rose-500">${rem}</td><td class="py-2 px-3 text-center"><div class="flex items-center justify-center gap-1.5"><div class="w-10 bg-slate-100 rounded-full h-1.5 overflow-hidden"><div class="bg-brand-600 h-1.5 rounded-full" style="width: ${itemPct}%"></div></div><span class="text-[10px] font-bold text-slate-600">${itemPct}%</span></div></td><td class="py-2 px-3 text-center">${statusTag}</td></tr>`;
+        itemRowsHtml += `<tr class="hover:bg-slate-50 font-medium"><td class="py-2 px-3 text-center text-slate-400 font-bold">${idx + 1}</td><td class="py-2 px-3 font-semibold text-slate-800">${it.name}</td><td class="py-2 px-3 text-center">${sat}</td><td class="py-2 px-3 text-right whitespace-nowrap">${hrg > 0 ? formatIDR(hrg) : '—'}</td><td class="py-2 px-3 text-center font-bold text-slate-900">${ord}</td><td class="py-2 px-3 text-center font-extrabold text-emerald-600">${rec}</td><td class="py-2 px-3 text-center font-bold text-rose-500">${rem}</td><td class="py-2 px-3 text-right font-bold text-slate-900 whitespace-nowrap">${hrg > 0 ? formatIDR(subtotal) : '—'}</td><td class="py-2 px-3 text-center"><div class="flex items-center justify-center gap-1.5"><div class="w-10 bg-slate-100 rounded-full h-1.5 overflow-hidden"><div class="bg-brand-600 h-1.5 rounded-full" style="width: ${itemPct}%"></div></div><span class="text-[10px] font-bold text-slate-600">${itemPct}%</span></div></td><td class="py-2 px-3 text-center">${statusTag}</td></tr>`;
       });
 
       const files = item.files || [];
@@ -3028,7 +3065,7 @@
         <div class="space-y-2">
           <div class="flex items-center justify-between"><span class="text-xs font-bold text-slate-900 flex items-center gap-1.5"><i data-lucide="package" class="w-4 h-4 text-brand-600"></i> Rincian Item:</span></div>
           <div class="border border-slate-200 rounded-xl overflow-hidden">
-            <table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-100 text-slate-700 font-bold uppercase text-[10px] border-b border-slate-200"><tr><th class="py-2 px-3 text-center">No</th><th class="py-2 px-3">Nama Item</th><th class="py-2 px-3 text-center">Pesan</th><th class="py-2 px-3 text-center text-emerald-700">Masuk</th><th class="py-2 px-3 text-center text-rose-700">Kurang</th><th class="py-2 px-3 text-center">Progres</th><th class="py-2 px-3 text-center">Status</th></tr></thead><tbody class="divide-y divide-slate-100">${itemRowsHtml}</tbody></table>
+            <table class="w-full text-left text-xs text-slate-600"><thead class="bg-slate-100 text-slate-700 font-bold uppercase text-[10px] border-b border-slate-200"><tr><th class="py-2 px-3 text-center">No</th><th class="py-2 px-3">Nama Item</th><th class="py-2 px-3 text-center">Satuan</th><th class="py-2 px-3 text-right">Harga Satuan</th><th class="py-2 px-3 text-center">Pesan</th><th class="py-2 px-3 text-center text-emerald-700">Masuk</th><th class="py-2 px-3 text-center text-rose-700">Kurang</th><th class="py-2 px-3 text-right">Subtotal</th><th class="py-2 px-3 text-center">Progres</th><th class="py-2 px-3 text-center">Status</th></tr></thead><tbody class="divide-y divide-slate-100">${itemRowsHtml}</tbody><tfoot class="bg-slate-50 font-bold text-slate-800 border-t border-slate-200"><tr><td class="py-2 px-3" colspan="7">Total Subtotal (Qty Dipesan)</td><td class="py-2 px-3 text-right text-brand-700 whitespace-nowrap">${subtotalAll > 0 ? formatIDR(subtotalAll) : '—'}</td><td class="py-2 px-3" colspan="2"></td></tr></tfoot></table>
           </div>
         </div>
         <div class="space-y-2"><span class="text-xs font-bold text-slate-900 flex items-center gap-1.5"><i data-lucide="folder-check" class="w-4 h-4 text-brand-600"></i> Berkas Lampiran (${files.length}):</span>${filesListHtml}</div>
@@ -3049,12 +3086,24 @@
 
     function closeDetailModal() { document.getElementById('detailModal').classList.add('hidden'); }
 
+    function getDefaultAddItemRowHTML() {
+      return `<div class="flex items-center gap-2 add-item-row"><input type="text" placeholder="Nama Barang..." required class="add-item-name flex-1 px-3 py-1.5 border border-slate-200 rounded-lg text-xs"><input type="text" value="pcs" placeholder="pcs/box" class="add-item-satuan w-16 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs"><input type="text" placeholder="Harga Satuan" oninput="formatInputRibuan(event); recalcAddItemsProgress()" class="add-item-harga w-28 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs font-bold"><input type="number" min="0" value="0" required oninput="recalcAddItemsProgress()" class="add-item-qty-order w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs"><input type="number" min="0" value="0" required oninput="recalcAddItemsProgress()" class="add-item-qty-rec w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs"><button type="button" onclick="this.parentElement.remove(); recalcAddItemsProgress()" class="text-rose-500 hover:text-rose-700 p-1">✕</button></div>`;
+    }
+
+    function resetAddItemsContainer() {
+      const container = document.getElementById('addModalItemsContainer');
+      if (container) container.innerHTML = getDefaultAddItemRowHTML();
+    }
+
     function openAddModal() {
       if (!isAdmin) return;
       document.getElementById('formTgl').valueAsDate = new Date();
       toggleAddMataAnggaranField();
       temporaryAddFiles = [];
       renderAddFilesList();
+      resetAddItemsContainer();
+      const addBtn = document.getElementById('btnSubmitAdd');
+      if (addBtn) { addBtn.disabled = false; addBtn.textContent = 'Simpan Entri PPAB'; }
       document.getElementById('addModal').classList.remove('hidden');
       calculateAddTaxTotals(); // Kalkulasi awal ke Rp 0
     }
@@ -3063,74 +3112,109 @@
       document.getElementById('addModal').classList.add('hidden');
       document.getElementById('addPpabForm').reset();
       temporaryAddFiles = [];
+      resetAddItemsContainer();
     }
 
     function addModalNewItemRow() {
       const container = document.getElementById('addModalItemsContainer');
       const div = document.createElement('div');
-      div.className = 'flex items-center gap-2 add-item-row';
-      div.innerHTML = `
-        <input type="text" placeholder="Nama Barang..." required class="add-item-name flex-1 px-3 py-1.5 border border-slate-200 rounded-lg text-xs">
-        <input type="number" min="0" value="0" required class="add-item-qty-order w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs">
-        <input type="number" min="0" value="0" required class="add-item-qty-rec w-20 px-2 py-1.5 text-center border border-slate-200 rounded-lg text-xs">
-        <button type="button" onclick="this.parentElement.remove()" class="text-rose-500 hover:text-rose-700 p-1">✕</button>
-      `;
-      container.appendChild(div);
+      div.innerHTML = getDefaultAddItemRowHTML();
+      container.appendChild(div.firstChild);
+      recalcAddItemsProgress();
+    }
+
+    function recalcAddItemsProgress() {
+      const rows = document.querySelectorAll('#addModalItemsContainer .add-item-row');
+      let totalHargaItems = 0;
+      rows.forEach(row => {
+        const hargaInput = row.querySelector('.add-item-harga');
+        const qtyOrder = parseInt(row.querySelector('.add-item-qty-order')?.value) || 0;
+        const hargaVal = hargaInput ? parseRibuan(hargaInput.value) : 0;
+        totalHargaItems += hargaVal * qtyOrder;
+      });
+      document.getElementById('formNilai').value = totalHargaItems.toLocaleString('id-ID');
+      calculateAddTaxTotals();
     }
 
     function saveNewPpab(e) {
       e.preventDefault();
       if (!isAdmin) return;
-      const nilaiInput = parseRibuan(document.getElementById('formNilai').value) || 0;
-      const taxRes = computeTaxDetails(nilaiInput, document.getElementById('formTaxType').value);
 
-      const itemRows = document.querySelectorAll('.add-item-row');
-      const itemsList = []; let totalOrder = 0; let totalReceived = 0;
-      itemRows.forEach(row => {
-        const n = row.querySelector('.add-item-name').value.trim() || 'Barang';
-        const ord = parseInt(row.querySelector('.add-item-qty-order').value) || 0;
-        const rec = parseInt(row.querySelector('.add-item-qty-rec').value) || 0;
-        itemsList.push({ name: n, qty_order: ord, qty_received: rec });
-        totalOrder += ord; totalReceived += rec;
-      });
-
-      const pct = totalOrder > 0 ? Math.min(100, Math.round((totalReceived / totalOrder) * 100)) : 0;
-      let statusCalc = pct === 100 ? 'Selesai' : (pct > 0 ? 'Progres' : 'Belum Proses');
-
-         const nextNo = rawDatabase.length > 0 ? Math.max(...rawDatabase.map(d => Number(d.no)||0)) + 1 : 1;
-      const stAnggaran = document.getElementById('formStAnggaran').value || 'Opex';
-      let mataAnggaran;
-      if (stAnggaran === 'Capex') {
-        const capexDropdown = document.getElementById('addModalCapexDropdown');
-        const capexInput = document.getElementById('formMAInput');
-        mataAnggaran = (capexDropdown && capexDropdown.value) ? capexDropdown.value : (capexInput.value.trim() || 'Capex - Belanja Modal');
-      } else {
-        mataAnggaran = document.getElementById('formMASelect').value;
+      const formTgl = document.getElementById('formTgl').value.trim();
+      const formPpab = document.getElementById('formPpab').value.trim();
+      const formPerihal = document.getElementById('formPerihal').value.trim();
+      if (!formTgl || !formPpab || !formPerihal) {
+        const missing = [];
+        if (!formTgl) missing.push('Tanggal Mulai');
+        if (!formPpab) missing.push('Nomor PPAB');
+        if (!formPerihal) missing.push('Perihal Pengadaan');
+        showToast('Field wajib belum diisi: ' + missing.join(', '), true);
+        return;
+      }
+      if (rawDatabase.some(d => d.no_ppab === formPpab)) {
+        showToast(`Nomor PPAB "${formPpab}" sudah terdaftar. Gunakan nomor lain.`, true);
+        return;
       }
 
-      const newEntry = {
-        no: nextNo,
-        tanggal: document.getElementById('formTgl').value || '-',
-        tanggal_selesai: document.getElementById('formTglSelesai').value || '-',
-        no_ppab: document.getElementById('formPpab').value || '-',
-        st_anggaran: stAnggaran,
-        no_kak: '-', no_pr_ppab: '-', no_pr_sap: '-',
-        perihal: document.getElementById('formPerihal').value || '-',
-        nilai: taxRes.nilai, tax_type: document.getElementById('formTaxType').value, dpp: taxRes.dpp, ppn: taxRes.ppn, jumlah: taxRes.total,
-        mata_anggaran: mataAnggaran, vendor: document.getElementById('formVendor').value || '-',
-        items_breakdown: itemsList, files: temporaryAddFiles,
-        jml_item: totalOrder, brg_msk: totalReceived, progres: pct, status: statusCalc,
-        "Jam Update": getCurrentTimestamp()
-      };
+      const submitBtn = document.getElementById('btnSubmitAdd');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Menyimpan...'; }
 
-      rawDatabase.push(newEntry);
+      try {
+        const nilaiInput = parseRibuan(document.getElementById('formNilai').value) || 0;
+        const taxRes = computeTaxDetails(nilaiInput, document.getElementById('formTaxType').value);
 
-      if (statusCalc === 'Selesai') { autoTransferPPABToInventory(newEntry); }
+        const itemRows = document.querySelectorAll('#addModalItemsContainer .add-item-row');
+        const itemsList = []; let totalOrder = 0; let totalReceived = 0;
+        itemRows.forEach(row => {
+          const n = row.querySelector('.add-item-name').value.trim() || 'Barang';
+          const sat = (row.querySelector('.add-item-satuan')?.value || '').trim() || 'pcs';
+          const hrg = parseRibuan(row.querySelector('.add-item-harga')?.value) || 0;
+          const ord = parseInt(row.querySelector('.add-item-qty-order').value) || 0;
+          const rec = parseInt(row.querySelector('.add-item-qty-rec').value) || 0;
+          itemsList.push({ name: n, satuan: sat, harga_satuan: hrg, qty_order: ord, qty_received: rec });
+          totalOrder += ord; totalReceived += rec;
+        });
 
-      currentMasterPage = 1;
-      saveDatabase();
-      closeAddModal();
-      showToast('Paket PPAB baru berhasil ditambahkan!');
+        const pct = totalOrder > 0 ? Math.min(100, Math.round((totalReceived / totalOrder) * 100)) : 0;
+        let statusCalc = pct === 100 ? 'Selesai' : (pct > 0 ? 'Progres' : 'Belum Proses');
+
+        const nextNo = rawDatabase.length > 0 ? Math.max(...rawDatabase.map(d => Number(d.no)||0)) + 1 : 1;
+        const stAnggaran = document.getElementById('formStAnggaran').value || 'Opex';
+        let mataAnggaran;
+        if (stAnggaran === 'Capex') {
+          const capexDropdown = document.getElementById('addModalCapexDropdown');
+          const capexInput = document.getElementById('formMAInput');
+          mataAnggaran = (capexDropdown && capexDropdown.value) ? capexDropdown.value : (capexInput.value.trim() || 'Capex - Belanja Modal');
+        } else {
+          mataAnggaran = document.getElementById('formMASelect').value;
+        }
+
+        const newEntry = {
+          no: nextNo,
+          tanggal: document.getElementById('formTgl').value || '-',
+          tanggal_selesai: document.getElementById('formTglSelesai').value || '-',
+          no_ppab: document.getElementById('formPpab').value || '-',
+          st_anggaran: stAnggaran,
+          no_kak: '-', no_pr_ppab: '-', no_pr_sap: '-',
+          perihal: document.getElementById('formPerihal').value || '-',
+          nilai: taxRes.nilai, tax_type: document.getElementById('formTaxType').value, dpp: taxRes.dpp, ppn: taxRes.ppn, jumlah: taxRes.total,
+          mata_anggaran: mataAnggaran, vendor: document.getElementById('formVendor').value || '-',
+          items_breakdown: itemsList, files: temporaryAddFiles,
+          jml_item: totalOrder, brg_msk: totalReceived, progres: pct, status: statusCalc,
+          "Jam Update": getCurrentTimestamp()
+        };
+
+        rawDatabase.push(newEntry);
+
+        if (statusCalc === 'Selesai') { autoTransferPPABToInventory(newEntry); saveInventoryData(); }
+
+        currentMasterPage = 1;
+        saveDatabase();
+        closeAddModal();
+        showToast('Paket PPAB baru berhasil ditambahkan!');
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Simpan Entri PPAB'; }
+      }
     }
 
     // ======================================================================
@@ -3140,6 +3224,21 @@
     const BORROW_STORAGE_KEY = 'ppab_borrowing_records_v1';
     const EXPEND_STORAGE_KEY = 'ppab_inventory_expenditures_v1';
     const DELIVERY_STORAGE_KEY = 'ppab_consumer_deliveries_v1';
+    const IMPORTED_PPAB_KEY = 'ppab_imported_ppab_list_v1';
+
+    function getImportedPPABs() {
+      try { return JSON.parse(localStorage.getItem(IMPORTED_PPAB_KEY)) || []; } catch(e) { return []; }
+    }
+    function markPPABImported(noPpab) {
+      if (!noPpab || noPpab === '-') return;
+      const list = getImportedPPABs();
+      if (!list.includes(noPpab)) { list.push(noPpab); localStorage.setItem(IMPORTED_PPAB_KEY, JSON.stringify(list)); }
+    }
+    function unmarkPPABImported(noPpab) {
+      const list = getImportedPPABs();
+      const idx = list.indexOf(noPpab);
+      if (idx !== -1) { list.splice(idx, 1); localStorage.setItem(IMPORTED_PPAB_KEY, JSON.stringify(list)); }
+    }
 
     let inventoryItems = [];
     let borrowingRecords = [];
@@ -3158,9 +3257,11 @@
     // ======================================================================
     function classifyItemByKeywords(name) {
       const n = (name || '').toLowerCase();
+      const serviceKeywords = ['jasa','audit','biaya','layanan','konsultasi','pelatihan','seminar','training','honorer','upah','sewa','transport','akomodasi','konsumsi','catering','pakaian seragam'];
+      if (serviceKeywords.some(kw => n.includes(kw))) return null;
       const rules = [
         { cat: 'Dijual Kembali', keywords: ['buku laporan','aws','gelas ukur','tabung curah hujan','ombrometer'] },
-        { cat: 'Aset Tetap', keywords: ['laptop','pc','komputer','meja','kursi','ac','tv','monitor','server'] },
+        { cat: 'Aset Tetap', keywords: ['laptop','pc','komputer','meja','kursi','ac','tv','monitor','server','hardisk','ssd','cpu','keyboard','mouse'] },
         { cat: 'Alat Tulis Kantor', keywords: ['kertas','bolpoin','pensil','map','binder','stapler','tinta','amplop'] },
         { cat: 'Alat Habis Pakai', keywords: ['baterai','lampu','filter','kapur'] },
         { cat: 'Alat Bantu Kerja', keywords: ['printer','scanner','proyektor','mesin hitung','lemari','brankas','genset','bor tanah'] },
@@ -3360,6 +3461,22 @@
     // ======================================================================
     function autoTransferPPABToInventory(ppabItem) {
       if (!ppabItem.items_breakdown || ppabItem.items_breakdown.length === 0) return;
+      const noPpabKey = ppabItem.no_ppab || '';
+      if (noPpabKey && noPpabKey !== '-') {
+        const alreadyInInventory = inventoryItems.some(i =>
+          i.source_ppab === noPpabKey ||
+          (Array.isArray(i.source_ppab_history) && i.source_ppab_history.includes(noPpabKey))
+        );
+        if (alreadyInInventory) {
+          markPPABImported(noPpabKey);
+          showToast(`PPAB ${noPpabKey} sudah ada di inventaris. Lewati.`, false);
+          return;
+        }
+        if (getImportedPPABs().includes(noPpabKey)) {
+          // Penanda basi: inventory kosong → bersihkan & izinkan re-import
+          unmarkPPABImported(noPpabKey);
+        }
+      }
       const sumberMap = {
         'HPP Rekomendasi Pupuk': 'PPAB - HPP Rekomendasi Pupuk',
         'HPP Jasa Informasi Digital': 'PPAB - HPP Jasa Informasi Digital',
@@ -3367,11 +3484,14 @@
         'HPP Bantuan Teknis': 'PPAB - HPP Bantuan Teknis'
       };
       const sumber = (ppabItem.st_anggaran || '').toLowerCase() === 'capex' ? 'PPAB - Capex' : (sumberMap[ppabItem.mata_anggaran] || 'PPAB - HPP Training');
-      
-      // Hitung harga per item dari total PPAB
-      const totalItems = ppabItem.items_breakdown.length;
-      const totalNilai = ppabItem.jumlah || 0;
-      const hargaPerItem = totalItems > 0 ? Math.floor(totalNilai / totalItems) : 0;
+
+      // Kategori yang di-merge (ditambah stok) jika nama + kategori sudah ada
+      const mergeCategories = ['Alat Tulis Kantor', 'Alat Habis Pakai', 'Souvenir', 'Dijual Kembali'];
+
+      // Fallback harga tanpa PPN: hanya item yang lolos klasifikasi (bukan jasa)
+      const totalNilaiTanpaPPN = ppabItem.nilai || 0;
+      const classifiedItems = ppabItem.items_breakdown.filter(it => classifyItemByKeywords(it.name) !== null);
+      const totalQtyClassified = classifiedItems.reduce((s, it) => s + (it.qty_received || it.qty_order || 0), 0);
 
       // Mapping kategori ke kode
       const kategoriCodeMap = {
@@ -3383,55 +3503,151 @@
         'Dijual Kembali': 'DJK'
       };
 
+      let mergedCount = 0; let createdCount = 0;
+
       ppabItem.items_breakdown.forEach(item => {
         const kategori = classifyItemByKeywords(item.name);
         const jumlahItem = item.qty_received || item.qty_order || 0;
-        
-        // Generate kode barang dengan nomor urut yang benar
+        if (jumlahItem <= 0) return;
+        if (kategori === null) return;
+
+        // Harga satuan tanpa PPN dari form; fallback pembagian nilai kontrak
+        let hargaSatuan = item.harga_satuan || 0;
+        if (hargaSatuan <= 0) {
+          hargaSatuan = totalQtyClassified > 0 ? Math.floor(totalNilaiTanpaPPN / totalQtyClassified) : 0;
+        }
+
+        // Merge untuk kategori stok: jika nama + kategori sama, tambah jumlah saja
+        if (mergeCategories.includes(kategori)) {
+          const existingIdx = inventoryItems.findIndex(i =>
+            (i.nama_barang || '').toLowerCase() === (item.name || '').toLowerCase() && i.kategori === kategori
+          );
+          if (existingIdx !== -1) {
+            const ex = inventoryItems[existingIdx];
+            ex.jumlah = (ex.jumlah || 0) + jumlahItem;
+            if (hargaSatuan > 0) ex.nilai_perolehan = hargaSatuan;
+            ex.tanggal_perolehan = ppabItem.tanggal || ex.tanggal_perolehan;
+            ex.source_ppab = noPpabKey || ex.source_ppab;
+            if (!Array.isArray(ex.source_ppab_history)) ex.source_ppab_history = [];
+            if (noPpabKey && !ex.source_ppab_history.includes(noPpabKey)) {
+              ex.source_ppab_history.push(noPpabKey);
+            }
+            if (!ex.ppab_qty_contrib || typeof ex.ppab_qty_contrib !== 'object') ex.ppab_qty_contrib = {};
+            ex.ppab_qty_contrib[noPpabKey || '-'] = (ex.ppab_qty_contrib[noPpabKey || '-'] || 0) + jumlahItem;
+            ex.sumber_perolehan = sumber;
+            ex.keterangan = 'Auto-import dari PPAB ' + noPpabKey + ' | Harga satuan: ' + formatIDR(hargaSatuan);
+            ex.jam_update = getCurrentTimestamp();
+            mergedCount++;
+            return;
+          }
+        }
+
+        // Barang baru: generate kode dengan nomor urut
         const kategoriKode = kategoriCodeMap[kategori] || 'AST';
-        const existingCodes = inventoryItems
-          .filter(i => i.kode_barang && i.kode_barang.startsWith(`INV/${kategoriKode}/UPJKP/`))
-          .map(i => { const m = i.kode_barang.match(/INV\/[A-Z]+\/UPJKP\/(\d+)/); return m ? parseInt(m[1]) : 0; });
-        const nextNum = existingCodes.length > 0 ? Math.max(...existingCodes) + 1 : 1;
-        const kodeBarang = `INV/${kategoriKode}/UPJKP/${String(nextNum).padStart(4, '0')}`;
-        
-        inventoryItems.push({
+        const getNextNum = () => {
+          const codes = inventoryItems
+            .filter(i => i.kode_barang && i.kode_barang.startsWith(`INV/${kategoriKode}/`))
+            .map(i => { const m = i.kode_barang.match(/(\d+)$/); return m ? parseInt(m[1]) : 0; });
+          return codes.length > 0 ? Math.max(...codes) + 1 : 1;
+        };
+        const makeEntry = (kodeBarang, qty, keteranganExtra) => ({
           id: inventoryItems.length > 0 ? Math.max(...inventoryItems.map(i => parseInt(i.id) || 0)) + 1 : 1,
           nama_barang: item.name || 'Barang',
           kode_barang: kodeBarang,
           kategori: kategori,
           merek_type: '-',
-          jumlah: jumlahItem,
+          jumlah: qty,
+          satuan: item.satuan || 'pcs',
           kondisi: 'Baik',
           lokasi_ruangan: '-',
           tanggal_perolehan: ppabItem.tanggal || '-',
-          nilai_perolehan: hargaPerItem,
+          nilai_perolehan: hargaSatuan,
           status: 'Tersedia',
           gambar_url: '',
           qr_code_url: 'info.html?item=' + encodeURIComponent(kodeBarang),
           sumber_perolehan: sumber,
-          source_ppab: ppabItem.no_ppab || '-',
-          keterangan: 'Auto-import dari PPAB ' + (ppabItem.no_ppab || '') + ' | Harga satuan: ' + formatIDR(hargaPerItem),
+          source_ppab: noPpabKey || '-',
+          source_ppab_history: noPpabKey ? [noPpabKey] : ['-'],
+          ppab_qty_contrib: { [noPpabKey || '-']: qty },
+          keterangan: 'Auto-import dari PPAB ' + noPpabKey + ' | Harga satuan: ' + formatIDR(hargaSatuan) + (keteranganExtra || ''),
           jam_update: getCurrentTimestamp()
         });
+
+        // Aset Tetap / Alat Bantu Kerja dengan qty > 1: split jadi unit individual
+        if (!mergeCategories.includes(kategori) && jumlahItem > 1) {
+          const slug = (item.name || 'BARANG').replace(/[^a-zA-Z0-9]+/g, '').toUpperCase().substring(0, 15);
+          for (let u = 1; u <= jumlahItem; u++) {
+            const nextNum = getNextNum();
+            const kodeBarang = `INV/${kategoriKode}/${slug}.${u}/UPJKP/${String(nextNum).padStart(4, '0')}`;
+            inventoryItems.push(makeEntry(kodeBarang, 1, ` | Unit ${u}/${jumlahItem}`));
+            createdCount++;
+          }
+        } else {
+          const nextNum = getNextNum();
+          const kodeBarang = `INV/${kategoriKode}/UPJKP/${String(nextNum).padStart(4, '0')}`;
+          inventoryItems.push(makeEntry(kodeBarang, jumlahItem, ''));
+          createdCount++;
+        }
       });
-      showToast(`${ppabItem.items_breakdown.length} item berhasil diimport ke Inventaris! Nilai perolehan: ${formatIDR(hargaPerItem)}/item`);
+
+      const parts = [];
+      if (mergedCount > 0) parts.push(`${mergedCount} item digabung ke stok existing`);
+      if (createdCount > 0) parts.push(`${createdCount} item baru diimport`);
+      if (mergedCount + createdCount > 0) markPPABImported(noPpabKey);
+      showToast(`Import PPAB ${noPpabKey}: ${parts.join(', ')}.`);
     }
 
     function rollbackInventoryFromPPAB(ppabItem) {
       if (!ppabItem || !ppabItem.no_ppab) return;
-      const sourceLabel = 'PPAB - ' + (ppabItem.no_ppab || '');
-      const removed = [];
+      const noPpab = ppabItem.no_ppab;
+      const removed = []; const reduced = [];
       inventoryItems = inventoryItems.filter(item => {
-        if (item.source_ppab === ppabItem.no_ppab || (item.sumber_perolehan && item.sumber_perolehan.includes('PPAB') && item.source_ppab === ppabItem.no_ppab)) {
-          removed.push(item.nama_barang);
-          return false;
+        const inHistory = Array.isArray(item.source_ppab_history) && item.source_ppab_history.includes(noPpab);
+        const isPrimary = item.source_ppab === noPpab;
+        if (!inHistory && !isPrimary) return true;
+
+        // Proporsional: jika ada kontribusi per PPAB lain, kurangi qty saja
+        const contrib = (item.ppab_qty_contrib && typeof item.ppab_qty_contrib === 'object') ? item.ppab_qty_contrib : null;
+        const myContrib = contrib ? (parseInt(contrib[noPpab]) || 0) : 0;
+        const otherContribs = contrib
+          ? Object.keys(contrib).filter(k => k !== noPpab).reduce((s, k) => s + (parseInt(contrib[k]) || 0), 0)
+          : 0;
+
+        if (otherContribs > 0) {
+          // Item hasil merge beberapa PPAB: kurangi kontribusi PPAB ini saja (jika ada)
+          if (myContrib > 0) item.jumlah = Math.max(0, (item.jumlah || 0) - myContrib);
+          delete contrib[noPpab];
+          const hIdx = item.source_ppab_history.indexOf(noPpab);
+          if (hIdx !== -1) item.source_ppab_history.splice(hIdx, 1);
+          // Pindahkan source_ppab ke PPAB lain yang masih menyumbang
+          const remainingKeys = Object.keys(item.ppab_qty_contrib || {});
+          if (remainingKeys.length > 0) item.source_ppab = remainingKeys[remainingKeys.length - 1];
+          item.jam_update = getCurrentTimestamp();
+          if (item.jumlah <= 0) { removed.push(item.nama_barang); return false; }
+          reduced.push(item.nama_barang);
+          return true;
         }
-        return true;
+
+        // Item milik PPAB ini saja (atau tanpa data kontribusi lama): hapus total
+        removed.push(item.nama_barang);
+        return false;
       });
-      if (removed.length > 0) {
+      // Bersihkan history pada item lain (data lama tanpa ppab_qty_contrib)
+      inventoryItems.forEach(item => {
+        if (Array.isArray(item.source_ppab_history)) {
+          const idx = item.source_ppab_history.indexOf(noPpab);
+          if (idx !== -1 && !(item.ppab_qty_contrib && item.ppab_qty_contrib[noPpab])) {
+            item.source_ppab_history.splice(idx, 1);
+          }
+        }
+      });
+      unmarkPPABImported(noPpab);
+      if (removed.length > 0 || reduced.length > 0) {
         saveInventoryData();
-        showToast(`Rollback inventory: ${removed.length} item dihapus (${removed.join(', ')})`);
+        const parts = [];
+        if (removed.length > 0) parts.push(`${removed.length} item dihapus (${removed.join(', ')})`);
+        if (reduced.length > 0) parts.push(`${reduced.length} item stok dikurangi (${reduced.join(', ')})`);
+        showToast(`Rollback inventory PPAB ${noPpab}: ${parts.join('; ')}`);
       }
     }
 
@@ -3823,47 +4039,58 @@
         
         // ADD MODE — Barang baru: auto-generate kode
         const kategoriKode = kategoriCodeMap[kategori] || 'AST';
-        const existingCodes = inventoryItems
-          .filter(i => i.kode_barang && i.kode_barang.startsWith(`INV/${kategoriKode}/UPJKP/`))
-          .map(i => {
-            const match = i.kode_barang.match(/INV\/[A-Z]+\/UPJKP\/(\d+)/);
-            return match ? parseInt(match[1]) : 0;
-          });
-        const nextNum = existingCodes.length > 0 ? Math.max(...existingCodes) + 1 : 1;
-        const kodeBarang = `INV/${kategoriKode}/UPJKP/${String(nextNum).padStart(4, '0')}`;
-        
+        const getNextNum = () => {
+          const codes = inventoryItems
+            .filter(i => i.kode_barang && i.kode_barang.startsWith(`INV/${kategoriKode}/`))
+            .map(i => { const m = i.kode_barang.match(/(\d+)$/); return m ? parseInt(m[1]) : 0; });
+          return codes.length > 0 ? Math.max(...codes) + 1 : 1;
+        };
+        const shouldSplit = (kategori === 'Aset Tetap' || kategori === 'Alat Bantu Kerja') && jumlahInput > 1;
+        const unitCount = shouldSplit ? jumlahInput : 1;
+        const slug = shouldSplit ? namaBarang.replace(/[^a-zA-Z0-9]+/g, '').toUpperCase().substring(0, 15) : '';
+        const firstNum = getNextNum();
+        const firstKode = shouldSplit
+          ? `INV/${kategoriKode}/${slug}.1/UPJKP/${String(firstNum).padStart(4, '0')}`
+          : `INV/${kategoriKode}/UPJKP/${String(firstNum).padStart(4, '0')}`;
+
         let gambarUrl = '';
         if (imgBase64) {
-          const uploadedUrl = await doUpload(kodeBarang);
+          const uploadedUrl = await doUpload(firstKode);
           if (uploadedUrl) gambarUrl = uploadedUrl;
         }
-        
-        let maxId = inventoryItems.length > 0 ? Math.max(...inventoryItems.map(i => parseInt(i.id)||0)) + 1 : 1;
-        inventoryItems.push({
-          id: maxId,
-          nama_barang: namaBarang,
-          kode_barang: kodeBarang,
-          kategori: kategori,
-          merek_type: document.getElementById('invMerek').value || '-',
-          jumlah: jumlahInput,
-          kondisi: document.getElementById('invKondisi').value,
-          status: document.getElementById('invStatus').value,
-          lokasi_ruangan: document.getElementById('invLokasi').value || '-',
-          tanggal_perolehan: document.getElementById('invTglPerolehan').value || '-',
-          nilai_perolehan: nilaiInput,
-          sumber_perolehan: document.getElementById('invSumber').value,
-          keterangan: document.getElementById('invKeterangan').value || '-',
-          gambar_url: gambarUrl,
-          qr_code_url: 'info.html?item=' + encodeURIComponent(kodeBarang),
-          source_ppab: '-',
-          jam_update: getCurrentTimestamp()
-        });
-        
+
+        for (let u = 1; u <= unitCount; u++) {
+          const nextNum = getNextNum();
+          const kodeBarang = shouldSplit
+            ? `INV/${kategoriKode}/${slug}.${u}/UPJKP/${String(nextNum).padStart(4, '0')}`
+            : `INV/${kategoriKode}/UPJKP/${String(nextNum).padStart(4, '0')}`;
+          let maxId = inventoryItems.length > 0 ? Math.max(...inventoryItems.map(i => parseInt(i.id)||0)) + 1 : 1;
+          inventoryItems.push({
+            id: maxId,
+            nama_barang: namaBarang,
+            kode_barang: kodeBarang,
+            kategori: kategori,
+            merek_type: document.getElementById('invMerek').value || '-',
+            jumlah: shouldSplit ? 1 : jumlahInput,
+            kondisi: document.getElementById('invKondisi').value,
+            status: document.getElementById('invStatus').value,
+            lokasi_ruangan: document.getElementById('invLokasi').value || '-',
+            tanggal_perolehan: document.getElementById('invTglPerolehan').value || '-',
+            nilai_perolehan: nilaiInput,
+            sumber_perolehan: document.getElementById('invSumber').value,
+            keterangan: (document.getElementById('invKeterangan').value || '-') + (shouldSplit ? ` | Unit ${u}/${unitCount}` : ''),
+            gambar_url: gambarUrl,
+            qr_code_url: 'info.html?item=' + encodeURIComponent(kodeBarang),
+            source_ppab: '-',
+            jam_update: getCurrentTimestamp()
+          });
+        }
+
         temporaryInvImageBase64 = null;
         temporaryInvImageFilename = null;
         temporaryInvImageMimeType = null;
         temporaryInvImage = null;
-        showToast(`Barang baru ditambahkan! Kode: ${kodeBarang}`);
+        showToast(shouldSplit ? `${unitCount} unit ditambahkan! Kode: ${firstKode} dst.` : `Barang baru ditambahkan! Kode: ${firstKode}`);
         saveInventoryData();
         closeInventoryModal();
         checkLowStock();
@@ -3908,7 +4135,16 @@
         } catch(e) {}
       }
       
+      const deletedRefs = [item.source_ppab, ...(Array.isArray(item.source_ppab_history) ? item.source_ppab_history : [])]
+        .filter(s => s && s !== '-' && s !== '');
       inventoryItems.splice(itemIndex, 1);
+      deletedRefs.forEach(ref => {
+        const stillUsed = inventoryItems.some(i =>
+          i.source_ppab === ref ||
+          (Array.isArray(i.source_ppab_history) && i.source_ppab_history.includes(ref))
+        );
+        if (!stillUsed) unmarkPPABImported(ref);
+      });
       saveInventoryData();
       checkLowStock();
       filterInventory();
@@ -4199,8 +4435,13 @@
       if (selesaiItems.length === 0) { list.innerHTML = '<p class="text-center text-slate-400 text-xs py-6">Tidak ada PPAB dengan status Selesai</p>'; }
       else {
         selesaiItems.forEach(item => {
-          // Cek apakah sudah di-import
-          const sudahImport = inventoryItems.some(i => i.source_ppab === item.no_ppab);
+          const inItems = inventoryItems.some(i =>
+            i.source_ppab === item.no_ppab ||
+            (Array.isArray(i.source_ppab_history) && i.source_ppab_history.includes(item.no_ppab))
+          );
+          if (inItems) markPPABImported(item.no_ppab);
+          else unmarkPPABImported(item.no_ppab);
+          const sudahImport = inItems;
           const div = document.createElement('div');
           div.className = 'flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 hover:border-emerald-300 transition';
           if (sudahImport) {
@@ -5420,7 +5661,7 @@
           // Parse JSON fields
           if (!Array.isArray(d.items_breakdown)) { try { d.items_breakdown = JSON.parse(d.items_breakdown); } catch(e) {} if (!Array.isArray(d.items_breakdown)) d.items_breakdown = []; }
           if (d.items_breakdown.length > 0 && typeof d.items_breakdown[0] === 'string') { try { d.items_breakdown = JSON.parse(d.items_breakdown[0]); } catch(e) {} if (!Array.isArray(d.items_breakdown)) d.items_breakdown = []; }
-          d.items_breakdown = d.items_breakdown.map(item => ({ name: item.name || item.nama || item.nama_barang || 'Barang', qty_order: parseInt(item.qty_order) || 0, qty_received: parseInt(item.qty_received) || 0 }));
+          d.items_breakdown = d.items_breakdown.map(item => ({ name: item.name || item.nama || item.nama_barang || 'Barang', satuan: item.satuan || 'pcs', harga_satuan: item.harga_satuan || 0, qty_order: parseInt(item.qty_order) || 0, qty_received: parseInt(item.qty_received) || 0 }));
           if (!Array.isArray(d.files)) { try { d.files = JSON.parse(d.files); } catch(e) {} if (!Array.isArray(d.files)) d.files = []; }
           // Recalculate computed fields
           d.jml_item = parseInt(d.jml_item) || 0;
